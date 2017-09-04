@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
-import Recharge from '@/components/recharge/Recharge'
 
 Vue.use(Router)
+
+const Recharge = () => import('@/components/recharge/Recharge')
 
 export default new Router({
   routes: [
