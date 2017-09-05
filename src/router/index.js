@@ -6,9 +6,11 @@ Vue.use(Router)
 // 路由配置（使用lazyloading）
 const Recharge = () => import('@/components/recharge/Recharge')
 const Self = () => import('@/components/self/Self')
+const ModifyPwd = () => import('@/components/modifyPassword/ModifyPwd')
 
 export default new Router({
   routes: [
+    { path: '/', redirect: '/self' },
     {
       path: '/self',
       name: 'Self',
@@ -18,6 +20,11 @@ export default new Router({
       path: '/recharge',
       name: 'Recharge',
       component: Recharge
+    },
+    {
+      path: '/modifyPwd',
+      name: 'modifyPwd',
+      component: ModifyPwd
     }
   ]
 })

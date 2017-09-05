@@ -73,6 +73,9 @@
       <mt-cell title="意见反馈" is-link @click.native="feedback">
         <img slot="icon" v-bind:src="billIcon" class="left-icon">
       </mt-cell>
+      <mt-cell title="修改密码" is-link router-link to="/modifyPwd" tag="div">
+        <img slot="icon" v-bind:src="billIcon" class="left-icon">
+      </mt-cell>
     </div>
 
 
