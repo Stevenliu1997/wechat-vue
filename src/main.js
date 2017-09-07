@@ -8,7 +8,6 @@ import 'mint-ui/lib/style.css'
 import 'font-awesome/css/font-awesome.css'
 import VueResource from 'vue-resource'
 
-
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
