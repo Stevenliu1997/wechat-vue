@@ -17,6 +17,7 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
       <li><router-link to="/recharge">Go to recharge</router-link></li>
+      <li><router-link to="/ChargingPile/addNewPile">Charging</router-link></li>
     </ul>
   </div>
 </template>
