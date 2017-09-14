@@ -1,0 +1,8 @@
+{
+  "servicecharge": 12.2,  /*服务费*/
+  "price": 1.1,     /*电费*/
+  "startchargetime": "12:00:00",    /*充电起始时间*/
+  "chargetime": "2:00:00",    /*充电时长*/
+  "message": "wu",
+  "code": "00"
+}

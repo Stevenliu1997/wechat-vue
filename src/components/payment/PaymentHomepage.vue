@@ -6,9 +6,9 @@
     <div class="clock">
       <img src="../../assets/PaymentPage/clock.png" height="64" width="64"/>
     </div>
-    <div class="button">
+    <div class="button payment-button">
       <router-link to="/payment/input" tag="div">
-        <mt-button type="primary" class="payment-button">我要充电</mt-button>
+        <mt-button type="primary">点击充电</mt-button>
       </router-link>
     </div>
   </div>
@@ -25,9 +25,8 @@
 
 <style>
   .payment-button{
-    top: 500px;
-    margin:0 auto;
-    display:block;
+    width:100px;
+    margin:500px auto;
   }
   .role{
     display: inline;
