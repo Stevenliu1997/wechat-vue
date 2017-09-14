@@ -15,6 +15,11 @@ const OrderList = () => import('@/components/orderlist/OrderList')
 const Feedback = () => import('@/components/feedback/Feedback')
 const Setting = () => import('@/components/setting/Setting')
 const Wallet = () => import('@/components/wallet/Wallet')
+const PaymentHomepage = () => import('@/components/payment/PaymentHomepage')
+const PaymentInput = () => import('@/components/payment/PaymentInput')
+const Charging = () => import('@/components/payment/Charging')
+const OrderInformation = () => import('@/components/payment/OrderInformation')
+const Success = () => import('@/components/payment/Success')
 
 export default new Router({
   routes: [
@@ -53,6 +58,31 @@ export default new Router({
       path: '/setting',
       name: 'Setting',
       component: Setting
+    },
+    {
+      path: '/payment/homepage',
+      name: 'PaymentHomepage',
+      component: PaymentHomepage
+    },
+    {
+      path: '/payment/input',
+      name: 'PaymentInput',
+      component: PaymentInput
+    },
+    {
+      path: '/payment/charging',
+      name: 'Charging',
+      component: Charging
+    },
+    {
+      path: '/payment/orderinformation',
+      name: 'orderinformation',
+      component: OrderInformation
+    },
+    {
+      path: '/payment/success',
+      name: 'Success',
+      component: Success
     },
     {
       path: '/ChargingPile/CertificationFailed',

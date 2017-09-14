@@ -9,7 +9,7 @@
     </div>
     <img src=""/>
     <div class="button">
-      <router-link to="/payment/orderinformation" tag="div">
+      <router-link to="/payment/success" tag="div">
         <mt-button type="primary" class="payment-button">结束充电</mt-button>
       </router-link>
     </div>
