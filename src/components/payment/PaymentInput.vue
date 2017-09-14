@@ -1,12 +1,26 @@
 <template>
 <div>
   <div class="QRcode">
-    <img src="../../assets/PaymentPage/blackberry-qr-code-variant.png" height="64" width="64"/>
+    <router-link to="/payment/charging" tag="div">
+      <img src="../../assets/PaymentPage/blackberry-qr-code-variant.png" height="64" width="64"/>
+    </router-link>
   </div>
   <div class="input-hand">
-    <span class="input-part">请输入充电桩编号</span>
-    <input type="text" placeholder="单行输入" v-model="code" class="input-part"/>
-    <mt-button type="primary" class="input-part">确认</mt-button>
+    <div class="input-part">
+      <span>请输入充电桩编号</span>
+    </div>
+    <br/><br/>
+    <div class="input-part">
+      <input type="text" placeholder="单行输入" v-model="code"/>
+    </div>
+    <br/><br/>
+    <div class="input-part">
+      <div class="button">
+        <router-link to="/payment/charging" tag="div">
+          <mt-button type="primary">确认</mt-button>
+        </router-link>
+      </div>
+    </div>
   </div>
 </div>
 </template>
@@ -31,12 +45,12 @@ export default{
     top: 500px;
     margin:0 auto;
     display:block;
-    position: relative;
-    left: 50%;
+    float:left;
+    position:relative;
+    left:50%;
   }
   .input-part{
-    display: block;
-    position: relative;
-    left: -50%;
+    position:relative;
+    left:-50%;
   }
 </style>

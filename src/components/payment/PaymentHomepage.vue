@@ -6,7 +6,11 @@
     <div class="clock">
       <img src="../../assets/PaymentPage/clock.png" height="64" width="64"/>
     </div>
-    <mt-button type="primary" class="payment-button">我要充电</mt-button>
+    <div class="button">
+      <router-link to="/payment/input" tag="div">
+        <mt-button type="primary" class="payment-button">我要充电</mt-button>
+      </router-link>
+    </div>
   </div>
 </template>
 
