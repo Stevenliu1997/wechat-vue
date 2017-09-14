@@ -11,6 +11,8 @@ Vue.use(Router)
 const Recharge = () => import('@/components/recharge/Recharge')
 const Self = () => import('@/components/self/Self')
 const ModifyPwd = () => import('@/components/modifyPassword/ModifyPwd')
+const PaymentHomepage = () => import('@/components/payment/PaymentHomepage')
+const PaymentInput = () => import('@/components/payment/PaymentInput')
 
 export default new Router({
   routes: [
@@ -49,6 +51,16 @@ export default new Router({
       path: '/ChargingPile/addNewPile',
       name: 'addNewPile',
       component: addNewPile
+    },
+    {
+      path: '/payment/homepage',
+      name: 'PaymentHomepage',
+      component: PaymentHomepage
+    },
+    {
+      path: '/payment/input',
+      name: 'PaymentInput',
+      component: PaymentInput
     }
   ]
 })
