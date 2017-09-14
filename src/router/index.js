@@ -11,6 +11,10 @@ Vue.use(Router)
 const Recharge = () => import('@/components/recharge/Recharge')
 const Self = () => import('@/components/self/Self')
 const ModifyPwd = () => import('@/components/modifyPassword/ModifyPwd')
+const OrderList = () => import('@/components/orderlist/OrderList')
+const Feedback = () => import('@/components/feedback/Feedback')
+const Setting = () => import('@/components/setting/Setting')
+const Wallet = () => import('@/components/wallet/Wallet')
 
 export default new Router({
   routes: [
@@ -29,6 +33,26 @@ export default new Router({
       path: '/modifyPwd',
       name: 'modifyPwd',
       component: ModifyPwd
+    },
+    {
+      path: '/orderlist',
+      name: 'OrderList',
+      component: OrderList
+    },
+    {
+      path: '/feedback',
+      name: 'Feedback',
+      component: Feedback
+    },
+    {
+      path: '/wallet',
+      name: '/Wallet',
+      component: Wallet
+    },
+    {
+      path: '/setting',
+      name: 'Setting',
+      component: Setting
     },
     {
       path: '/ChargingPile/CertificationFailed',
