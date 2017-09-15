@@ -4,6 +4,7 @@ import CertificationFailed from '@/components/ChargingPile/CertificationFailed'
 import ChargingPileInfo from '@/components/ChargingPile/ChargingPileInfo'
 import ChargingPileDetail from '@/components/ChargingPile/ChargingPileDetail'
 import addNewPile from '@/components/ChargingPile/addNewPile'
+import test from '@/components/ChargingPile/test'
 
 Vue.use(Router)
 
@@ -20,6 +21,11 @@ const Ticket = () => import('@/components/ticket/Ticket')
 const GetTicket = () => import('@/components/ticket/GetTicket')
 const Receipt = () => import('@/components/receipt/Receipt')
 const ReceiptHistory = () => import('@/components/receipt/ReceiptHistory')
+const PaymentHomepage = () => import('@/components/payment/PaymentHomepage')
+const PaymentInput = () => import('@/components/payment/PaymentInput')
+const Charging = () => import('@/components/payment/Charging')
+const OrderInformation = () => import('@/components/payment/OrderInformation')
+const Success = () => import('@/components/payment/Success')
 
 export default new Router({
   routes: [
@@ -86,6 +92,31 @@ export default new Router({
       component: Setting
     },
     {
+      path: '/payment/homepage',
+      name: 'PaymentHomepage',
+      component: PaymentHomepage
+    },
+    {
+      path: '/payment/input',
+      name: 'PaymentInput',
+      component: PaymentInput
+    },
+    {
+      path: '/payment/charging',
+      name: 'Charging',
+      component: Charging
+    },
+    {
+      path: '/payment/orderinformation',
+      name: 'orderinformation',
+      component: OrderInformation
+    },
+    {
+      path: '/payment/success',
+      name: 'Success',
+      component: Success
+    },
+    {
       path: '/ChargingPile/CertificationFailed',
       name: 'CertificationFailed',
       component: CertificationFailed
@@ -104,6 +135,12 @@ export default new Router({
       path: '/ChargingPile/addNewPile',
       name: 'addNewPile',
       component: addNewPile
+    },
+    {
+      path: '/ChargingPile/test',
+      name: 'test',
+      component: test
     }
+
   ]
 })

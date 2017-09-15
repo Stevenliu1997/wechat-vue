@@ -117,6 +117,8 @@
     created: function () {
       this.$http.get('/mock/self.json').then(response => {
         let data = response.body
+//        console.log(data.code)
+//        console.log(data.userInfo.balance)
         this.treasure.balance = data.userInfo.balance
         this.cellPhone = data.userInfo.cellPhone
       }, response => {
