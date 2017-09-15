@@ -4,6 +4,7 @@ import CertificationFailed from '@/components/ChargingPile/CertificationFailed'
 import ChargingPileInfo from '@/components/ChargingPile/ChargingPileInfo'
 import ChargingPileDetail from '@/components/ChargingPile/ChargingPileDetail'
 import addNewPile from '@/components/ChargingPile/addNewPile'
+import test from '@/components/ChargingPile/test'
 
 Vue.use(Router)
 
@@ -49,6 +50,12 @@ export default new Router({
       path: '/ChargingPile/addNewPile',
       name: 'addNewPile',
       component: addNewPile
+    },
+    {
+      path: '/ChargingPile/test',
+      name: 'test',
+      component: test
     }
+
   ]
 })
