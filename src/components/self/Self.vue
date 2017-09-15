@@ -1,5 +1,13 @@
 <template>
   <div>
+    <div>
+      <mt-header title="我的账户">
+        <router-link to="/" slot="left">
+          <mt-button icon="back">返回</mt-button>
+        </router-link>
+        <mt-button icon="more" slot="right"></mt-button>
+      </mt-header>
+    </div>
     <div class="self-head">
       <div class="pt-8vh">
         <img v-bind:src="accountIcon" class="left-icon">
@@ -128,11 +136,11 @@
   .self-head {
     height: 20vh;
     width: 100vw;
-    background: url("../../assets/logo.png") center no-repeat;
-    background-size: 100vw 20vh;
     text-align: center;
     font-size: 20px;
     margin-bottom: 3px;
+    margin-top: 0px;
+    padding-top: 1px;
   }
 
   .cell-three-buttons {

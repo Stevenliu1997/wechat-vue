@@ -15,6 +15,11 @@ const OrderList = () => import('@/components/orderlist/OrderList')
 const Feedback = () => import('@/components/feedback/Feedback')
 const Setting = () => import('@/components/setting/Setting')
 const Wallet = () => import('@/components/wallet/Wallet')
+const GetRecharge = () => import('@/components/recharge/GetRecharge')
+const Ticket = () => import('@/components/ticket/Ticket')
+const GetTicket = () => import('@/components/ticket/GetTicket')
+const Receipt = () => import('@/components/receipt/Receipt')
+const ReceiptHistory = () => import('@/components/receipt/ReceiptHistory')
 
 export default new Router({
   routes: [
@@ -25,9 +30,34 @@ export default new Router({
       component: Self
     },
     {
+      path: '/getrecharge',
+      name: 'GetRecharge',
+      component: GetRecharge
+    },
+    {
+      path: '/ticekt',
+      name: 'Ticket',
+      component: Ticket
+    },
+    {
+      path: '/receipt',
+      name: 'Receipt',
+      component: Receipt
+    },
+    {
+      path: '/receipt',
+      name: 'ReceiptHistory',
+      component: ReceiptHistory
+    },
+    {
       path: '/recharge',
       name: 'Recharge',
       component: Recharge
+    },
+    {
+      path: '/ticket',
+      name: 'GetTicket',
+      component: GetTicket
     },
     {
       path: '/modifyPwd',
@@ -49,6 +79,7 @@ export default new Router({
       name: '/Wallet',
       component: Wallet
     },
+
     {
       path: '/setting',
       name: 'Setting',
