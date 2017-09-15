@@ -12,6 +12,15 @@ Vue.use(Router)
 const Recharge = () => import('@/components/recharge/Recharge')
 const Self = () => import('@/components/self/Self')
 const ModifyPwd = () => import('@/components/modifyPassword/ModifyPwd')
+const OrderList = () => import('@/components/orderlist/OrderList')
+const Feedback = () => import('@/components/feedback/Feedback')
+const Setting = () => import('@/components/setting/Setting')
+const Wallet = () => import('@/components/wallet/Wallet')
+const PaymentHomepage = () => import('@/components/payment/PaymentHomepage')
+const PaymentInput = () => import('@/components/payment/PaymentInput')
+const Charging = () => import('@/components/payment/Charging')
+const OrderInformation = () => import('@/components/payment/OrderInformation')
+const Success = () => import('@/components/payment/Success')
 
 export default new Router({
   routes: [
@@ -30,6 +39,51 @@ export default new Router({
       path: '/modifyPwd',
       name: 'modifyPwd',
       component: ModifyPwd
+    },
+    {
+      path: '/orderlist',
+      name: 'OrderList',
+      component: OrderList
+    },
+    {
+      path: '/feedback',
+      name: 'Feedback',
+      component: Feedback
+    },
+    {
+      path: '/wallet',
+      name: '/Wallet',
+      component: Wallet
+    },
+    {
+      path: '/setting',
+      name: 'Setting',
+      component: Setting
+    },
+    {
+      path: '/payment/homepage',
+      name: 'PaymentHomepage',
+      component: PaymentHomepage
+    },
+    {
+      path: '/payment/input',
+      name: 'PaymentInput',
+      component: PaymentInput
+    },
+    {
+      path: '/payment/charging',
+      name: 'Charging',
+      component: Charging
+    },
+    {
+      path: '/payment/orderinformation',
+      name: 'orderinformation',
+      component: OrderInformation
+    },
+    {
+      path: '/payment/success',
+      name: 'Success',
+      component: Success
     },
     {
       path: '/ChargingPile/CertificationFailed',
