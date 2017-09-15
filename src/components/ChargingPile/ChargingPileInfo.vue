@@ -23,7 +23,7 @@
       </mt-popup>
     </div>
     <!--<hr>-->
-      <mt-cell v-for="(chargingPileInfo, index) in dataSet" :key="chargingPileInfo.deviceModel">
+      <mt-cell v-for="(chargingPileInfo, index) in dataSet" :key="chargingPileInfo.pileid">
         <div slot="title" class="four-cells">
           <div class="cell" id="cell-serial">
               {{index+1}}
@@ -34,15 +34,15 @@
           </div>
           <div class="cell">
             <ul>
-            <li>设备ID{{chargingPileInfo.deviceModel}}</li>
-            <li>站点ID{{chargingPileInfo.stationId}}</li>
-            <li>厂商ID{{chargingPileInfo.manufacturerId}}</li>
-            <li>设备名称{{chargingPileInfo.deviceName}}</li>
+            <li>设备ID{{chargingPileInfo.pileid}}</li>
+            <li>站点ID{{chargingPileInfo.siteid}}</li>
+            <li>厂商ID{{chargingPileInfo.factoryid}}</li>
+            <li>设备名称{{chargingPileInfo.pilename}}</li>
             </ul>
           </div>
 
           <div class="cell">
-            <i id="angle-bottom" class="fa fa-angle-right fa-2x" aria-hidden="true" v-on:click="ChargingPileDetail(chargingPileInfo.deviceModel)"></i>
+            <i id="angle-bottom" class="fa fa-angle-right fa-2x" aria-hidden="true" v-on:click="ChargingPileDetail(chargingPileInfo.pileid)"></i>
           </div>
         </div>
 
@@ -87,9 +87,9 @@
       }
     },
     created: function () {
-      this.$http.get('/mock/ChargingPileDetail.json').then(response => {
-        let data = response.body
-        this.dataSet = data.chargingPileInfo
+      this.$http.get('/PileDetailInformation/Find').then(response => {
+        let info = response.body
+        this.dataSet = info.data
       }, response => {
         // error callback
       })

@@ -1,92 +1,52 @@
-<template>
-  <div id="all">
-    <h3>新增设备</h3>
-    <!--添加一道横线-->
-    <hr>
-    <form action="form_action.asp" method="get" id="form1">
-    <div id="body">
-      <ul>
-        <li><span style="display:inline-block;width:70px;text-align:left;">设备名称</span> <input class="input" type="text"/></li>
-        <li><span style="display:inline-block;width:70px;text-align:left;">设备型号</span> <input class="input" type="text"/></li>
-        <li><span style="display:inline-block;width:70px;text-align:left;">站点ID</span>  <input class="input" type="text"/></li>
-        <li>
-          <span style="display:inline-block;width:70px;text-align:left;">电源类型</span>
-          <select name="cars">
-            <option value="volvo">类型1</option>
-            <option value="saab">类型2</option>
-          </select>
-        </li>
-        <ul class="menu">
-          <li>电压<input class="input-1" type="text"/></li>
-          <li>电流<input class="input-1" type="text"/></li>
-          <li>功率<input class="input-1" type="text"/></li>
-        </ul>
-        <br>
-        <br>
-        <li><span style="display:inline-block;width:70px;text-align:left;">接口类型</span> <input class="input" type="text"/></li>
-        <li><span style="display:inline-block;width:70px;text-align:left;">接口标准</span> <input class="input" type="text"/></li>
-        <li><span style="display:inline-block;width:70px;text-align:left;">程序ID</span> <input class="input" type="text"/></li>
-        <li><span style="display:inline-block;width:70px;text-align:left;">产商ID</span> <input class="input" type="text"/></li>
-        <li><span style="display:inline-block;width:70px;text-align:left;">设备备注</span> <input class="input" type="text"/></li>
-        <li><span style="display:inline-block;width:70px;text-align:left;">地址信息</span> <input class="input" type="text"/></li>
-        <!--<input type="submit" value="Submit">-->
-      </ul>
-    </div>
-      <hr>
-      <div id="bottom">
-        <ul class="menu">
-          <li class="bottom-li"><mt-button v-on:click="" >保存</mt-button></li>
-          <li class="bottom-li"><mt-button @click="goBack" >返回</mt-button></li>
-        </ul>
-      </div>
-    </form>
+<!--<template>-->
 
-  </div>
-</template>
-<script>
-  export default {
-//    el: '#all',
-    data () {
-      return {}
-    },
-    methods: {
-      goBack: function () {
-        this.$route.push({path: '/ChargingPile/ChargingPileInfo'})
-      }
-    }
-  }
-</script>
-<style scoped>
-  h3{
-    display: flex;
-    padding-left:40px;
-  }
-  .input{
-    margin-left: 15px;
-    border: 1px solid;
-  }
-  li{
-    display: flex;
-    /*justify-content: flex-start;*/
-    list-style-type :none;
-    padding-top: 5px;
-  }
-  select{
-    margin-left: 15px;
-    border: 1px solid;
-    width: 130px;
-  }
-  .menu li{
-    float: left;
-  }
-  .input-1{
-    width: 36px;
-    margin-left: 10px;
-    border: 1px solid;
+<!--</template>-->
+<!--<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js">-->
+  <!--import wx from 'weixin-js-sdk'-->
+  <!--export default({-->
+    <!--type: 'post',-->
+    <!--url: '', // 自己填写请求地址-->
+    <!--data () {},-->
+    <!--success: function (result) {-->
+      <!--wx.config({-->
+        <!--// 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。-->
+        <!--debug: false,-->
+        <!--// 必填，公众号的唯一标识-->
+        <!--appId: result.appId,-->
+        <!--// 必填，生成签名的时间戳-->
+        <!--timestamp: '' + result.timestamp,-->
+        <!--// 必填，生成签名的随机串-->
+        <!--nonceStr: result.noncestr,-->
+        <!--// 必填，签名，见附录1-->
+        <!--signature: result.signature,-->
+        <!--// 必填，需要使用的JS接口列表，所有JS接口列表见附录2-->
+        <!--jsApiList: [ 'checkJsApi', 'scanQRCode' ]-->
+      <!--})-->
+    <!--}-->
+  <!--})-->
 
-  }
-  .bottom-li{
-    display: inline-block;
-    padding-left: 95px;
-  }
-</style>
+  <!--wx.error(function(res) {-->
+    <!--alert('出错了：' + res.errMsg) // 这个地方的好处就是wx.config配置错误，会弹出窗口哪里错误，然后根据微信文档查询即可。-->
+  <!--})-->
+  <!--wx.ready(function() {-->
+    <!--wx.checkJsApi({-->
+      <!--jsApiList: ['scanQRCode'],-->
+      <!--success: function (res) {-->
+
+      <!--}-->
+    <!--})-->
+    <!--// 点击按钮扫描二维码-->
+    <!--document.querySelector('#scanQRCode').onclick = function () {-->
+      <!--wx.scanQRCode({-->
+        <!--needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，-->
+        <!--scanType: ['qrCode'], // 可以指定扫二维码还是一维码，默认二者都有-->
+        <!--success : function (res) {-->
+          <!--var result = res.resultStr // 当needResult 为 1 时，扫码返回的结果-->
+<!--//          window.location.href = result // 因为我这边是扫描后有个链接，然后跳转到该页面-->
+        <!--}-->
+      <!--})-->
+    <!--}-->
+  <!--})-->
+<!--</script>-->
+
+
