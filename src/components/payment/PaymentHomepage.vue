@@ -17,22 +17,22 @@
 <script>
   import { Button } from 'mint-ui'
   import Vue from 'vue'
-  import {MP} from './map.js'
+//  import {MP} from './map.js'
   Vue.component(Button.name, Button)
   export default {
-    name: 'PaymentHomepage',
-    mounted () {
-      this.$nextTick(function() {
-        var _this = this
-        MP(_this.ak).then(Bmap => {
-          var map = new BMap.Map('allmap')
-          map.centerAndZoom(new BMap.Point(116.404, 39.915), 11)
-          map.addControl(new BMap.MapTypeControl())
-          map.setCurrentCity('北京')
-          map.enableScrollWheelZoom(true)
-        })
-      })
-    }
+    name: 'PaymentHomepage'
+//    mounted () {
+//      this.$nextTick(function() {
+//        var _this = this
+//        MP(_this.ak).then(Bmap => {
+//          var map = new BMap.Map('allmap')
+//          map.centerAndZoom(new BMap.Point(116.404, 39.915), 11)
+//          map.addControl(new BMap.MapTypeControl())
+//          map.setCurrentCity('北京')
+//          map.enableScrollWheelZoom(true)
+//        })
+//      })
+//    }
   }
 </script>
 
