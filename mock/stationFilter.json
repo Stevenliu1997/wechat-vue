@@ -1,0 +1,38 @@
+{
+  "location": [{
+    "id": "distance",
+    "name": "距离我",
+    "type": "radio",
+    "options": ["全市", "1km", "2km", "3km", "4km", "5km", "10km"]
+  }, {
+    "id": "businessDistrict",
+    "name": "商圈",
+    "type": "checkbox",
+    "options": ["不限", "王府井/东单", "沙滩/美术馆灯市口", "天坛", "广渠门", "地安门"]
+  }, {
+    "id": "administrativeArea",
+    "name": "行政区",
+    "type": "checkbox",
+    "options": ["不限", "东城区", "西城区", "朝阳区", "丰台区", "石景山区", "海淀区"]
+  }],
+  "devices": [{
+    "name": "电站类型",
+    "options": ["公共站", "驻地站", "专用站", "个人站"]
+  }, {
+    "name": "电站状态",
+    "options": ["空闲", "全满", "离网", "未知"]
+  }, {
+    "name": "充电方式",
+    "options": ["快充", "慢充"]
+  }],
+  "filters": [{
+    "name": "运营类型",
+    "options": ["自营", "代运营", "加盟", "联通互通", "个人共享"]
+  }, {
+    "name": "停车收费方式",
+    "options": ["免费", "收费"]
+  }, {
+    "name": "营业时间",
+    "options": ["24小时", "营业中", "时间不确定"]
+  }]
+}

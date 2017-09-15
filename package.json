@@ -13,6 +13,10 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
+<<<<<<< HEAD
+    "element-ui": "^1.4.4",
+=======
+>>>>>>> 5197199b223a687cf0fb98950c85121afdabeb0a
     "font-awesome": "^4.7.0",
     "mint-ui": "^2.2.9",
     "vue": "^2.4.2",
