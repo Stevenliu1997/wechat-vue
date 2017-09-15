@@ -20,6 +20,7 @@
     background-color: #393a3f;
   }
   img{
+    padding-left: 100px;
     padding-top: 80px;
   }
 </style>

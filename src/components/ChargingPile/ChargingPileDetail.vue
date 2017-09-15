@@ -1,6 +1,11 @@
 <template>
   <div id="all">
     <div id="head">
+      <mt-header id="mt-head">
+        <mt-button v-link="'/'" slot="left"><i class="fa fa-arrow-left fa-lg" v-on:click="goback">详细信息</i></mt-button>
+      </mt-header>
+    </div>
+    <div id="body">
       <table width="100%">
         <tr>
           <td width="50%">
@@ -18,7 +23,7 @@
         </tr>
       </table>
     </div>
-    <div id="body">
+    <div id="bottom">
       <mt-cell>
         <div slot="title">
           <div>设备型号</div>
@@ -62,6 +67,11 @@
         }
       }
     },
+    methods: {
+      goback: function () {
+        router.push({path: '/ChargingPile/chargingPileInfo'})
+      }
+    },
     created: function () {
       this.$http.get('/PileDetailInformation/Find').then(response => {
 //        console.log(router.history.current.query.id)
@@ -87,5 +97,8 @@
   li{
     list-style-type :none;
     text-align: center;
+  }
+  #mt-head{
+    background-color: gray;
   }
 </style>
