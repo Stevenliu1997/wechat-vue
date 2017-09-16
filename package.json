@@ -82,12 +82,8 @@
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.19.0",
     "webpack-merge": "^4.1.0",
-<<<<<<< HEAD
     "weixin-js-sdk": "latest",
     "vue-resource": "latest"
-=======
-    "weixin-js-sdk": "latest"
->>>>>>> ce0b5946bbdb47446ef38bc87f619f9397d44b12
   },
   "engines": {
     "node": ">= 4.0.0",
