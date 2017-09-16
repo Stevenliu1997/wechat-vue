@@ -33,7 +33,5 @@
 </script>
 <style>
   .payment-button{
-    width:100px;
-    margin:300px auto;
   }
 </style>

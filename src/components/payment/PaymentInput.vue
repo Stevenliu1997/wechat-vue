@@ -42,7 +42,7 @@ export default{
   right:25px;
 }
   .input-hand{
-    top: 500px;
+    top: 380px;
     margin:0 auto;
     display:block;
     float:left;

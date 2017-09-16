@@ -2,7 +2,9 @@
   <div>
     <baidu-map class="map" center="成都"></baidu-map>
     <div class="role">
-      <img src="../../assets/PaymentPage/user.png" height="64" width="64"/>
+      <router-link to="/self">
+        <img src="../../assets/PaymentPage/user.png" height="64" width="64"/>
+      </router-link>
     </div>
     <div class="clock">
       <img src="../../assets/PaymentPage/clock.png" height="64" width="64"/>
