@@ -43,11 +43,11 @@
     data () {
       return {
         selected: '1',
-        ritems: {},
-        pitems: {}
+        ritems: [{name: '88'}, {name: '66'}],
+        pitems: [{name: '张三充值消费'}, {name: '李四充值消费'}]
       }
-    },
-    created: function () {
+    }
+    /* created: function () {
       this.$http.get('/mock/orderlist.json').then(response => {
         let data = response.data
         this.ritems = data.ritems
@@ -56,6 +56,7 @@
         console.log('failed')
       })
     }
+  } */
   }
 </script>
 
