@@ -20,7 +20,7 @@
     </div>
 
     <div class="tailsection">
-      <router-link to="/getrecharge" tag="div">
+      <router-link to="/recharge/getrecharge" tag="div">
         <mt-button type="primary" class="button">
           充值
         </mt-button>

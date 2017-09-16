@@ -5,18 +5,23 @@ import App from './App'
 import router from './router'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
-import 'font-awesome/css/font-awesome.css'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
 import VueResource from 'vue-resource'
+import 'font-awesome/css/font-awesome.css'
 
 Vue.config.productionTip = false
 
 Vue.use(VueResource)
 Vue.use(MintUI)
+Vue.use(ElementUI)
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: {
+    App
+  }
 })

@@ -26,6 +26,17 @@ const Charging = () => import('@/components/payment/Charging')
 const OrderInformation = () => import('@/components/payment/OrderInformation')
 const Success = () => import('@/components/payment/Success')
 
+const NearbyStation = () =>
+import('@/components/station/NearbyStation')
+const StationInfo = () =>
+import('@/components/station/StationInfo')
+const ChoseCity = () =>
+import('@/components/choseCity/ChoseCity')
+const TerminalInfo = () =>
+import('@/components/terminal/TerminalInfo')
+const ChargingMethod = () =>
+import('@/components/terminal/ChargingMethod')
+
 export default new Router({
   routes: [
     { path: '/', redirect: '/self' },
@@ -134,6 +145,35 @@ export default new Router({
       path: '/ChargingPile/addNewPile',
       name: 'addNewPile',
       component: addNewPile
+    },
+    {
+      path: '/',
+      redirect: '/nearbyStation'
+    },
+    {
+      path: '/nearbyStation',
+      name: 'nearbyStation',
+      component: NearbyStation
+    },
+    {
+      path: '/choseCity',
+      name: 'choseCity',
+      component: ChoseCity
+    },
+    {
+      path: '/stationInfo/:id',
+      name: 'stationInfo',
+      component: StationInfo
+    },
+    {
+      path: '/terminalInfo/:id/:index',
+      name: 'terminalInfo',
+      component: TerminalInfo
+    },
+    {
+      path: '/chargingMethod',
+      name: 'chargingMethod',
+      component: ChargingMethod
     }
   ]
 })

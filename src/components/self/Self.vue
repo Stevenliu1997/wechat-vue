@@ -43,7 +43,7 @@
             <div>
               0.00
             </div>
-            <router-link to="/ticket/Ticket" tag="div">
+            <router-link to="/ticket/ticket" tag="div">
               代金券
             </router-link>
           </div>
