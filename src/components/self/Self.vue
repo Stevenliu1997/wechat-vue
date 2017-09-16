@@ -43,7 +43,7 @@
             <div>
               0.00
             </div>
-            <router-link to="/ticket" tag="div">
+            <router-link to="/ticket/Ticket" tag="div">
               代金券
             </router-link>
           </div>
@@ -54,7 +54,7 @@
       <mt-cell title="我的订单" is-link router-link to="/orderlist" tag="div">
         <img slot="icon" v-bind:src="orderIcon" class="left-icon">
       </mt-cell>
-      <mt-cell title="我的发票" is-link router-link to="/recharge" tag="div">
+      <mt-cell title="我的发票" is-link router-link to="/receipt/Receipt" tag="div">
         <img slot="icon" v-bind:src="receiptIcon" class="left-icon">
       </mt-cell>
     </div>

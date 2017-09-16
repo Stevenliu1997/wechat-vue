@@ -4,7 +4,6 @@ import CertificationFailed from '@/components/ChargingPile/CertificationFailed'
 import ChargingPileInfo from '@/components/ChargingPile/ChargingPileInfo'
 import ChargingPileDetail from '@/components/ChargingPile/ChargingPileDetail'
 import addNewPile from '@/components/ChargingPile/addNewPile'
-import test from '@/components/ChargingPile/test'
 
 Vue.use(Router)
 
@@ -36,32 +35,32 @@ export default new Router({
       component: Self
     },
     {
-      path: '/getrecharge',
+      path: '/recharge/GetRecharge',
       name: 'GetRecharge',
       component: GetRecharge
     },
     {
-      path: '/ticekt',
+      path: '/ticekt/Ticket',
       name: 'Ticket',
       component: Ticket
     },
     {
-      path: '/receipt',
+      path: '/receipt/Receipt',
       name: 'Receipt',
       component: Receipt
     },
     {
-      path: '/receipt',
+      path: '/receipt/ReceiptHistory',
       name: 'ReceiptHistory',
       component: ReceiptHistory
     },
     {
-      path: '/recharge',
+      path: '/recharge/Recharge',
       name: 'Recharge',
       component: Recharge
     },
     {
-      path: '/ticket',
+      path: '/ticket/GetTicket',
       name: 'GetTicket',
       component: GetTicket
     },
@@ -135,12 +134,6 @@ export default new Router({
       path: '/ChargingPile/addNewPile',
       name: 'addNewPile',
       component: addNewPile
-    },
-    {
-      path: '/ChargingPile/test',
-      name: 'test',
-      component: test
     }
-
   ]
 })

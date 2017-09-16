@@ -20,16 +20,16 @@
     </div>
 
     <div class="tailsection">
-      <mt-button type="primary" class="button">
-        <router-link to="/getrecharge" tag="div">
+      <router-link to="/getrecharge" tag="div">
+        <mt-button type="primary" class="button">
           充值
-        </router-link>
-      </mt-button>
-      <mt-button type="default" class="button">
-        <router-link to="/orderlist" tag="div">
+        </mt-button>
+      </router-link>
+      <router-link to="/orderlist" tag="div">
+        <mt-button type="default" class="button">
           交易明细
-        </router-link>
-      </mt-button>
+        </mt-button>
+      </router-link>
     </div>
   </div>
 </template>
