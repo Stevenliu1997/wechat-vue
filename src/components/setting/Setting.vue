@@ -8,10 +8,18 @@
       </mt-header>
     </div>
     <div>
-      <mt-switch v-model="value">充值通知</mt-switch>
-      <mt-switch v-model="value">充电开始通知</mt-switch>
-      <mt-switch v-model="value">充电结束通知</mt-switch>
-      <mt-switch v-model="value">充电失败通知</mt-switch>
+      <div class="button">
+        <mt-switch :value.sync="statevalue.charge">充值通知</mt-switch>
+      </div>
+      <div class="button">
+        <mt-switch :value.sync="statevalue.start">充电开始通知</mt-switch>
+      </div>
+      <div class="button">
+        <mt-switch :value.sync="statevalue.end">充电结束通知</mt-switch>
+      </div>
+      <div class="button">
+        <mt-switch :value.sync="statevalue.failed">充电失败通知</mt-switch>
+      </div>
     </div>
   </div>
 </template>
@@ -22,4 +30,25 @@
 
   Vue.component(Switch.name, Switch)
   Vue.component(Header.name, Header)
+
+  export default {
+    name: 'setting',
+    data () {
+      return {
+        statevalue: {
+          charge: null,
+          start: null,
+          end: null,
+          failed: null
+        }
+      }
+    },
+    methods: {
+      sendstate () {
+        this.$http.get('', this.statevalue).then(response => {
+
+        })
+      }
+    }
+  }
 </script>

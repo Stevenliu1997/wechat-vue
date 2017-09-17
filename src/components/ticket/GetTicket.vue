@@ -14,17 +14,29 @@
         </mt-field>
       </div>
       <div>
-        <mt-button type="primary">点击兑换</mt-button>
+        <mt-button type="primary" v-on:click="getTicket">点击兑换</mt-button>
       </div>
     </div>
   </div>
 </template>
 <script>
+  import { MessageBox } from 'mint-ui'
+
   export default {
     name: 'getticket',
     data () {
       return {
         chargecode: null
+      }
+    },
+    methods: {
+      getTicket () {
+        this.$http.get('').then(response => {
+          if (response.code === '00') {
+            MessageBox.alert('提示', '操作成功')
+            this.chargecode = null
+          }
+        })
       }
     }
   }
