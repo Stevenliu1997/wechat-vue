@@ -86,8 +86,6 @@
   import settingIcon from '@/assets/icon/self/001-cogwheel.svg'
   import accountIcon from '@/assets/icon/self/round-account.svg'
 
-  import {Toast} from 'mint-ui'
-
   export default {
     name: 'self',
     data () {
@@ -109,18 +107,14 @@
       }
     },
     methods: {
-      feedback: function () {
-        this.treasure.balance = 500
-        Toast('feedBack')
-      }
     },
     created: function () {
       this.$http.get('/mock/self.json').then(response => {
-        let data = response.body
-//        console.log(data.code)
-//        console.log(data.userInfo.balance)
-        this.treasure.balance = data.userInfo.balance
-        this.cellPhone = data.userInfo.cellPhone
+        if (response.result === 'success') {
+          let data = response.body
+          this.treasure.balance = data.userInfo.balance
+          this.cellPhone = data.userInfo.cellPhone
+        }
       }, response => {
         console.log('failed')
       })

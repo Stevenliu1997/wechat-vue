@@ -18,17 +18,26 @@
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
           <mt-cell v-for="canuse in canuses">
-            {{}}
+            <span>
+              <div>{{money}}</div>
+              <div>{{date}}</div>
+            </span>
           </mt-cell>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
           <mt-cell v-for="used in useds">
-            {{}}
+            <span>
+              <div>{{money}}</div>
+              <div>{{date}}</div>
+            </span>
           </mt-cell>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
           <mt-cell v-for="notuse in notuses">
-            {{}}
+            <span>
+              <div>{{money}}</div>
+              <div>{{date}}</div>
+            </span>
           </mt-cell>
         </mt-tab-container-item>
       </mt-tab-container>
@@ -45,10 +54,20 @@
     name: 'ticket',
     data () {
       return {
-        canuses: [],
-        useds: [],
-        notuses: []
+        ticket: {
+          canuses: [],
+          useds: [],
+          notuses: []
+        }
       }
+    },
+    created: function () {
+      this.$http.get('').then(response => {
+        if (response.result === 'success') {
+          let data = response.data
+          this.canuses = data.a
+        }
+      })
     }
   }
 </script>

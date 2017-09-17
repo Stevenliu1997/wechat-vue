@@ -44,6 +44,14 @@
           balance: 0
         }
       }
+    },
+    created: function () {
+      this.$http.get('').then(response => {
+        let data = response.body
+        this.treasure.balance = data.userInfo.balance
+      }, response => {
+        console.log('failed')
+      })
     }
   }
 </script>

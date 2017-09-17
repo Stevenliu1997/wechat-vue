@@ -8,35 +8,35 @@
     </mt-header>
     <div>
       <div>
-        <mt-field label="手机号" placeholder="请输入手机号" type="tel"></mt-field>
+        <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="datamodel.telephone"></mt-field>
       </div>
       <div>
         <div class=".cell-three-buttons">
-          <div class="button">
+          <div class="button" v-on:click="datamodel.chargeAmount = 100">
             100
           </div>
-          <div class="button">
-            100
+          <div class="button" v-on:click="datamodel.chargeAmount = 200">
+            200
           </div>
-          <div class="button">
-            100
+          <div class="button" v-on:click="datamodel.chargeAmount = 300">
+            300
           </div>
-          <div class="button">
-            100
+          <div class="button" v-on:click="datamodel.chargeAmount = 400">
+            400
           </div>
-          <div class="button">
-            100
+          <div class="button" v-on:click="datamodel.chargeAmount = 500">
+            500
           </div>
-          <div class="button">
-            100
+          <div class="button" v-on:click="datamodel.chargeAmount = 600">
+            600
           </div>
         </div>
         <div>
-          <mt-field label="金额" placeholder="请输入充值金额" type="number"></mt-field>
+          <mt-field label="金额" placeholder="请输入充值金额" type="number" v-model="datamodel.chargeAmount"></mt-field>
         </div>
       </div>
       <div>
-        <mt-button type="primary">立即充值</mt-button>
+        <mt-button type="primary" v-on:click="sendcharge">立即充值</mt-button>
       </div>
     </div>
   </div>
@@ -46,7 +46,28 @@
   export default {
     name: 'getrecharge',
     data () {
-      return {}
+      return {
+        datamodel: {
+          telehpone: null,
+          chargeAmount: 0
+        }
+      }
+    },
+    method: {
+      rollback () {
+        this.datamodel = {}
+      },
+      sendcharge () {
+        this.$http.get('').then(response => {
+          if (response.code === '00') {
+            let data = response.result
+            alert(data) // todo change alert
+            this.rollback()
+          }
+        }, response => {
+          console.log('failed')
+        })
+      }
     }
   }
 </script>
@@ -66,6 +87,5 @@
     display: inline-block;
     background-color: #26a2ff;
     text-align: center;
-
   }
 </style>
