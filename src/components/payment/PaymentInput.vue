@@ -38,7 +38,8 @@ export default{
           this.$router.push({
             path: '/payment/charging',
             query: {
-              mykey: data.orderid
+              mykey: data.orderid,
+              number: data.ordernumber
             }
           })
         }

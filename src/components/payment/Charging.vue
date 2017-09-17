@@ -3,7 +3,7 @@
     <mt-cell title="我要充电"></mt-cell>
     <mt-cell title="已充时间" v-model="chargetime"></mt-cell>
     <mt-cell title="电价" v-model="price"></mt-cell>
-    <mt-cell title="剩余时间" v-model="startchargetime"></mt-cell>
+    <mt-cell title="剩余时间" value="无接口"></mt-cell>
     <div class="button payment-button">
       <mt-button type="primary" @click="submit()">结束充电</mt-button>
     </div>
@@ -19,7 +19,8 @@
         chargetime: '',
         price: '',
         startchargetime: '',
-        mykey: this.$route.query.mykey
+        mykey: this.$route.query.mykey,
+        number: this.$route.query.number
       }
     },
     created: function () {
@@ -37,7 +38,8 @@
         this.$router.push({
           path: '/payment/orderinformation',
           query: {
-            mykey: this.mykey + 'success'
+            mykey: this.mykey,
+            number: this.number
           }
         })
       }
