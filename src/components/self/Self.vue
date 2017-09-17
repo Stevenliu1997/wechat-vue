@@ -2,7 +2,7 @@
   <div>
     <div>
       <mt-header title="我的账户">
-        <router-link to="/" slot="left">
+        <router-link to="/payment/homepage" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
         <mt-button icon="more" slot="right"></mt-button>

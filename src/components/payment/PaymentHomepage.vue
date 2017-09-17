@@ -1,15 +1,17 @@
 <template>
   <div>
-    <baidu-map class="map"></baidu-map>
+    <baidu-map class="map" center="成都"></baidu-map>
     <div class="role">
-      <img src="../../assets/PaymentPage/user.png" height="64" width="64"/>
+      <router-link to="/self">
+        <img src="../../assets/PaymentPage/user.png" height="64" width="64"/>
+      </router-link>
     </div>
     <div class="clock">
       <img src="../../assets/PaymentPage/clock.png" height="64" width="64"/>
     </div>
     <div class="button payment-button">
       <router-link to="/payment/input" tag="div">
-        <mt-button type="primary">点击充电</mt-button>
+        <mt-button type="primary" style="border-radius:100%;width: 140px;height: 140px;">点击充电</mt-button>
       </router-link>
     </div>
   </div>
@@ -30,8 +32,11 @@
 
 <style>
   .payment-button{
-    width:100px;
-    margin:500px auto;
+    display: inline;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   .role{
     display: inline;
@@ -46,7 +51,8 @@
     right:25px;
   }
   .map {
-    width: 400px;
-    height: 300px;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
   }
 </style>
