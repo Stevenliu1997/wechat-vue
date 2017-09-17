@@ -25,7 +25,6 @@ const PaymentInput = () => import('@/components/payment/PaymentInput')
 const Charging = () => import('@/components/payment/Charging')
 const OrderInformation = () => import('@/components/payment/OrderInformation')
 const Success = () => import('@/components/payment/Success')
-
 const NearbyStation = () =>
 import('@/components/station/NearbyStation')
 const StationInfo = () =>

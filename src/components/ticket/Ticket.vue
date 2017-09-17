@@ -17,7 +17,7 @@
 
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-          <mt-cell v-for="canuse in canuses">
+          <mt-cell v-for="canuse in canuses" :key="canuse1">
             <span>
               <div>{{money}}</div>
               <div>{{date}}</div>
@@ -25,7 +25,7 @@
           </mt-cell>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <mt-cell v-for="used in useds">
+          <mt-cell v-for="used in useds" :key="used1">
             <span>
               <div>{{money}}</div>
               <div>{{date}}</div>
@@ -33,7 +33,7 @@
           </mt-cell>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-          <mt-cell v-for="notuse in notuses">
+          <mt-cell v-for="notuse in notuses" :key="notuse1">
             <span>
               <div>{{money}}</div>
               <div>{{date}}</div>

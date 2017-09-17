@@ -43,7 +43,7 @@
             <div>
               0.00
             </div>
-            <router-link to="/ticket/ticket" tag="div">
+            <router-link to="/ticket/Ticket" tag="div">
               代金券
             </router-link>
           </div>
@@ -63,7 +63,7 @@
       <mt-cell title="意见反馈" is-link router-link to="/feedback" tag="div">
         <img slot="icon" v-bind:src="suggestIcon" class="left-icon">
       </mt-cell>
-      <mt-cell title="运维管理" is-link router-link to="/modifyPwd" tag="div">
+      <mt-cell title="运维管理" is-link router-link to="/ChargingPile/ChargingPileInfo" tag="div">
         <img slot="icon" v-bind:src="manageIcon" class="left-icon">
       </mt-cell>
       <mt-cell title="设置" is-link router-link to="/setting" tag="div">
