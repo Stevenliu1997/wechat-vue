@@ -19,15 +19,15 @@
   export default {
     data () {
       return {
+        orderid: this.$route.query.mykey
       }
     },
     created: function () {
-      this.$http.get('/mock/charge/end.json').then(response => {
-        if (response.code === '00') {
+      this.$http.get('/mock/charge/end.json', {orderid: this.orderid}).then(response => {
+        let data = response.body
+        if (data.code === '00') {
 
         }
-      }, response => {
-        console.log(response.message)
       })
     }
   }

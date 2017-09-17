@@ -11,14 +11,12 @@
     </div>
     <br/><br/>
     <div class="input-part">
-      <input type="text" placeholder="单行输入" v-model="code"/>
+      <input type="text" v-model="pileid"/>
     </div>
     <br/><br/>
     <div class="input-part">
       <div class="button">
-        <router-link to="/payment/charging" tag="div">
-          <mt-button type="primary">确认</mt-button>
-        </router-link>
+        <mt-button type="primary" @click="submit()">确认</mt-button>
       </div>
     </div>
   </div>
@@ -29,7 +27,22 @@ export default{
   name: '',
   data () {
     return {
-      code: ''
+      pileid: ''
+    }
+  },
+  methods: {
+    submit: function () {
+      this.$http.get('mock/charge/create.json', {pileid: this.pileid}).then(response => {
+        let data = response.body
+        if (data.code === '00') {
+          this.$router.push({
+            path: '/payment/charging',
+            query: {
+              mykey: data.orderid
+            }
+          })
+        }
+      })
     }
   }
 }

@@ -7,7 +7,9 @@
       </router-link>
     </div>
     <div class="clock">
-      <img src="../../assets/PaymentPage/clock.png" height="64" width="64"/>
+      <router-link to="/nearbyStation">
+        <img src="../../assets/PaymentPage/clock.png" height="64" width="64"/>
+      </router-link>
     </div>
     <div class="button payment-button">
       <router-link to="/payment/input" tag="div">
