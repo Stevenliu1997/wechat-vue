@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="QRcode">
-    <router-link to="/payment/charging" tag="div">
+    <router-link>
       <img src="../../assets/PaymentPage/blackberry-qr-code-variant.png" height="64" width="64"/>
     </router-link>
   </div>
