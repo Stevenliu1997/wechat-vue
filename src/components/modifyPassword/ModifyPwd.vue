@@ -35,7 +35,7 @@
         }
         // TODO 应该使用post的方式，因为模拟请求post拿不到json，mock时就用get
         // this.$http.post('/mock/modifyPwd.json', this.pwd)
-        this.$http.get('/mock/modifyPwd.json', {params: this.pwd}).then(response => {
+        this.$http.post('/mock/modifyPwd.json', {params: this.pwd}).then(response => {
           let data = response.body
           if (data.code === '00') {
             Toast('修改密码成功')

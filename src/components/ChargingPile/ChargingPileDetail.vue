@@ -73,7 +73,7 @@
       }
     },
     created: function () {
-      this.$http.get('/PileDetailInformation/Find').then(response => {
+      this.$http.post('/PileDetailInformation/Find').then(response => {
 //        console.log(router.history.current.query.id)
         let info = response.body
         info.chargingPileInfo = info.chargingPileInfo.filter(function (item) {
