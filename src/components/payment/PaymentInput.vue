@@ -1,9 +1,7 @@
 <template>
 <div>
   <div class="QRcode">
-    <router-link>
-      <img src="../../assets/PaymentPage/blackberry-qr-code-variant.png" height="64" width="64"/>
-    </router-link>
+    <img src="../../assets/PaymentPage/blackberry-qr-code-variant.png" height="64" width="64"/>
   </div>
   <div class="input-hand">
     <div class="input-part">
