@@ -28,14 +28,18 @@
     data () {
       return {
         datamodel: {
-          introduction: null,
-          phone: null
+          content: null,
+          phone: null,
+          sendtime: null
         }
       }
     },
     methods: {
+
       feedback () {
-        this.$http.get('').then(response => {
+        var myDate = new Date()
+        this.datamodel.sendtime = myDate.toLocaleDateString + myDate.toLocaleTimeString
+        this.$http.post('/suggestion/addnew', this.datamodel).then(response => {
           if (response.code === '00') {
             MessageBox.alert('tips', 'success')
             this.datamodel = {}

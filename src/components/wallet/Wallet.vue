@@ -46,7 +46,7 @@
       }
     },
     created: function () {
-      this.$http.get('').then(response => {
+      this.$http.post('').then(response => {
         let data = response.body
         this.treasure.balance = data.userInfo.balance
       }, response => {

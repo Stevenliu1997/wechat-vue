@@ -32,7 +32,7 @@ export default{
   },
   methods: {
     submit: function () {
-      this.$http.get('mock/charge/create.json', {pileid: this.pileid}).then(response => {
+      this.$http.post('mock/charge/create.json', {pileid: this.pileid}).then(response => {
         let data = response.body
         if (data.code === '00') {
           this.$router.push({

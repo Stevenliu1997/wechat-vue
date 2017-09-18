@@ -10,10 +10,10 @@
     </div>
     <div class="self-head">
       <div class="pt-8vh">
-        <img v-bind:src="accountIcon" class="left-icon">
+        <img v-bind:src="treasure.headImg" class="left-icon">
       </div>
       <div>
-        {{cellPhone}}
+        {{treasure.nickName}}
       </div>
     </div>
 
@@ -41,7 +41,7 @@
               <img v-bind:src="ticketIcon" class="left-icon">
             </div>
             <div>
-              0.00
+              {{treasure.voucherCount}}
             </div>
             <router-link to="/ticket/Ticket" tag="div">
               代金券
@@ -102,14 +102,17 @@
         accountIcon: accountIcon,
         cellPhone: null,
         treasure: {
-          balance: 0
+          balance: null,
+          headImg: null,
+          voucherCount: null,
+          nickName: null
         }
       }
     },
     methods: {
     },
     created: function () {
-      this.$http.get('/mock/self.json').then(response => {
+      this.$http.post('/perInformation/getBaseMsg').then(response => {
         if (response.result === 'success') {
           let data = response.body
           this.treasure.balance = data.userInfo.balance

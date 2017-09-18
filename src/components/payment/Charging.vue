@@ -24,7 +24,7 @@
       }
     },
     created: function () {
-      this.$http.get('/mock/charge/charging.json').then(response => {
+      this.$http.post('/mock/charge/charging.json').then(response => {
         let data = response.body
         if (data.code === '00') {
           this.chargetime = data.chargetime
