@@ -16,22 +16,12 @@
   export default {
     data () {
       return {
-        chargetime: '',
-        price: '',
-        startchargetime: '',
+        chargetime: this.$route.query.chargetime,
+        price: this.$route.query.price,
+        startchargetime: this.$route.query.startchargetime,
         mykey: this.$route.query.mykey,
         number: this.$route.query.number
       }
-    },
-    created: function () {
-      this.$http.post('/mock/charge/charging.json').then(response => {
-        let data = response.body
-        if (data.code === '00') {
-          this.chargetime = data.chargetime
-          this.price = data.price
-          this.startchargetime = data.startchargetime
-        }
-      })
     },
     methods: {
       submit: function () {

@@ -24,7 +24,7 @@
       }
     },
     created: function () {
-      this.$http.post('/mock/charge/end.json', {orderid: this.orderid}).then(response => {
+      this.$http.post('/charge/end', {orderid: this.orderid}).then(response => {
         let data = response.body
         if (data.code === '00') {
           this.chargetime = data.chargetime
