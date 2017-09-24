@@ -2,13 +2,13 @@
   <div>
     <div>
       <mt-header title="意见反馈">
-        <router-link to="/" slot="left">
+        <router-link to="/self" slot="left">
           <mt-button icon="back">返回</mt-button>
         </router-link>
       </mt-header>
     </div>
     <div>
-      <mt-field label="意见反馈" placeholder="意见反馈" type="textarea" rows="4" v-modal="datamodel.introduction"></mt-field>
+      <mt-field label="意见反馈" placeholder="意见反馈" type="textarea" rows="4" v-model="datamodel.content"></mt-field>
       <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="datamodel.phone"></mt-field>
       <mt-button type="default" v-on:click="feedback">提交</mt-button>
     </div>
@@ -35,10 +35,8 @@
       }
     },
     methods: {
-
       feedback () {
-        var myDate = new Date()
-        this.datamodel.sendtime = myDate.toLocaleDateString + myDate.toLocaleTimeString
+        this.datamodel.sendtime = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate() + ' ' + new Date().toLocaleTimeString('en-GB')
         this.$http.post('/suggestion/addnew', this.datamodel).then(response => {
           if (response.code === '00') {
             MessageBox.alert('tips', 'success')

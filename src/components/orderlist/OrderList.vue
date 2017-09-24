@@ -15,7 +15,7 @@
       </mt-navbar>
       <!-- tab-container -->
       <mt-tab-container v-model="selected">
-        <!--mt-tab-container-item id="1">
+        <mt-tab-container-item id="1">
           <mt-loadmore :bottom-method="loadBottom">
             <ul>
               <li v-for="item in ritems ">
@@ -32,7 +32,7 @@
               </li>
             </ul>
           </mt-loadmore>
-        </mt-tab-container-item-->
+        </mt-tab-container-item>
       </mt-tab-container>
     </div>
 
@@ -44,7 +44,7 @@
   // TODO solve the loadmore problem
   import {Header, TabItem, Navbar, TabContainer, TabContainerItem} from 'mint-ui'
   import Vue from 'vue'
-  // import MtLoadmore from '../../../node_modules/mint-ui/packages/loadmore/src/loadmore'
+  import MtLoadmore from '../../../node_modules/mint-ui/packages/loadmore/src/loadmore'
 
   Vue.component(Header.name, Header)
   Vue.component(Navbar.name, Navbar)
@@ -53,7 +53,7 @@
   Vue.component(TabContainerItem.name, TabContainerItem)
 
   export default {
-    // components: {MtLoadmore},
+    components: {MtLoadmore},
     name: 'orderlist',
     data () {
       return {
@@ -65,7 +65,7 @@
     },
     methods: {
       getList () {
-        this.$http.get('/hisConsumptionBill').then(response => {
+        this.$http.post('/hisConsumptionBill').then(response => {
           if (response.result === 'success') {
             let pdata = response.resultList
             this.pitems = pdata
