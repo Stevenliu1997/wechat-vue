@@ -10,7 +10,9 @@
     <div>
       <mt-field label="意见反馈" placeholder="意见反馈" type="textarea" rows="4" v-model="datamodel.content"></mt-field>
       <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="datamodel.phone"></mt-field>
-      <mt-button type="default" v-on:click="feedback">提交</mt-button>
+      <mt-button type="default" v-on:click="feedback">
+        提交
+      </mt-button>
     </div>
   </div>
 </template>
@@ -40,7 +42,7 @@
         this.$http.post('/suggestion/addnew', this.datamodel).then(response => {
           if (response.code === '00') {
             MessageBox.alert('tips', 'success')
-            this.datamodel = {}
+            this.$route.push({path: '/hospital/fuwuxq'})
           }
         })
       }
