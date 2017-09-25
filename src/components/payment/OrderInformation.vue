@@ -18,19 +18,10 @@
     data () {
       return {
         orderid: this.$route.query.mykey,
-        chargetime: '',
-        total: '',
+        chargetime: this.$route.query.time,
+        total: this.$route.query.total,
         ordernumber: this.$route.query.number
       }
-    },
-    created: function () {
-      this.$http.post('/charge/end', {orderid: this.orderid}).then(response => {
-        let data = response.body
-        if (data.code === '00') {
-          this.chargetime = data.chargetime
-          this.total = data.servicecharge + data.price
-        }
-      })
     },
     methods: {
       submit: function () {

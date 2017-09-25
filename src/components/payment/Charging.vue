@@ -20,16 +20,25 @@
         price: this.$route.query.price,
         startchargetime: this.$route.query.startchargetime,
         mykey: this.$route.query.mykey,
-        number: this.$route.query.number
+        number: this.$route.query.number,
+        total: ''
       }
     },
     methods: {
       submit: function () {
+        this.$http.post('/charge/end', {orderid: this.orderid}).then(response => {
+          let data = response.body
+          if (data.code === '00') {
+            this.total = data.servicecharge + data.price
+          }
+        })
         this.$router.push({
           path: '/payment/orderinformation',
           query: {
             mykey: this.mykey,
-            number: this.number
+            number: this.number,
+            time: this.chargetime,
+            total: this.total
           }
         })
       }
