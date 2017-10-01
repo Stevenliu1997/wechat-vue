@@ -7,8 +7,7 @@
       </router-link>
     </div>
     <div class="clock">
-      <router-link to="/nearbyStation">
-        <img src="../../assets/PaymentPage/clock.png" height="64" width="64"/>
+      <router-link to="/">
       </router-link>
     </div>
     <div class="button payment-button">
@@ -43,14 +42,18 @@
   .role{
     display: inline;
     position: absolute;
-    top:25px;
-    left:25px;
+    top:575px;
+    left:275px;
   }
   .clock{
     display: inline;
     position: absolute;
-    top:25px;
-    right:25px;
+    width: 80%;
+    height: 10%;
+    top:35px;
+    right:40px;
+    border-radius:25px;
+    background-color: rgba(150, 160, 245, 0.7);
   }
   .map {
     width: 100%;

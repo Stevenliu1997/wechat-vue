@@ -5,13 +5,29 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import { Cell } from 'mint-ui'
-
-  Vue.component(Cell.name, Cell)
-
   export default {
-    name: 'app'
+    name: 'app',
+    mounted: function () {
+      this.$nextTick(function () {
+        const wx = require('weixin-js-sdk')
+        let data = {
+          noncestr: 'Wm3WZYTPz0wzccnWsss',
+          timestamp: +new Date(),
+          url: window.location.href.split('#')[0],
+          jsApiList: ['startSearchBeacons', 'scanQRCode', 'chooseWXPay']
+        }
+        this.$http.post('/后台url', data).then(res => {
+          wx.config({
+            debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+            appId: res.data.appid, // 必填，公众号的唯一标识
+            timestamp: data.timestamp, // 必填，生成签名的时间戳
+            nonceStr: data.noncestr, // 必填，生成签名的随机串
+            signature: res.data.signature, // 必填，签名，见附录1
+            jsApiList: data.jsApiList // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+          })
+        })
+      })
+    }
   }
 </script>
 
@@ -20,46 +36,4 @@
     margin: 0;
     font-size: 20px;
   }
-
-  .pt-8vh {
-    padding-top: 8vh;
-  }
-
-  .mt-2vh {
-    margin-top: 2vh;
-  }
-</style>
-<template>
-  <div id="app">
-    <!--<img src="./assets/logo.png">-->
-    <router-view></router-view>
-  </div>
-</template>
-
-<script>
-  import Vue from 'vue'
-  import { Cell } from 'mint-ui'
-
-  Vue.component(Cell.name, Cell)
-
-  export default {
-    name: 'app'
-  }
-</script>
-
-<style>
-  body {
-    margin: 0;
-    font-size: 20px;
-  }
-
-  .pt-8vh {
-    padding-top: 8vh;
-  }
-
-  .mt-2vh {
-    margin-top: 2vh;
-  }
-
-
 </style>

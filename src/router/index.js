@@ -152,10 +152,6 @@ export default new Router({
       component: addNewPile
     },
     {
-      path: '/',
-      redirect: '/nearbyStation'
-    },
-    {
       path: '/nearbyStation',
       name: 'nearbyStation',
       component: NearbyStation

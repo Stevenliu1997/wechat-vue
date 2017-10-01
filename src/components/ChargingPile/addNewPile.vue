@@ -1,7 +1,7 @@
 <template>
 
 </template>
-<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js">
+<!--script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js">
   import wx from 'weixin-js-sdk'
   export default({
     type: 'post',
