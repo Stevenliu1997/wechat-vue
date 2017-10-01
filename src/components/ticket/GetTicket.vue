@@ -31,7 +31,7 @@
     },
     methods: {
       getTicket () {
-        this.$http.get('').then(response => {
+        this.$http.post('').then(response => {
           if (response.code === '00') {
             MessageBox.alert('提示', '操作成功')
             this.chargecode = null

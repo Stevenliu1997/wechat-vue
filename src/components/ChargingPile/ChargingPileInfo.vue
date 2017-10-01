@@ -90,7 +90,7 @@
       }
     },
     created: function () {
-      this.$http.get('/PileDetailInformation/Find').then(response => {
+      this.$http.post('/PileDetailInformation/Find').then(response => {
         let info = response.body
         this.dataSet = info.data
       }, response => {

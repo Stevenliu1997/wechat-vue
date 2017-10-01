@@ -17,35 +17,37 @@
 
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-          <mt-cell v-for="canuse in canuses">
+          <mt-cell v-for="canuse in canuses" :key="canuse1">
             <span>
-              <div>{{money}}</div>
-              <div>{{date}}</div>
+              <div>{{ticket.canuses.lasttime}}</div>
+              <div>{{ticket.canuses.amount}}</div>
             </span>
           </mt-cell>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <mt-cell v-for="used in useds">
+          <mt-cell v-for="used in useds" :key="used1">
             <span>
-              <div>{{money}}</div>
-              <div>{{date}}</div>
+              <div>{{ticket.useds.lasttime}}</div>
+              <div>{{ticket.useds.amount}}</div>
             </span>
           </mt-cell>
         </mt-tab-container-item>
         <mt-tab-container-item id="3">
-          <mt-cell v-for="notuse in notuses">
+          <mt-cell v-for="notuse in notuses" :key="notuse1">
             <span>
-              <div>{{money}}</div>
-              <div>{{date}}</div>
+              <div>{{ticket.notuses.lasttime}}</div>
+              <div>{{ticket.notuses.amount}}</div>
             </span>
           </mt-cell>
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
     <div>
-      <mt-palette-button content="+">
-        <div class="my-icon-button"></div>
-      </mt-palette-button>
+      <router-link to="/ticket/GetTicket">
+        <mt-palette-button content="+">
+          <div class="my-icon-button"></div>
+        </mt-palette-button>
+      </router-link>
     </div>
   </div>
 </template>
@@ -62,10 +64,13 @@
       }
     },
     created: function () {
-      this.$http.get('').then(response => {
-        if (response.result === 'success') {
-          let data = response.data
-          this.canuses = data.a
+      this.$http.post('/perInformation/getAllVoucher').then(response => {
+        console.log(response)
+        if (response.code === '00') {
+          let data = response.result
+          this.ticket.notuses = data.expiredVoucher
+          this.ticket.canuses = data.availableVoucher
+          this.ticket.useds = data.usedVoucher
         }
       })
     }

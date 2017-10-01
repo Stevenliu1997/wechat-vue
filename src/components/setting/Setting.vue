@@ -45,7 +45,7 @@
     },
     methods: {
       sendstate () {
-        this.$http.get('', this.statevalue).then(response => {
+        this.$http.post('', this.statevalue).then(response => {
 
         })
       }

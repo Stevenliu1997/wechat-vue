@@ -10,10 +10,10 @@
     </div>
     <div class="self-head">
       <div class="pt-8vh">
-        <img v-bind:src="accountIcon" class="left-icon">
+        <img v-bind:src="treasure.headImg" class="left-icon">
       </div>
       <div>
-        {{cellPhone}}
+        {{treasure.nickName}}
       </div>
     </div>
 
@@ -41,9 +41,9 @@
               <img v-bind:src="ticketIcon" class="left-icon">
             </div>
             <div>
-              0.00
+              {{treasure.voucherCount}}
             </div>
-            <router-link to="/ticket/ticket" tag="div">
+            <router-link to="/ticket/Ticket" tag="div">
               代金券
             </router-link>
           </div>
@@ -63,7 +63,7 @@
       <mt-cell title="意见反馈" is-link router-link to="/feedback" tag="div">
         <img slot="icon" v-bind:src="suggestIcon" class="left-icon">
       </mt-cell>
-      <mt-cell title="运维管理" is-link router-link to="/modifyPwd" tag="div">
+      <mt-cell title="运维管理" is-link router-link to="/ChargingPile/ChargingPileInfo" tag="div">
         <img slot="icon" v-bind:src="manageIcon" class="left-icon">
       </mt-cell>
       <mt-cell title="设置" is-link router-link to="/setting" tag="div">
@@ -102,14 +102,17 @@
         accountIcon: accountIcon,
         cellPhone: null,
         treasure: {
-          balance: 0
+          balance: null,
+          headImg: null,
+          voucherCount: null,
+          nickName: null
         }
       }
     },
     methods: {
     },
     created: function () {
-      this.$http.get('/mock/self.json').then(response => {
+      this.$http.post('/perInformation/getBaseMsg').then(response => {
         if (response.result === 'success') {
           let data = response.body
           this.treasure.balance = data.userInfo.balance

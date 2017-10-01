@@ -3,7 +3,7 @@
     <mt-cell title="我要充电"></mt-cell>
     <mt-cell title="已充时间" v-model="chargetime"></mt-cell>
     <mt-cell title="电价" v-model="price"></mt-cell>
-    <mt-cell title="剩余时间" v-model="startchargetime"></mt-cell>
+    <mt-cell title="剩余时间" value="无接口"></mt-cell>
     <div class="button payment-button">
       <mt-button type="primary" @click="submit()">结束充电</mt-button>
     </div>
@@ -16,28 +16,29 @@
   export default {
     data () {
       return {
-        chargetime: '',
-        price: '',
-        startchargetime: '',
-        mykey: this.$route.query.mykey
+        chargetime: this.$route.query.chargetime,
+        price: this.$route.query.price,
+        startchargetime: this.$route.query.startchargetime,
+        mykey: this.$route.query.mykey,
+        number: this.$route.query.number,
+        total: ''
       }
-    },
-    created: function () {
-      this.$http.get('/mock/charge/charging.json').then(response => {
-        let data = response.body
-        if (data.code === '00') {
-          this.chargetime = data.chargetime
-          this.price = data.price
-          this.startchargetime = data.startchargetime
-        }
-      })
     },
     methods: {
       submit: function () {
+        this.$http.post('/charge/end', {orderid: this.orderid}).then(response => {
+          let data = response.body
+          if (data.code === '00') {
+            this.total = data.servicecharge + data.price
+          }
+        })
         this.$router.push({
           path: '/payment/orderinformation',
           query: {
-            mykey: this.mykey + 'success'
+            mykey: this.mykey,
+            number: this.number,
+            time: this.chargetime,
+            total: this.total
           }
         })
       }

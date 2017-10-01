@@ -26,7 +26,7 @@ export default {
   methods: {
   },
   created() {
-    this.$http.get('/mock/city.json').then(response => {
+    this.$http.post('/mock/city.json').then(response => {
       this.cityList = response.body
     }, response => {
       // error callback

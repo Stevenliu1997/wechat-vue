@@ -58,7 +58,7 @@
         this.datamodel = {}
       },
       sendcharge () {
-        this.$http.get('').then(response => {
+        this.$http.post('').then(response => {
           if (response.code === '00') {
             let data = response.result
             alert(data) // todo change alert

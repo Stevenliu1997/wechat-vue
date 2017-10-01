@@ -25,7 +25,7 @@ const PaymentInput = () => import('@/components/payment/PaymentInput')
 const Charging = () => import('@/components/payment/Charging')
 const OrderInformation = () => import('@/components/payment/OrderInformation')
 const Success = () => import('@/components/payment/Success')
-
+const Login = () => import('@/components/login/Login')
 const NearbyStation = () =>
 import('@/components/station/NearbyStation')
 const StationInfo = () =>
@@ -39,7 +39,12 @@ import('@/components/terminal/ChargingMethod')
 
 export default new Router({
   routes: [
-    { path: '/', redirect: '/self' },
+    { path: '/', redirect: '/payment/homepage' },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
     {
       path: '/self',
       name: 'Self',
@@ -51,7 +56,7 @@ export default new Router({
       component: GetRecharge
     },
     {
-      path: '/ticekt/Ticket',
+      path: '/Ticket',
       name: 'Ticket',
       component: Ticket
     },

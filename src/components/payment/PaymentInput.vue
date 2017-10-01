@@ -1,9 +1,7 @@
 <template>
 <div>
   <div class="QRcode">
-    <router-link to="/payment/charging" tag="div">
-      <img src="../../assets/PaymentPage/blackberry-qr-code-variant.png" height="64" width="64"/>
-    </router-link>
+    <img src="../../assets/PaymentPage/blackberry-qr-code-variant.png" height="64" width="64"/>
   </div>
   <div class="input-hand">
     <div class="input-part">
@@ -32,13 +30,17 @@ export default{
   },
   methods: {
     submit: function () {
-      this.$http.get('mock/charge/create.json', {pileid: this.pileid}).then(response => {
+      this.$http.post('/charge/create', {pileid: this.pileid}).then(response => {
         let data = response.body
         if (data.code === '00') {
           this.$router.push({
             path: '/payment/charging',
             query: {
-              mykey: data.orderid
+              mykey: data.orderid,
+              number: data.ordernumber,
+              chargetime: data.chargetime,
+              price: data.price,
+              startchargetime: data.startchargetime
             }
           })
         }
