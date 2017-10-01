@@ -7,7 +7,8 @@
       </mt-header>
     </div>
     <div id="body">
-      <img src="./../../assets/ChargingPile/raw_1503022745.png" height="200" width="200">
+      <!--<img src="./../../assets/ChargingPile/raw_1503022745.png" height="200" width="200">-->
+      <i class="fa fa-exclamation fa-3x" aria-hidden="true" id="exclamation"></i>
       <h1>对不起，你没有这个权限</h1>
     </div>
   </div>
@@ -19,8 +20,14 @@
   #mt-head{
     background-color: #393a3f;
   }
-  img{
-    padding-left: 100px;
-    padding-top: 80px;
+  /*img{*/
+    /*padding-left: 100px;*/
+    /*padding-top: 80px;*/
+  /*}*/
+  #body{
+    padding-top: 100px;
+  }
+  #exclamation{
+    padding-left: 180px;
   }
 </style>

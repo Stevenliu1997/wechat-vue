@@ -2,7 +2,7 @@
   <div id="all">
     <div id="head">
       <mt-header id="mt-head">
-        <mt-button v-link="'/'" slot="left"><i class="fa fa-arrow-left fa-lg" v-on:click="goback">详细信息</i></mt-button>
+        <mt-button router-link="'/'" slot="left"><i class="fa fa-arrow-left fa-lg" v-on:click="goback">详细信息</i></mt-button>
       </mt-header>
     </div>
     <div id="body">
@@ -10,8 +10,8 @@
         <tr>
           <td width="50%">
             <ul>
-              <li><img src="./../../assets/ChargingPile/raw_1502702313.png" width="96" height="96"/></li>
-              <li><img src="./../../assets/ChargingPile/1.png" width="24" height="24"/></li>
+              <li><img src="./../../assets/ChargingPile/26-512.png" width="96" height="96"/></li>
+              <!--<li><img src="./../../assets/ChargingPile/1.png" width="24" height="24"/></li>-->
             </ul>
           </td>
           <td><ul>

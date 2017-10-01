@@ -22,15 +22,13 @@
         <mt-button id="search" @click="hunt">查询</mt-button>
       </mt-popup>
     </div>
-    <!--<hr>-->
       <mt-cell v-for="(chargingPileInfo, index) in dataSet" :key="chargingPileInfo.pileid">
         <div slot="title" class="four-cells">
           <div class="cell" id="cell-serial">
               {{index+1}}
           </div>
           <div class="cell">
-            <div><img src="./../../assets/ChargingPile/raw_1502702313.png" width="96" height="96"/></div>
-            <div><img src="./../../assets/ChargingPile/1.png" width="24" height="24" class="img-2"/></div>
+            <div><img src="./../../assets/ChargingPile/26-512.png" width="96" height="96"/></div>
           </div>
           <div class="cell">
             <ul>
@@ -67,7 +65,12 @@
         popupVisible: false,
         isVisible: true,
         serialNumber: 0,
-        dataSet: []
+        dataSet: [{
+          pileid: 100,
+          siteid: 100,
+          factoryid: 100,
+          pilename: 'A'
+        }]
       }
     },
     methods: {
@@ -97,12 +100,15 @@
   }
 </script>
 <style scoped>
+  img{
+    padding-left: 20px;
+  }
   #search{
     margin-left: 40%;
   }
   #mt-popup{
     width: 100%;
-    margin-top: 104px;
+    margin-top: 65px;
   }
   #mt-head{
     background-color: #393a3f;
