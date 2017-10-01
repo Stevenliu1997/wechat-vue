@@ -39,7 +39,7 @@ import('@/components/terminal/ChargingMethod')
 
 export default new Router({
   routes: [
-    { path: '/', redirect: '/payment/homepage' },
+    { path: '/', redirect: '/login' },
     {
       path: '/login',
       name: 'Login',

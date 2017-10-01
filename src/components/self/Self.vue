@@ -112,8 +112,8 @@
     methods: {
     },
     created: function () {
-      this.$http.post('/perInformation/getBaseMsg').then(response => {
-        if (response.result === 'success') {
+      this.$http.post('/perInformation/getBaseMsg', {}).then(response => {
+        if (response.code === '00') {
           let data = response.body
           this.treasure.balance = data.userInfo.balance
           this.cellPhone = data.userInfo.cellPhone

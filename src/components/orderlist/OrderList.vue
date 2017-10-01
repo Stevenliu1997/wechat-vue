@@ -76,7 +76,7 @@
       }
     },
     created: function () {
-      this.$http.get('/hisConsumptionBill').then(response => {
+      this.$http.post('/hisConsumptionBill').then(response => {
         if (response.result === 'success') {
           let rdata = response.resultList
           this.ritems = rdata
