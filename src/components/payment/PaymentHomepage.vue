@@ -11,7 +11,7 @@
       </router-link>
     </div>
     <div class="button payment-button">
-      <router-link to="/payment/input" tag="div">
+      <router-link to="/payment/SelectChargingMethod" tag="div">
         <mt-button type="primary" style="border-radius:100%;width: 140px;height: 140px;">点击充电</mt-button>
       </router-link>
     </div>

@@ -4,6 +4,8 @@ import CertificationFailed from '@/components/ChargingPile/CertificationFailed'
 import ChargingPileInfo from '@/components/ChargingPile/ChargingPileInfo'
 import ChargingPileDetail from '@/components/ChargingPile/ChargingPileDetail'
 import addNewPile from '@/components/ChargingPile/addNewPile'
+import SelectChargingMethod from '@/components/payment/SelectChargingMethod'
+import setInformation from '@/components/ChargingPile/setInformation'
 
 Vue.use(Router)
 
@@ -23,7 +25,6 @@ const ReceiptHistory = () => import('@/components/receipt/ReceiptHistory')
 const PaymentHomepage = () => import('@/components/payment/PaymentHomepage')
 const PaymentInput = () => import('@/components/payment/PaymentInput')
 const Charging = () => import('@/components/payment/Charging')
-const OrderInformation = () => import('@/components/payment/OrderInformation')
 const Success = () => import('@/components/payment/Success')
 const Login = () => import('@/components/login/Login')
 const NearbyStation = () =>
@@ -146,11 +147,6 @@ export default new Router({
       component: Charging
     },
     {
-      path: '/payment/orderinformation',
-      name: 'orderinformation',
-      component: OrderInformation
-    },
-    {
       path: '/payment/success',
       name: 'Success',
       component: Success
@@ -159,6 +155,11 @@ export default new Router({
       path: '/ChargingPile/CertificationFailed',
       name: 'CertificationFailed',
       component: CertificationFailed
+    },
+    {
+      path: '/ChargingPile/setInformation',
+      name: 'setInformation',
+      component: setInformation
     },
     {
       path: '/ChargingPile/ChargingPileInfo',
@@ -199,6 +200,11 @@ export default new Router({
       path: '/chargingMethod',
       name: 'chargingMethod',
       component: ChargingMethod
+    },
+    {
+      path: '/payment/SelectChargingMethod',
+      name: 'SelectChargingMethod',
+      component: SelectChargingMethod
     }
   ]
 })

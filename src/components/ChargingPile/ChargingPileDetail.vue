@@ -2,7 +2,7 @@
   <div id="all">
     <div id="head">
       <mt-header id="mt-head">
-        <mt-button router-link="'/'" slot="left"><i class="fa fa-arrow-left fa-lg" v-on:click="goback">详细信息</i></mt-button>
+        <mt-button router-link="'/'" slot="left"><i class="fa fa-arrow-left fa-lg" v-on:click="goBack">详细信息</i></mt-button>
       </mt-header>
     </div>
     <div id="body">
@@ -11,7 +11,6 @@
           <td width="50%">
             <ul>
               <li><img src="./../../assets/ChargingPile/26-512.png" width="96" height="96"/></li>
-              <!--<li><img src="./../../assets/ChargingPile/1.png" width="24" height="24"/></li>-->
             </ul>
           </td>
           <td><ul>
@@ -28,7 +27,7 @@
         <div slot="title">
           <div>设备型号</div>
         </div>
-        <div>{{chargingPileInfo.deviceModel}}</div>
+        <div>{{chargingPileInfo.deviceType}}</div>
       </mt-cell>
       <mt-cell>
         <div slot="title">
@@ -48,57 +47,91 @@
         </div>
         <div>{{chargingPileInfo.deviceNote}}</div>
       </mt-cell>
+      <div id="bt" v-on:click="modifyNote">
+        <mt-button>修改备注</mt-button>
+      </div>
+      <div id="div-message" v-show="isShow">
+        <div><textarea id="message" placeholder="多行输入" v-model="modifiedNote"></textarea></div>
+        <div id="bt-2" v-on:click="handIn"><mt-button>确认</mt-button></div>
+      </div>
     </div>
   </div>
 </template>
 <script>
   import router from './../../router/index.js'
+  import MtButton from '../../../node_modules/mint-ui/packages/button/src/button.vue'
   export default {
+    components: {MtButton},
     data () {
       return {
+        isShow: false,
+        modifiedNote: null,
+        pileId: null,
         chargingPileInfo: {
           deviceName: null,
           deviceModel: null,
           stationId: null,
           manufacturerId: null,
           location: null,
+          deviceType: null,
           deviceNote: null,
           workstation: null
         }
       }
     },
     methods: {
-      goback: function () {
+      goBack: function () {
         router.push({path: '/ChargingPile/chargingPileInfo'})
-      }
-    },
-    created: function () {
-      this.$http.post('/PileDetailInformation/Find').then(response => {
-//        console.log(router.history.current.query.id)
-        let info = response.body
-        info.chargingPileInfo = info.chargingPileInfo.filter(function (item) {
-          return item.deviceModel === router.history.current.query.id
+      },
+      modifyNote: function () {
+        this.isShow = true
+      },
+      handIn: function () {
+        this.$http.post('/Pile/Add', {remarks: this.modifiedNote}).then(response => {
+        }, response => {})
+      },
+      created: function () {
+        this.pileId = router.history.current.query.id
+        this.$http.post('/PileDetailInformation/Find', this.pileId).then(response => {
+          let info = response.body
+          if (info.code === '00') {
+            this.chargingPileInfo.deviceName = info.data.pilename
+            this.chargingPileInfo.deviceModel = info.data.pileid
+            this.chargingPileInfo.stationId = info.data.siteid
+            this.chargingPileInfo.manufacturerId = info.data.factoryid
+            this.chargingPileInfo.location = info.data.position
+            this.chargingPileInfo.deviceNote = info.data.remarks
+            this.chargingPileInfo.workstation = info.data.workstation
+            this.chargingPileInfo.deviceType = info.data.type
+          }
+        }, response => {
         })
-        this.chargingPileInfo.deviceName = info.data[0].pilename
-        this.chargingPileInfo.deviceModel = info.data[0].pileid
-        this.chargingPileInfo.stationId = info.data[0].siteid
-        this.chargingPileInfo.manufacturerId = info.data[0].factoryid
-        this.chargingPileInfo.location = info.data[0].position
-        this.chargingPileInfo.deviceNote = info.data[0].remarks
-        this.chargingPileInfo.workstation = info.data[0].workstation
-//        console.log(this.data.deviceName)
-//        console.log(this.data)
-      }, response => {
-      })
+      }
     }
   }
 </script>
 <style scoped>
+  #bt{
+    padding-left: 35%;
+  }
+  #bt-2{
+    padding-top: 10px;
+    padding-left: 22%;
+  }
   li{
     list-style-type :none;
     text-align: center;
   }
   #mt-head{
     background-color: gray;
+  }
+  #div-message{
+    padding-top: 20px;
+    padding-left: 21%;
+  }
+  #message{
+    border: 2px solid;
+    width: 200px;
+    height: 100px;
   }
 </style>
