@@ -1,71 +1,53 @@
 <template>
-<div>
-  <div class="QRcode">
-    <img src="../../assets/PaymentPage/blackberry-qr-code-variant.png" height="64" width="64"/>
+  <div>
+    <div>
+      <p>请输入充电桩编号</p>
+    </div>
+
+    <div id="div-2">
+      <input type="text" placeholder="单行输入" v-model="pileid"/>
+    </div>
+
+    <div id="div-3" >
+      <mt-button v-on:click="handIn">确认</mt-button>
+    </div>
+
   </div>
-  <div class="input-hand">
-    <div class="input-part">
-      <span>请输入充电桩编号</span>
-    </div>
-    <br/><br/>
-    <div class="input-part">
-      <input type="text" v-model="pileid"/>
-    </div>
-    <br/><br/>
-    <div class="input-part">
-      <div class="button">
-        <mt-button type="primary" @click="submit()">确认</mt-button>
-      </div>
-    </div>
-  </div>
-</div>
 </template>
 <script>
-export default{
-  name: '',
-  data () {
-    return {
-      pileid: ''
-    }
-  },
-  methods: {
-    submit: function () {
-      this.$http.post('/charge/create', {pileid: this.pileid}).then(response => {
-        let data = response.body
-        if (data.code === '00') {
-          this.$router.push({
-            path: '/payment/charging',
-            query: {
-              mykey: data.orderid,
-              number: data.ordernumber,
-              chargetime: data.chargetime,
-              price: data.price,
-              startchargetime: data.startchargetime
-            }
-          })
-        }
-      })
+  import router from './../../router/index.js'
+  export default {
+    data () {
+      return {
+        pileid: null
+      }
+    },
+    methods: {
+      handIn: function () {
+        router.push({path: '/payment/charging', params: {pileid: this.pileId}})
+      }
     }
   }
-}
 </script>
 <style>
-.QRcode{
-  display: inline;
-  position: absolute;
-  top:25px;
-  right:25px;
-}
-  .input-hand{
-    top: 380px;
-    margin:0 auto;
-    display:block;
-    float:left;
-    position:relative;
-    left:50%;
+  p {
+    padding-top: 100px;
+    padding-left: 30%;
   }
-  .input-part{
-    position:relative;
-    left:-50%;
+
+  input {
+    border: 1px solid;
+    border-radius: 10px;
+    width: 200px;
+    height: 40px;
+  }
+
+  #div-2 {
+    padding-left: 25%;
+  }
+
+  #div-3 {
+    padding-left: 40%;
+    padding-top: 20px;
   }
 </style>
