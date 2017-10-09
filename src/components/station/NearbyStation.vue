@@ -2,152 +2,133 @@
   <div>
     <mt-cell>
       <div slot="title">
-        <table width="100%">
+        <table width="100%" style="text-align:center;padding:1vh;">
           <tr>
-            <td width="20%">
-              <span @click="toChoseCity()">{{ location }}<img :src="arrowDownIcon" class="filterIcon" /></span>
+            <td width="5%">
             </td>
-            <td width="60%">
-              <input class="searchBar" type="text" placeholder="         查找充电站" />
+            <td width="75%">
+              <el-input placeholder="查找充电站" icon="search" v-model="stationFilter.name" :on-icon-click="stationSearch" v-enter @enter.native="stationSearch"></el-input>
             </td>
             <td width="20%">
-              <span>{{ map }}</span>
+              <span @click="changeTab()" style="color:#aaaaaa">{{ tab }}</span>
             </td>
           </tr>
         </table>
-        <table width="100%">
-          <tr>
-            <td width="30%">
-              <el-popover ref="popover1" placement="bottom-start" trigger="click" :visible-arrow="false" width="380">
-                <el-row>
-                  <el-col :span="6" style="margin-top:8px;">
-                    <mt-cell v-for="location in stationFilterList.location" :key="location.name">
-                      <span slot="title" @click="changeTab($event)">{{ location.name }}</span>
-                    </mt-cell>
-                  </el-col>
-                  <el-col :span="18">
-                    <mt-tab-container v-model="activeTab">
-                      <mt-tab-container-item v-for="location in stationFilterList.location" :key="location.id" :id="location.id">
-                        <mt-radio v-if="location.type === 'radio'" v-model="locationFilter[location.id]" :options="location.options"></mt-radio>
-                        <mt-checklist v-if="location.type === 'checkbox'" v-model="locationFilter[location.id]" :options="location.options"></mt-checklist>
-                      </mt-tab-container-item>
-                    </mt-tab-container>
-                  </el-col>
-                </el-row>
-              </el-popover>
-              <span v-popover:popover1 @click="showFilter($event)">位置区域<img :src="filterIcon" class="filterIcon" /></span>
-            </td>
-            <td width="25%">
-              <el-popover ref="popover2" placement="bottom" trigger="click" :visible-arrow="false" width="380">
-                <span style="float:right;color:#6579e0;">保存偏好设置</span>
-                <div v-for="device in stationFilterList.devices" :key="device.name">
-                  <span style="padding-left:10px;">{{ device.name }}</span>
-                  <el-row>
-                    <el-col :span="7" :offset="1" v-for="option in device.options" :key="option">
-                      <button class="plainButton">{{ option }}</button>
-                    </el-col>
-                  </el-row>
-                </div>
-              </el-popover>
-              <span v-popover:popover2 @click="showFilter($event)">设备<img :src="filterIcon" class="filterIcon" /></span>
-            </td>
-            <td width="15%"></td>
-            <td width="25%">
-              <el-popover ref="popover3" placement="bottom-end" trigger="click" :visible-arrow="false" width="380">
-                <span style="float:right;color:#6579e0;">保存偏好设置</span>
-                <div v-for="filter in stationFilterList.filters" :key="filter.name">
-                  <span style="padding-left:10px;">{{ filter.name }}</span>
-                  <el-row>
-                    <el-col :span="7" :offset="1" v-for="option in filter.options" :key="option">
-                      <button class="plainButton">{{ option }}</button>
-                    </el-col>
-                  </el-row>
-                </div>
-              </el-popover>
-              <span v-popover:popover3 @click="showFilter($event)">筛选<img :src="filterIcon" class="filterIcon" /></span>
-            </td>
-          </tr>
-        </table>
+        <el-row :gutter="5" style="padding:1vh;display:flex;justify-content:center;align-items:center;">
+          <el-col :span="7">
+            <el-cascader :options="locationOptions" :show-all-levels="false" :props="locationProps" placeholder="位置区域" size="small" v-model="stationFilter.location"></el-cascader>
+          </el-col>
+          <el-col :span="5">
+            <el-select placeholder="距离我" size="small" v-model="stationFilter.distance">
+              <el-option v-for="op in stationFilterList.distanceOptions" :key="op.value" :label="op.label" :value="op.value">
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="5">
+            <el-select placeholder="电站状态" size="small" v-model="stationFilter.devices">
+              <el-option v-for="op in stationFilterList.devicesOptions" :key="op.value" :label="op.label" :value="op.value">
+              </el-option>
+            </el-select>
+          </el-col>
+          <el-col :span="7">
+            <el-select placeholder="综合排序" size="small" v-model="stationFilter.sort">
+              <el-option v-for="op in stationFilterList.sortOptions" :key="op.value" :label="op.label" :value="op.value">
+              </el-option>
+            </el-select>
+          </el-col>
+        </el-row>
       </div>
     </mt-cell>
-    <mt-cell v-for="(stationInfo,index) in stationInfoList" :key="stationInfo.name" @click.native="toStatinInfo(index)">
-      <el-row slot="title">
-        <el-col :span="8">
-          <div class="iconWrapper"><img class="stationIcon" :src="stationIcon" /></div>
-        </el-col>
-        <el-col :span="16" style="margin:3vh 0px;">
-          <el-row style="font-size:1.1em;">
-            <el-col :span="20">
-              <span style="vertical-align:text-bottom;">{{ stationInfo.name }}</span>
+    <mt-tab-container v-model="activeTab">
+      <mt-tab-container-item id="list">
+        <mt-cell v-for="stationInfo in stationInfoList" :key="stationInfo.siteid">
+          <el-row slot="title">
+            <el-col :span="8">
+              <div class="iconWrapper"><img class="stationIcon" :src="stationIcon" /></div>
             </el-col>
-            <el-col :span="4">
-              <mt-button size="small" type="danger">快</mt-button>
+            <el-col :span="16" style="margin:3vh 0px;">
+              <el-row style="font-size:1.1em;">
+                <el-col :span="18">
+                  <span style="vertical-align:text-bottom;">{{ stationInfo.sitename }}</span>
+                </el-col>
+                <el-col :span="6">
+                  <button v-if="stationInfo.hasfast > 0" class="fastButton">快</button>
+                  <button v-if="stationInfo.hasslow > 0" class="slowButton">慢</button>
+                </el-col>
+              </el-row>
+              <el-row style="margin-top:2vh;font-size:0.8em;">
+                <el-col :span="7" style="margin-top:-0.6vh;">
+                  <el-rate v-model="stationInfo.score" disabled :max="3"></el-rate>
+                </el-col>
+                <el-col :span="10">
+                  <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                    <span>{{ stationInfo.price }}元/度</span>
+                  </div>
+                </el-col>
+                <el-col :span="7">
+                  <span style="color:#666666">距您{{ stationInfo.distance }}km</span>
+                </el-col>
+              </el-row>
+              <el-row style="margin-top:2vh;font-size:0.6em;">
+                <el-col :span="18">
+                  <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                    <span>{{ stationInfo.position }}</span>
+                  </div>
+                </el-col>
+                <el-col :span="6">
+                  <span style="color:#33e02f">空闲{{ stationInfo.pilenum }}</span>
+                </el-col>
+              </el-row>
+              <el-row style="margin-top:2vh;">
+                <div class="dashedLine"></div>
+              </el-row>
             </el-col>
           </el-row>
-          <el-row style="margin-top:2vh;font-size:0.8em;">
-            <el-col :span="8" style="margin-top:-0.5vh;">
-              <el-rate v-model="stationInfo.score" disabled :max="3"></el-rate>
-            </el-col>
-            <el-col :span="16">
-              <div style="white-space:nowrap; overflow:hidden;text-overflow:ellipsis;">
-                <span>电费：{{ stationInfo.electricity }}；服务费：{{ stationInfo.serviceCharge }}</span>
-              </div>
-            </el-col>
-          </el-row>
-          <el-row style="margin-top:2vh;font-size:0.6em;">
-            <el-col :span="9">
-              <span>{{ stationInfo.type }}</span>
-            </el-col>
-            <el-col :span="5">
-              <span>{{ stationInfo.stationType }}</span>
-            </el-col>
-            <el-col :span="5">
-              <span>{{ stationInfo.block }}</span>
-            </el-col>
-            <el-col :span="4" :offset="1">
-              <span style="color:#33e02f">{{ stationInfo.stationStatus }}</span>
-            </el-col>
-          </el-row>
-          <el-row style="margin-top:2vh;">
-            <div class="dashedLine"></div>
-          </el-row>
-          <el-row style="margin-top:2vh">
-            <button class="successButton">免费停车</button>
-            <mt-button size="small" plain type="primary">不在服务时段</mt-button>
-          </el-row>
-        </el-col>
-      </el-row>
-    </mt-cell>
+        </mt-cell>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="map">
+        <baidu-map class="map" :scroll-wheel-zoom='true'>
+          <!-- <bm-driving start='电子科技大学' end='四川大学' :auto-viewport='true'></bm-driving> -->
+        </baidu-map>
+      </mt-tab-container-item>
+    </mt-tab-container>
   </div>
 </template>
 
 <script>
-import station from '@/assets/icon/station/station.jpeg'
-import arrowUp from '@/assets/icon/station/arrow-up.svg'
-import arrowDown from '@/assets/icon/station/arrow-down.svg'
+import Vue from 'vue'
+import BaiduMap from 'vue-baidu-map'
+import stationIcon from '@/assets/icon/station/station.png'
+
+Vue.use(BaiduMap, {
+  ak: 'fu6xOFGxYhEiIGWQIXk2CATSoYtS14Hg'
+})
 
 export default {
   name: 'nearbyStation',
   data() {
     return {
-      location: '北京',
-      map: '地图',
-      activeTab: 'distance',
+      clientWidth: '',
+      locationOptions: [],
+      locationProps: {
+        value: 'label'
+      },
+      tab: '地图',
+      activeTab: 'list',
       stationInfoList: {},
       stationFilterList: {},
-      locationFilter: [],
-      arrowDownIcon: arrowDown,
-      filterIcon: arrowDown,
-      stationIcon: station
+      stationFilter: {
+        'name': '',
+        'location': [],
+        'distance': '',
+        'devices': '',
+        'sort': ''
+      },
+      stationIcon: stationIcon
     }
   },
   methods: {
-    toChoseCity() {
-      this.$router.push({
-        name: 'choseCity'
-      })
-    },
-    toStatinInfo(index) {
+    toStationInfo(index) {
       this.$router.push({
         name: 'stationInfo',
         params: {
@@ -155,65 +136,64 @@ export default {
         }
       })
     },
-    showFilter(e) {
-      e.currentTarget.childNodes[1].src = (e.currentTarget.childNodes[1].src === arrowDown) ? arrowUp : arrowDown
+    stationSearch(ev) {
+      console.log(this.stationFilter.name)
     },
-    changeTab(e) {
-      for (let location of this.stationFilterList.location) {
-        if (location.name === e.currentTarget.innerText) {
-          this.activeTab = location.id
-        }
-      }
+    changeTab() {
+      this.tab = (this.tab === '地图') ? '列表' : '地图'
+      this.activeTab = (this.activeTab === 'list') ? 'map' : 'list'
     }
   },
   created() {
-    this.$http.get('/mock/stationInfo.json').then(response => {
-      this.stationInfoList = response.body
+    this.clientWidth = document.documentElement.clientWidth * 0.90
+    this.$http.get('static/json/location.json').then(response => {
+      this.locationOptions = response.body
     }, response => {
-      // error callback
     })
-    this.$http.get('/mock/stationFilter.json').then(response => {
+    this.$http.post('/siteinformation/find', {
+      'province': '四川省',
+      'city': '成都市',
+      'requesttime': new Date().toString().slice(16, 21),
+      'distance': 0,
+      'pageNumber': 1,
+      'pageSize': 10
+    }).then(response => {
+      console.log(response.body)
+      this.stationInfoList = response.body.pageData
+    }, response => {
+      console.log('error!')
+    })
+    this.$http.get('static/json/stationFilter.json').then(response => {
       this.stationFilterList = response.body
-      for (let location of this.stationFilterList.location) {
-        if (location.type === 'radio') {
-          this.locationFilter[location.id] = ''
-        }
-        if (location.type === 'checkbox') {
-          this.locationFilter[location.id] = []
-        }
-      }
     }, response => {
-      // error callback
     })
+  },
+  directives: {
+    enter: {
+      bind: function(el, binding, vnode) {
+        const input = el.getElementsByTagName('input')[0]
+        input.addEventListener('keypress', function(e) {
+          var key = e.which || e.keyCode
+          if (key === 13) {
+            el.dispatchEvent(new Event('enter'))
+          }
+        })
+      },
+      unbind: function(el, binding, vnode) {
+      }
+    }
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-table {
-  text-align: center;
-  padding: 2vh;
-}
-
 .filterIcon {
-  width: 16px;
-  height: 16px;
-}
-
-.searchBar {
-  width: 80%;
-  line-height: 4vh;
-  border: 1px solid #000000;
-  border-radius: 6px;
-  box-sizing: border-box;
-  background: url("../../assets/icon/station/search.svg") no-repeat scroll left transparent;
-  outline: none;
-  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
 }
 
 .iconWrapper {
-  margin: 5vh 0px;
   display: inline-block;
 }
 
@@ -226,33 +206,34 @@ table {
   border-top: 1px dashed #bbbbbb;
 }
 
-.successButton {
+.fastButton {
+  border-radius: 4px;
+  border: 0;
+  box-sizing: border-box;
+  border: 1px solid #ef4f4f;
+  background-color: #ef4f4f;
+  box-shadow: none;
+  color: #ffffff;
+  display: inline-block;
+  font-size: 14px;
+  padding: 3px;
+}
+
+.slowButton {
   border-radius: 4px;
   border: 0;
   box-sizing: border-box;
   border: 1px solid #33e02f;
-  background-color: transparent;
+  background-color: #33e02f;
   box-shadow: none;
-  color: #33e02f;
+  color: #ffffff;
   display: inline-block;
   font-size: 14px;
-  padding: 0 12px;
-  height: 33px;
+  padding: 3px;
 }
 
-.plainButton {
+.map {
   width: 100%;
-  border-radius: 4px;
-  border: 0;
-  box-sizing: border-box;
-  border: 1px solid #bbbbbb;
-  background-color: transparent;
-  box-shadow: none;
-  color: #000000;
-  display: inline-block;
-  font-size: 14px;
-  padding: 0 12px;
-  margin: 5px 0;
-  height: 33px;
+  height: 100%;
 }
 </style>

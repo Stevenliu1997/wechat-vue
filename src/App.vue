@@ -3,63 +3,30 @@
     <router-view></router-view>
   </div>
 </template>
-
 <script>
-  import Vue from 'vue'
-  import { Cell } from 'mint-ui'
-
-  Vue.component(Cell.name, Cell)
-
-  export default {
-    name: 'app'
+import wx from 'weixin-js-sdk'
+export default {
+  name: 'app',
+  created: function() {
+    wx.config({
+      debug: true,
+      appId: 'wx3c908e74903f3b5f',
+      timestamp: 1414587457,
+      nonceStr: 'aaaaaaa',
+      signature: '16950602dc93e4469158bd0cdad0e32d42bfc288',
+      jsApiList: ['getLocation']
+    })
   }
+}
 </script>
-
 <style>
-  body {
-    margin: 0;
-    font-size: 20px;
-  }
+body {
+  margin: 0;
+  font-size: 20px;
+}
 
-  .pt-8vh {
-    padding-top: 8vh;
-  }
-
-  .mt-2vh {
-    margin-top: 2vh;
-  }
-</style>
-<template>
-  <div id="app">
-    <!--<img src="./assets/logo.png">-->
-    <router-view></router-view>
-  </div>
-</template>
-
-<script>
-  import Vue from 'vue'
-  import { Cell } from 'mint-ui'
-
-  Vue.component(Cell.name, Cell)
-
-  export default {
-    name: 'app'
-  }
-</script>
-
-<style>
-  body {
-    margin: 0;
-    font-size: 20px;
-  }
-
-  .pt-8vh {
-    padding-top: 8vh;
-  }
-
-  .mt-2vh {
-    margin-top: 2vh;
-  }
-
-
+.el-cascader-menu {
+  height: 35vh;
+  min-width: 0;
+}
 </style>

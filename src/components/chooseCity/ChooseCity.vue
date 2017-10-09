@@ -8,7 +8,7 @@
     </div>
     <mt-index-list>
       <mt-index-section v-for="(value, key) in cityList" :key="key" :index="key">
-        <mt-cell v-for="city in value" :title="city" :key="city"></mt-cell>
+        <mt-cell v-for="city in value" :title="city" :key="city" @click.native="chooseCity(city)"></mt-cell>
       </mt-index-section>
     </mt-index-list>
   </div>
@@ -16,7 +16,7 @@
 
 <script>
 export default {
-  name: 'choseCity',
+  name: 'chooseCity',
   data() {
     return {
       currentCity: '北京',
@@ -24,9 +24,18 @@ export default {
     }
   },
   methods: {
+    chooseCity(city) {
+      this.$router.push({
+        name: 'nearbyStation',
+        params: {
+          currentCity: city
+        }
+      })
+    }
   },
   created() {
-    this.$http.post('/mock/city.json').then(response => {
+    this.currentCity = this.$route.params.currentCity
+    this.$http.get('/mock/city.json').then(response => {
       this.cityList = response.body
     }, response => {
       // error callback

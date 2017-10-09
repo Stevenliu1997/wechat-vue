@@ -2,8 +2,8 @@
   <div>
     <mt-cell>
       <div class="tab" slot="title" style="padding:2vh 0;">
-        <mt-button type="primary" :plain="!isplain" @click="changeTab()">电站详情</mt-button>
-        <mt-button type="primary" :plain="isplain" @click="changeTab()">充电终端</mt-button>
+        <mt-button type="primary" :plain="!isplain" @click="changeTab(1)">电站详情</mt-button>
+        <mt-button type="primary" :plain="isplain" @click="changeTab(2)">充电终端</mt-button>
       </div>
     </mt-cell>
     <mt-tab-container v-model="activeTab">
@@ -24,7 +24,7 @@
                   <el-rate v-model="stationInfo.score" disabled :max="3"></el-rate>
                 </el-col>
                 <el-col :span="12" style="margin-top:0.5vh;">
-                  <div style="white-space:nowrap; overflow:hidden;text-overflow:ellipsis;">
+                  <div style="white-space:nowrap; overflow:hidden;text-overflow:ellipsis;font-size:0.2em;">
                     <span>价格：{{ stationInfo.electricity }}；环境：{{ stationInfo.environment }};服务费：{{ stationInfo.serviceCharge }}</span>
                   </div>
                 </el-col>
@@ -49,8 +49,8 @@
                 </td>
                 <td width="50%">
                   <span>
-                    <mt-button size="small" type="danger">快</mt-button>
-                    空闲0/共0
+                    <mt-button size="small" type="danger" style="background-color:#09bd06;">慢</mt-button>
+                    空闲8/共8
                   </span>
                 </td>
               </tr>
@@ -65,14 +65,17 @@
                 <i class="fa fa-bolt"></i>
               </div>
             </el-col>
-            <el-col :span="20" style="display:flex;justify-content:center;align-items:center;">
+            <el-col :span="16" style="display:flex;justify-content:center;align-items:center;">
               <span style="display:inline-block;">{{ stationInfo.address }}</span>
+            </el-col>
+            <el-col :span="4" style="display:flex;justify-content:center;align-items:center;">
+              <span style="color:#999999" @click="navigate()">导航<img :src="moreIcon" class="moreIcon" /></span>
             </el-col>
           </el-row>
         </mt-cell>
         <div class="break"></div>
         <mt-cell>
-          <el-row slot="title" style="display:flex;justify-content:center;align-items:center;">
+          <el-row slot="title" style="display:flex;justify-content:center;align-items:center;padding:20px 0;">
             <el-col :span="6">
               <span class="label">充电单价</span>
             </el-col>
@@ -82,7 +85,7 @@
           </el-row>
         </mt-cell>
         <mt-cell>
-          <el-row slot="title">
+          <el-row slot="title" style="padding:20px 0;">
             <el-col :span="6">
               <span class="label">停车费</span>
             </el-col>
@@ -90,7 +93,7 @@
           </el-row>
         </mt-cell>
         <mt-cell>
-          <el-row slot="title">
+          <el-row slot="title" style="padding:20px 0;">
             <el-col :span="6">
               <span class="label">运营公司</span>
             </el-col>
@@ -98,7 +101,7 @@
           </el-row>
         </mt-cell>
         <mt-cell>
-          <el-row slot="title">
+          <el-row slot="title" style="padding:20px 0;">
             <el-col :span="6">
               <span class="label">营业时间</span>
             </el-col>
@@ -106,7 +109,7 @@
           </el-row>
         </mt-cell>
         <mt-cell>
-          <el-row slot="title">
+          <el-row slot="title" style="padding:20px 0;">
             <el-col :span="6">
               <span class="label">服务电话</span>
             </el-col>
@@ -115,68 +118,20 @@
         </mt-cell>
         <div class="break"></div>
         <mt-cell>
-          <el-row slot="title" style="display:flex;justify-content:center;align-items:center;">
+          <el-row slot="title" style="display:flex;justify-content:flex-start;align-items:center;">
             <el-col :span="8">
               <span class="label">网友评论（0）</span>
-            </el-col>
-            <el-col :span="12" :offset="4">
-              <button class="commentButton">
-                <i class="fa fa-pencil"></i>
-                <span>&nbsp;&nbsp;&nbsp;我要评论</span>
-              </button>
             </el-col>
           </el-row>
         </mt-cell>
       </mt-tab-container-item>
       <mt-tab-container-item id="terminal">
-        <mt-cell>
-          <div slot="title">
-            <table width="100%">
-              <tr>
-                <td wdith="25%">
-                  <span>空闲优先</span>
-                </td>
-                <td wdith="25%">
-                  <span>快充优先</span>
-                </td>
-                <td wdith="25%">
-                  <span>慢充优先</span>
-                </td>
-                <td wdith="25%">
-                  <el-popover ref="popover" placement="bottom-end" trigger="click" :visible-arrow="false">
-                    <div v-for="terminal in terminalFilter" :key="terminal.name">
-                      <span style="padding-left:10px;">{{ terminal.name }}</span>
-                      <el-row>
-                        <el-col :span="5" :offset="2" v-for="option in terminal.options" :key="option">
-                          <button class="plainButton">{{ option }}</button>
-                        </el-col>
-                      </el-row>
-                    </div>
-                    <span style="margin-left:10px;">输入编号/车位号查询</span>
-                    <input class="searchBar" type="text" placeholder="         输入终端编号查询" style="margin-left:30px;" />
-                    <mt-cell>
-                      <el-row slot="title">
-                        <el-col :span="10" :offset="2">
-                          <button class="clearButton">清空</button>
-                        </el-col>
-                        <el-col :span="10" :offset="2">
-                          <button class="confirmButton">确定</button>
-                        </el-col>
-                      </el-row>
-                    </mt-cell>
-                  </el-popover>
-                  <span v-popover:popover @click="showFilter()">筛选<img :src="filterIcon" class="filterIcon" /></span>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </mt-cell>
-        <mt-cell v-for="(terminal,index) in stationInfo.terminals" :key="terminal.id" is-link @click.native="toTerminalInfo(index)">
+        <mt-cell v-for="(terminal,index) in stationInfo.terminals" :key="terminal.id">
           <el-row slot="title" style="display:flex;justify-content:center;align-items:center;">
             <el-col :span="5">
               <button class="numberButton">{{ terminal.name }}</button>
             </el-col>
-            <el-col :span="10" :offset="1">
+            <el-col :span="10" :offset="1" style="font-size:0.8em;">
               <p class="ellipsis">编号：{{ terminal.id }}</p>
               <p class="ellipsis">终端类型：{{ terminal.type }}</p>
               <p class="ellipsis">充电接口：{{ terminal.interface }}</p>
@@ -194,9 +149,8 @@
 </template>
 
 <script>
-import station from '@/assets/icon/station/station.jpeg'
-import arrowUp from '@/assets/icon/station/arrow-up.svg'
-import arrowDown from '@/assets/icon/station/arrow-down.svg'
+import stationIcon from '@/assets/icon/station/station.png'
+import moreIcon from '@/assets/icon/station/more.svg'
 
 export default {
   name: 'stationInfo',
@@ -205,37 +159,27 @@ export default {
       isplain: true,
       activeTab: 'detail',
       stationInfo: {},
-      terminalFilter: {},
-      stationIcon: station,
-      filterIcon: arrowDown
+      stationIcon: stationIcon,
+      moreIcon: moreIcon
     }
   },
   methods: {
-    changeTab() {
-      this.activeTab = (this.activeTab === 'detail') ? 'terminal' : 'detail'
-      this.isplain = !this.isplain
+    changeTab(index) {
+      if (index === 1) {
+        this.isplain = (this.activeTab === 'detail') ? this.isplain : !this.isplain
+        this.activeTab = 'detail'
+      } else if (index === 2) {
+        this.isplain = (this.activeTab === 'terminal') ? this.isplain : !this.isplain
+        this.activeTab = 'terminal'
+      }
     },
-    showFilter() {
-      this.filterIcon = (this.filterIcon === arrowDown) ? arrowUp : arrowDown
-    },
-    toTerminalInfo(index) {
-      this.$router.push({
-        name: 'terminalInfo',
-        params: {
-          id: this.$route.params.id,
-          index: index
-        }
-      })
+    navigate() {
+      window.location.href = 'http://api.map.baidu.com/direction?origin=latlng:30.679204000000,104.107936000000|name:电子科技大学&destination=四川大学&mode=driving&region=成都&output=html'
     }
   },
   created() {
     this.$http.get('/mock/stationInfo.json').then(response => {
       this.stationInfo = response.body[this.$route.params.id]
-    }, response => {
-      // error callback
-    })
-    this.$http.get('/mock/terminalFilter.json').then(response => {
-      this.terminalFilter = response.body
     }, response => {
       // error callback
     })
@@ -249,9 +193,28 @@ export default {
   text-align: center
 }
 
+table {
+  text-align: center;
+  vertical-align: middle;
+  border-collapse: collapse;
+  padding: 3vh 0;
+}
+
+table td {
+  border-right: 1px solid #d9d9d9;
+}
+
+table tr td:last-child {
+  border-right: 0px;
+}
+
 .iconWrapper {
-  margin: 3vh 0px;
   display: inline-block;
+}
+
+.moreIcon {
+  width: 18px;
+  height: 18px;
 }
 
 .stationIcon {
@@ -278,20 +241,6 @@ export default {
   color: #858285;
 }
 
-.commentButton {
-  width: 100%;
-  border-radius: 4px;
-  border: 0;
-  box-sizing: border-box;
-  border: 1px solid #bbbbbb;
-  background-color: transparent;
-  box-shadow: none;
-  display: inline-block;
-  font-size: 14px;
-  padding: 0 12px;
-  height: 33px;
-}
-
 .numberButton {
   width: 100%;
   border-radius: 4px;
@@ -307,53 +256,6 @@ export default {
   height: 33px;
 }
 
-.plainButton {
-  width: 100%;
-  border-radius: 4px;
-  border: 0;
-  box-sizing: border-box;
-  border: 1px solid #bbbbbb;
-  background-color: transparent;
-  box-shadow: none;
-  color: #000000;
-  display: inline-block;
-  font-size: 14px;
-  padding: 0 8px;
-  margin: 3px 0;
-}
-
-.clearButton {
-  width: 100%;
-  border-radius: 4px;
-  border: 0;
-  box-sizing: border-box;
-  border: 1px solid #bbbbbb;
-  background-color: transparent;
-  box-shadow: none;
-  color: #000000;
-  display: inline-block;
-  font-size: 14px;
-  padding: 0 8px;
-  margin: 3px 0;
-  height: 25px;
-}
-
-.confirmButton {
-  width: 100%;
-  border-radius: 4px;
-  border: 0;
-  box-sizing: border-box;
-  border: 1px solid #4862e8;
-  background-color: #4862e8;
-  box-shadow: none;
-  color: #ffffff;
-  display: inline-block;
-  font-size: 14px;
-  padding: 0 8px;
-  margin: 3px 0;
-  height: 25px;
-}
-
 .break {
   content: '';
   width: 100%;
@@ -362,40 +264,9 @@ export default {
   background-color: #f2f2f2;
 }
 
-.filterIcon {
-  width: 16px;
-  height: 16px;
-}
-
-table {
-  text-align: center;
-  vertical-align: middle;
-  border-collapse: collapse;
-  padding: 3vh 0;
-}
-
-table td {
-  border-right: 1px solid #d9d9d9;
-}
-
-table tr td:last-child {
-  border-right: 0px;
-}
-
 .ellipsis {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.searchBar {
-  width: 60%;
-  line-height: 4vh;
-  border: 1px solid #bbbbbb;
-  border-radius: 6px;
-  box-sizing: border-box;
-  background: url("../../assets/icon/station/search.svg") no-repeat scroll left transparent;
-  outline: none;
-  -webkit-appearance: none;
 }
 </style>
