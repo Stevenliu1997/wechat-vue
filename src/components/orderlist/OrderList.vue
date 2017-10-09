@@ -63,7 +63,8 @@
   export default {
     components: {
       MtCell,
-      MtLoadmore},
+      MtLoadmore
+    },
     name: 'orderlist',
     data () {
       return {
