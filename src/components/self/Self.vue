@@ -57,6 +57,9 @@
       <mt-cell title="我的发票" is-link router-link to="/receipt/Receipt" tag="div">
         <img slot="icon" v-bind:src="receiptIcon" class="left-icon">
       </mt-cell>
+      <mt-cell title="预约详情" is-link router-link to="/" tag="div">
+        <img slot="icon" v-bind:src="receiptIcon" class="left-icon">
+      </mt-cell>
     </div>
 
     <div class="mt-2vh">
@@ -112,8 +115,8 @@
     methods: {
     },
     created: function () {
-      this.$http.post('/perInformation/getBaseMsg').then(response => {
-        if (response.result === 'success') {
+      this.$http.post('/perInformation/getBaseMsg', {}).then(response => {
+        if (response.code === '00') {
           let data = response.body
           this.treasure.balance = data.userInfo.balance
           this.cellPhone = data.userInfo.cellPhone

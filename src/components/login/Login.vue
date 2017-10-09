@@ -1,62 +1,54 @@
 <template>
-  <div class="wrapper">
-
-    <!--  Header  -->
-    <header class="section header">
-      <div class="trapezoid"></div>
-
-      <div class="header__text">
-        <h1>sup.</h1>
-        <p>Sign in or create a new account.</p>
-      </div>
-    </header>
-
-    <!--  Sign Up  -->
-    <section class="section sign-up">
-      <div class="trapezoid"></div>
-      <form action="">
-        <input type="text" name="name" placeholder="Name">
-        <input type="text" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <input type="password" name="confirm" placeholder="Confirm Password">
-        <button>Create Account</button>
-        <p class="opposite-btn2">Already have an account?</p>
-      </form>
-    </section>
-
-    <!--  Sign In  -->
-    <section class="section sign-in">
-      <form action="">
-        <input type="text" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <button>Sign In</button>
-        <p class="opposite-btn1">Don't have an account?</p>
-      </form>
-    </section>
+  <div>
+    <div class="mid-section">
+      <mt-field label="手机号" placeholder="请输入手机号" type="tel"></mt-field>
+      <mt-field label="验证码" placeholder="输入验证码"></mt-field>
+      <button @click="send">
+        <span v-if="sendMsgDisabled">{{time+'秒后获取'}}</span>
+        <span v-if="!sendMsgDisabled">send</span>
+      </button>
+    </div>
+    <div>
+      <p>点击登录，即表示阅读并同意 <a href="/url">《充电服务条款》</a> </p>
+    </div>
   </div>
 </template>
 
 <script>
+  import Vue from 'vue'
+  import { Button } from 'mint-ui'
+  Vue.component(Button.name, Button)
+
   export default {
     name: 'login',
     data () {
       return {
-        myaccount: {
-          account: null,
-          password: null
-        }
+        time: 60,
+        sendMsgDisabled: false
       }
     },
     methods: {
-      login () {
-        this.$http.post('／login', this.myaccount).then(response => {
-          if (response.code === '00') {
-
+      send() {
+        let me = this
+        me.sendMsgDisabled = true
+        let interval = window.setInterval(function() {
+          if ((me.time--) <= 0) {
+            me.time = 60
+            me.sendMsgDisabled = false
+            window.clearInterval(interval)
           }
-        })
+        }, 1000)
       }
     }
   }
 </script>
 <style scoped>
+  mt-button {
+    display: block;
+    margin-bottom: 8px;
+    border-radius: 15px;
+  }
+  .mid-section {
+    margin-top: 50px;
+  }
 </style>

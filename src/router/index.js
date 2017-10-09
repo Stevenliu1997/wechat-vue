@@ -40,7 +40,7 @@ import('@/components/terminal/ChargingMethod')
 
 export default new Router({
   routes: [
-    { path: '/', redirect: '/payment/homepage' },
+    { path: '/', redirect: '/login' },
     {
       path: '/login',
       name: 'Login',
@@ -151,10 +151,6 @@ export default new Router({
       path: '/ChargingPile/addNewPile',
       name: 'addNewPile',
       component: addNewPile
-    },
-    {
-      path: '/',
-      redirect: '/nearbyStation'
     },
     {
       path: '/nearbyStation',

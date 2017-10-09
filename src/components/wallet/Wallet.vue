@@ -55,7 +55,7 @@
     }
   }
 </script>
-<style>
+<style scoped>
   .middleicon {
     width: 150px;
     height: 150px;
