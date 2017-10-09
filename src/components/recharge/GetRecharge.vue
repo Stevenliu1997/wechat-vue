@@ -1,11 +1,13 @@
 <template>
   <div>
-    <mt-header title="余额充值">
-      <router-link to="/self" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
-    </mt-header>
+    <div class="topsection">
+      <div class="top">
+        <mt-field label="代金券" placeholder="请输入兑换码" v-model="moneycode"></mt-field>
+      </div>
+      <div class="top">
+        <mt-button type="primary" v-on:click="getTicket">兑换</mt-button>
+      </div>
+    </div>
     <div>
       <div>
         <mt-field label="手机号" placeholder="请输入手机号" type="tel" v-model="datamodel.telephone"></mt-field>
@@ -36,7 +38,7 @@
         </div>
       </div>
       <div>
-        <mt-button type="primary" v-on:click="sendcharge">立即充值</mt-button>
+        <mt-button type="primary" v-on:click="sendcharge" class="lastbutton">立即充值</mt-button>
       </div>
     </div>
   </div>
@@ -50,22 +52,28 @@
         datamodel: {
           telehpone: null,
           chargeAmount: 0
-        }
+        },
+        moneycode: null
       }
     },
     method: {
-      rollback () {
-        this.datamodel = {}
-      },
       sendcharge () {
         this.$http.post('').then(response => {
           if (response.code === '00') {
             let data = response.result
             alert(data) // todo change alert
-            this.rollback()
+            this.$router.push({path: '/self'})
           }
         }, response => {
           console.log('failed')
+        })
+      },
+      getTicket () {
+        this.$http.post('', this.moneycode).then(response => {
+          if (response.code === '00') {
+            this.MessageBox('success')
+            this.$router.push({path: '/self'})
+          }
         })
       }
     }
@@ -87,5 +95,12 @@
     display: inline-block;
     background-color: #26a2ff;
     text-align: center;
+  }
+  .top {
+    display: inline-block;
+  }
+  .lastbutton {
+    margin-top: 30px;
+    margin-left: 120px;
   }
 </style>

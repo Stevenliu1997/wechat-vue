@@ -11,9 +11,11 @@ import VueResource from 'vue-resource'
 import 'font-awesome/css/font-awesome.css'
 import VueCookie from 'vue-cookie'
 import wx from 'weixin-js-sdk'
+import Vuex from 'vuex'
 
 Vue.config.productionTip = false
 
+Vue.use(Vuex)
 Vue.use(VueResource)
 Vue.use(MintUI)
 Vue.use(ElementUI)

@@ -43,8 +43,8 @@
             <div>
               {{treasure.voucherCount}}
             </div>
-            <router-link to="/ticket/Ticket" tag="div">
-              代金券
+            <router-link to="/ticket" tag="div">
+              折扣券
             </router-link>
           </div>
         </div>
@@ -54,11 +54,8 @@
       <mt-cell title="我的订单" is-link router-link to="/orderlist" tag="div">
         <img slot="icon" v-bind:src="orderIcon" class="left-icon">
       </mt-cell>
-      <mt-cell title="我的发票" is-link router-link to="/receipt/Receipt" tag="div">
-        <img slot="icon" v-bind:src="receiptIcon" class="left-icon">
-      </mt-cell>
-      <mt-cell title="预约详情" is-link router-link to="/" tag="div">
-        <img slot="icon" v-bind:src="receiptIcon" class="left-icon">
+      <mt-cell title="运维管理" is-link router-link to="/ChargingPile/ChargingPileInfo" tag="div">
+        <img slot="icon" v-bind:src="manageIcon" class="left-icon">
       </mt-cell>
     </div>
 
@@ -66,14 +63,13 @@
       <mt-cell title="意见反馈" is-link router-link to="/feedback" tag="div">
         <img slot="icon" v-bind:src="suggestIcon" class="left-icon">
       </mt-cell>
-      <mt-cell title="运维管理" is-link router-link to="/ChargingPile/ChargingPileInfo" tag="div">
-        <img slot="icon" v-bind:src="manageIcon" class="left-icon">
-      </mt-cell>
       <mt-cell title="设置" is-link router-link to="/setting" tag="div">
         <img slot="icon" v-bind:src="settingIcon" class="left-icon">
       </mt-cell>
     </div>
-
+    <div>
+      <mt-button type="danger">解除绑定</mt-button>
+    </div>
   </div>
 </template>
 
@@ -88,8 +84,10 @@
   import manageIcon from '@/assets/icon/self/002-management.svg'
   import settingIcon from '@/assets/icon/self/001-cogwheel.svg'
   import accountIcon from '@/assets/icon/self/round-account.svg'
+  import MtButton from '../../../node_modules/mint-ui/packages/button/src/button'
 
   export default {
+    components: {MtButton},
     name: 'self',
     data () {
       return {

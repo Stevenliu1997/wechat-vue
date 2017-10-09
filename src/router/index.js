@@ -36,6 +36,10 @@ const TerminalInfo = () =>
 import('@/components/terminal/TerminalInfo')
 const ChargingMethod = () =>
 import('@/components/terminal/ChargingMethod')
+const Infomation = () => import('@/components/infomation/Infomation')
+const nickname = () => import('@/components/infomation/nickname')
+const realname = () => import('@/components/infomation/realname')
+const carsinfo = () => import('@/components/infomation/carsinfo')
 
 export default new Router({
   routes: [
@@ -44,6 +48,26 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/infomation',
+      name: 'Infomation',
+      component: Infomation
+    },
+    {
+      path: '/infomation/nickname',
+      name: 'nickname',
+      component: nickname
+    },
+    {
+      path: '/infomation/realname',
+      name: 'realname',
+      component: realname
+    },
+    {
+      path: '/infomation/carsinfo',
+      name: 'carsinfo',
+      component: carsinfo
     },
     {
       path: '/self',

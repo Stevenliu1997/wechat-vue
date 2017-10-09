@@ -42,7 +42,7 @@
         this.$http.post('/suggestion/addnew', this.datamodel).then(response => {
           if (response.code === '00') {
             MessageBox.alert('tips', 'success')
-            this.$route.push({path: '/self'})
+            this.$router.push({path: '/self'})
           }
         })
       }
