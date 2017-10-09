@@ -20,9 +20,10 @@
     "mint-ui": "latest",
     "vue": "^2.4.2",
     "vue-baidu-map": "^0.15.1",
+    "vue-cookie": "^1.1.4",
     "vue-resource": "^1.3.4",
     "vue-router": "^2.7.0",
-    "weixin-js-sdk": "latest"
+    "vue-star-rating": "^1.4.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -77,6 +78,7 @@
     "sinon-chai": "^2.8.0",
     "url-loader": "^0.5.8",
     "vue-loader": "^13.0.4",
+    "vue-resource": "latest",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.4.2",
     "webpack": "^2.6.1",
@@ -84,8 +86,7 @@
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.19.0",
     "webpack-merge": "^4.1.0",
-    "weixin-js-sdk": "latest",
-    "vue-resource": "latest"
+    "weixin-js-sdk": "^1.2.0"
   },
   "engines": {
     "node": ">= 4.0.0",

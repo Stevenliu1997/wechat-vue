@@ -1,12 +1,5 @@
 <template>
   <div class="container">
-    <mt-header title="余额">
-      <router-link to="/" slot="left">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
-    </mt-header>
-
     <div class="middlessection">
       <div>
         <img v-bind:src="walletIcon" class="middleicon">

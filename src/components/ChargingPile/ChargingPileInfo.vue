@@ -5,23 +5,8 @@
         <mt-button router-link="'/'" slot="left"><i class="fa fa-arrow-left fa-lg">充电桩信息</i></mt-button>
       </mt-header>
     </div>
-    <div id="middle">
-      <i @click="handleClick" class="fa fa-angle-down" id="middle-font" v-if="isVisible">筛选</i>
-      <i @click="handleClick" class="fa fa-angle-up"  v-if="!isVisible">筛选</i>
-      <mt-popup id="mt-popup" position="top" pop-transition="popup-fade" v-model="popupVisible">
-        <mt-field label="设备ID" placeholder="请输入设备ID"></mt-field>
-        <mt-field label="站点ID" placeholder="请输入站点ID"></mt-field>
-        <mt-field label="厂商ID" placeholder="请输入厂商ID"></mt-field>
-        <mt-field label="设备名称" placeholder="请输入设备名称"></mt-field>
-        <mt-cell title="设备故障状态">
-          <select>
-            <option>是</option>
-            <option>否</option>
-          </select>
-        </mt-cell>
-        <mt-button id="search" @click="hunt">查询</mt-button>
-      </mt-popup>
-    </div>
+    <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded"
+                 ref="loadmore" :topDistance=20 @bottom-status-change="handleBottomChange">
       <mt-cell v-for="(chargingPileInfo, index) in dataSet" :key="chargingPileInfo.pileid">
         <div slot="title" class="four-cells">
           <div class="cell" id="cell-serial">
@@ -45,6 +30,13 @@
         </div>
 
       </mt-cell>
+      <div slot="bottom" class="mint-loadmore-bottom">
+        <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+        <span v-show="bottomStatus === 'loading'">
+          <mt-spinner type="snake"></mt-spinner>
+          </span>
+      </div>
+    </mt-loadmore>
 
     <div id="addNewPile" v-on:click="addNewPile">
       <i id="addNewPile-angle" class="fa fa-plus fa-1x" aria-hidden="true" ></i>
@@ -56,21 +48,31 @@
   import router from './../../router/index.js'
   import MtPopup from '../../../node_modules/mint-ui/packages/popup/src/popup.vue'
   import MtCell from '../../../node_modules/mint-ui/packages/cell/src/cell.vue'
+  import MtLoadmore from '../../../node_modules/mint-ui/packages/loadmore/src/loadmore.vue'
   export default {
     components: {
+      MtLoadmore,
       MtCell,
       MtPopup},
     data () {
       return {
         popupVisible: false,
         isVisible: true,
-        serialNumber: 0,
-        dataSet: [{
-          pileid: 100,
-          siteid: 100,
-          factoryid: 100,
-          pilename: 'A'
-        }]
+        serialNumber: 1,
+        allLoaded: false,
+        pageNo: 0,
+        translate: 0,
+        pageSize: 5,
+        totalPageNumber: 0,
+        bottomStatus: '',
+        selectedItem: {
+          pileId: null,
+          stationId: null,
+          manufacturerId: null,
+          deviceName: null,
+          workstation: null
+        },
+        dataSet: []
       }
     },
     methods: {
@@ -84,15 +86,31 @@
         this.isVisible = false
         this.popupVisible = true
       },
-      hunt: function () {
-        this.popupVisible = false
-        this.isVisible = true
+      loadBottom() {
+        // load data
+        this.pageNo = this.pageNo + 1
+        setTimeout(function () {
+          this.$http.post('/PileInformation/Find', {pageNumber: this.pageNo, pageSize: this.pageSize}).then(response => {
+            let next = response.body
+            this.dataSet = next.data
+          }, response => {
+            // error callback
+          })
+          this.$refs.loadmore.onBottomLoaded()
+        }, 2000)
+        if (this.pageNo === this.totalPageNumber) {
+          this.allLoaded = true // 若数据已全部获取完毕
+        }
+      },
+      handleBottomChange: function(status) {
+        this.bottomStatus = status
       }
     },
     created: function () {
-      this.$http.post('/PileDetailInformation/Find').then(response => {
+      this.$http.post('/PileInformation/Find', {currentPage: this.pageNo}).then(response => {
         let info = response.body
         this.dataSet = info.data
+        this.totalPageNumber = info.totalPages
       }, response => {
         // error callback
       })
@@ -103,24 +121,8 @@
   img{
     padding-left: 20px;
   }
-  #search{
-    margin-left: 40%;
-  }
-  #mt-popup{
-    width: 100%;
-    margin-top: 65px;
-  }
   #mt-head{
     background-color: #393a3f;
-  }
-  #middle{
-    display: flex;
-    justify-content: flex-start;
-    padding-left: 40px;
-  }
-  #middle-font{
-    font-size: large;
-    padding-top: 5px;
   }
   li{
     list-style-type: none;
@@ -168,6 +170,16 @@
   #cell-serial{
     padding-top: 50px;
   }
+  .mint-loadmore-bottom span {
+    display: inline-block;
+    -webkit-transition: .2s linear;
+    transition: .2s linear;
+    vertical-align: middle
+  }
 
+  .mint-loadmore-bottom span.is-rotate {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg)
+  }
 </style>
 

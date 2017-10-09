@@ -31,10 +31,11 @@
     },
     methods: {
       getTicket () {
-        this.$http.post('').then(response => {
+        let account = localStorage.getItem('account')
+        this.$http.post('/perInformation/exchangeVouche', {'code': this.chargecode, 'account': account}).then(response => {
           if (response.code === '00') {
-            MessageBox.alert('提示', '操作成功')
-            this.chargecode = null
+            MessageBox('提示', '操作成功')
+            this.$router.push({path: '/self'})
           }
         })
       }

@@ -7,12 +7,11 @@
       </router-link>
     </div>
     <div class="clock">
-      <router-link to="/nearbyStation">
-        <img src="../../assets/PaymentPage/clock.png" height="64" width="64"/>
+      <router-link to="/">
       </router-link>
     </div>
     <div class="button payment-button">
-      <router-link to="/payment/input" tag="div">
+      <router-link to="/payment/SelectChargingMethod" tag="div">
         <mt-button type="primary" style="border-radius:100%;width: 140px;height: 140px;">点击充电</mt-button>
       </router-link>
     </div>
@@ -43,14 +42,18 @@
   .role{
     display: inline;
     position: absolute;
-    top:25px;
-    left:25px;
+    top:575px;
+    left:275px;
   }
   .clock{
     display: inline;
     position: absolute;
-    top:25px;
-    right:25px;
+    width: 80%;
+    height: 10%;
+    top:35px;
+    right:40px;
+    border-radius:25px;
+    background-color: rgba(150, 160, 245, 0.7);
   }
   .map {
     width: 100%;
