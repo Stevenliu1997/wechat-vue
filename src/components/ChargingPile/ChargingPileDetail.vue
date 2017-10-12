@@ -89,24 +89,24 @@
       handIn: function () {
         this.$http.post('/Pile/Add', {remarks: this.modifiedNote}).then(response => {
         }, response => {})
-      },
-      created: function () {
-        this.pileId = router.history.current.query.id
-        this.$http.post('/PileDetailInformation/Find', this.pileId).then(response => {
-          let info = response.body
-          if (info.code === '00') {
-            this.chargingPileInfo.deviceName = info.data.pilename
-            this.chargingPileInfo.deviceModel = info.data.pileid
-            this.chargingPileInfo.stationId = info.data.siteid
-            this.chargingPileInfo.manufacturerId = info.data.factoryid
-            this.chargingPileInfo.location = info.data.position
-            this.chargingPileInfo.deviceNote = info.data.remarks
-            this.chargingPileInfo.workstation = info.data.workstation
-            this.chargingPileInfo.deviceType = info.data.type
-          }
-        }, response => {
-        })
       }
+    },
+    created: function () {
+      this.pileId = router.history.current.query.id
+      this.$http.post('/PileDetailInformation/Find', this.pileId).then(response => {
+        let info = response.body
+        if (info.code === '00') {
+          this.chargingPileInfo.deviceName = info.list.pilename
+          this.chargingPileInfo.deviceModel = info.list.pileid
+          this.chargingPileInfo.stationId = info.list.siteid
+          this.chargingPileInfo.manufacturerId = info.list.factoryid
+          this.chargingPileInfo.location = info.list.position
+          this.chargingPileInfo.deviceNote = info.list.remarks
+          this.chargingPileInfo.workstation = info.list.workstation
+          this.chargingPileInfo.deviceType = info.list.type
+        }
+      }, response => {
+      })
     }
   }
 </script>

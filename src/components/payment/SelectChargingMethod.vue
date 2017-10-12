@@ -13,7 +13,7 @@
     },
     methods: {
       Scan: function () {
-        router.push({path: ''})
+        router.push({path: '/payment/ChargingByScan'})
       },
       Hand: function () {
         router.push({path: '/payment/input'})

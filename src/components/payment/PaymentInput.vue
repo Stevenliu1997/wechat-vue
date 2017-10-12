@@ -5,7 +5,7 @@
     </div>
 
     <div id="div-2">
-      <input type="text" placeholder="单行输入" v-model="pileid"/>
+      <input type="text" placeholder="单行输入" v-model="pileId"/>
     </div>
 
     <div id="div-3" >
@@ -19,7 +19,7 @@
   export default {
     data () {
       return {
-        pileid: null
+        pileId: null
       }
     },
     methods: {
@@ -27,8 +27,6 @@
         router.push({path: '/payment/charging', params: {pileid: this.pileId}})
       }
     }
-  },
-  created: {
   }
 </script>
 <style>
