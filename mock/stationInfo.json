@@ -15,6 +15,22 @@
   "parkingFee": "免费",
   "businessHours": "00:00 - 00:00",
   "cellphone": "95598",
+  "totalcomment": 22,
+  "comments": [{
+    "commentid": "xxxx",
+    "content": "评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容",
+    "star": 3,
+    "nickname": "昵称",
+    "siteid": "xxx",
+    "senddate": "06-15 15:56"
+  }, {
+    "commentid": "xxxx",
+    "content": "评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容评论内容",
+    "star": 3,
+    "nickname": "昵称",
+    "siteid": "xxx",
+    "senddate": "06-15 15:56"
+  }],
   "terminals": [{
       "name": "412号",
       "id": "114029000000045682",

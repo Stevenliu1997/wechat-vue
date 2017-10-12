@@ -21,7 +21,7 @@
     "value": 10,
     "label": "10km"
   }],
-  "devicesOptions": [{
+  "stateOptions": [{
     "value": "开放",
     "label": "开放"
   }, {
@@ -29,16 +29,16 @@
     "label": "离网"
   }],
   "sortOptions": [{
-    "value": "综合排序",
+    "value": "multiple",
     "label": "综合排序"
   }, {
-    "value": "离我最近",
+    "value": "distance",
     "label": "离我最近"
   }, {
-    "value": "评价最好",
+    "value": "commentfirst",
     "label": "评价最好"
   }, {
-    "value": "价格最低",
+    "value": "cheapfirst",
     "label": "价格最低"
   }]
 }

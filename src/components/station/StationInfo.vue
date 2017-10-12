@@ -9,23 +9,23 @@
     <mt-tab-container v-model="activeTab">
       <mt-tab-container-item id="detail">
         <mt-cell>
-          <el-row slot="title">
-            <el-col :span="10">
-              <div class="iconWrapper"><img class="stationIcon" :src="stationIcon" /></div>
+          <el-row slot="title" style="display:flex;justify-content:center;align-items:center;">
+            <el-col :span="9" style="margin:1vh 0;">
+              <img class="stationIcon" :src="stationIcon" />
             </el-col>
-            <el-col :span="14" style="margin:3vh 0px;">
-              <el-row style="font-size:1.1em;">
+            <el-col :span="15" style="margin:3vh 0;">
+              <el-row style="font-size:1.2em;">
                 <el-col :span="24">
-                  <span style="vertical-align:text-bottom;">{{ stationInfo.name }}</span>
+                  <span style="vertical-align:text-bottom;">{{ stationInfo.sitename }}</span>
                 </el-col>
               </el-row>
-              <el-row style="margin-top:2vh;font-size:0.8em;">
-                <el-col :span="10">
-                  <el-rate v-model="stationInfo.score" disabled :max="3"></el-rate>
+              <el-row style="margin-top:2vh;">
+                <el-col :span="10" style="margin-top:0.3vh;">
+                  <star-rating :rating="stationInfo.star" :star-size="18" :increment="0.1" :fixed-points="1" :read-only="true" :show-rating="false"></star-rating>
                 </el-col>
-                <el-col :span="12" style="margin-top:0.5vh;">
-                  <div style="white-space:nowrap; overflow:hidden;text-overflow:ellipsis;font-size:0.2em;">
-                    <span>价格：{{ stationInfo.electricity }}；环境：{{ stationInfo.environment }};服务费：{{ stationInfo.serviceCharge }}</span>
+                <el-col :span="14" style="margin-top:0.5vh;">
+                  <div class="ellipsis">
+                    <span style="color:#666666;font-size:0.8em;">价格--环境--服务费--</span>
                   </div>
                 </el-col>
               </el-row>
@@ -44,13 +44,13 @@
                 <td width="50%">
                   <span>
                     <mt-button size="small" type="danger">快</mt-button>
-                    空闲8/共8
+                    &nbsp;空闲&nbsp;{{ stationInfo.fastfreenum }}&nbsp;/&nbsp;共&nbsp;{{ stationInfo.fastpilenum }}
                   </span>
                 </td>
                 <td width="50%">
                   <span>
                     <mt-button size="small" type="danger" style="background-color:#09bd06;">慢</mt-button>
-                    空闲8/共8
+                    &nbsp;空闲&nbsp;{{ stationInfo.slowfreenum }}&nbsp;/&nbsp;共&nbsp;{{ stationInfo.slowpilenum }}
                   </span>
                 </td>
               </tr>
@@ -66,10 +66,10 @@
               </div>
             </el-col>
             <el-col :span="16" style="display:flex;justify-content:center;align-items:center;">
-              <span style="display:inline-block;">{{ stationInfo.address }}</span>
+              <span style="display:inline-block;font-size:0.9em;">{{ stationInfo.position }}</span>
             </el-col>
             <el-col :span="4" style="display:flex;justify-content:center;align-items:center;">
-              <span style="color:#999999" @click="navigate()">导航<img :src="moreIcon" class="moreIcon" /></span>
+              <span style="color:#999999;font-size:0.9em;" @click="toNavigate(stationInfo.position)">导航<img :src="moreIcon" class="moreIcon" /></span>
             </el-col>
           </el-row>
         </mt-cell>
@@ -80,16 +80,8 @@
               <span class="label">充电单价</span>
             </el-col>
             <el-col :span="18">
-              电费：{{ stationInfo.electricity }}；服务费：{{ stationInfo.serviceCharge }}
+              电费：{{ stationInfo.price }}元/度，服务费：{{ stationInfo.servicecharge }}元/度
             </el-col>
-          </el-row>
-        </mt-cell>
-        <mt-cell>
-          <el-row slot="title" style="padding:20px 0;">
-            <el-col :span="6">
-              <span class="label">停车费</span>
-            </el-col>
-            <el-col :span="18">{{ stationInfo.parkingFee }}</el-col>
           </el-row>
         </mt-cell>
         <mt-cell>
@@ -97,15 +89,7 @@
             <el-col :span="6">
               <span class="label">运营公司</span>
             </el-col>
-            <el-col :span="18">{{ stationInfo.company }}</el-col>
-          </el-row>
-        </mt-cell>
-        <mt-cell>
-          <el-row slot="title" style="padding:20px 0;">
-            <el-col :span="6">
-              <span class="label">营业时间</span>
-            </el-col>
-            <el-col :span="18">{{ stationInfo.businessHours }}</el-col>
+            <el-col :span="18">{{ stationInfo.operatorname }}</el-col>
           </el-row>
         </mt-cell>
         <mt-cell>
@@ -113,14 +97,39 @@
             <el-col :span="6">
               <span class="label">服务电话</span>
             </el-col>
-            <el-col :span="18">{{ stationInfo.cellphone }}</el-col>
+            <el-col :span="18">{{ stationInfo.phone }}</el-col>
           </el-row>
         </mt-cell>
         <div class="break"></div>
         <mt-cell>
           <el-row slot="title" style="display:flex;justify-content:flex-start;align-items:center;">
-            <el-col :span="8">
-              <span class="label">网友评论（0）</span>
+            <span class="label" style="padding-left:5px;">网友评论（{{ stationInfo.totalcomment }}）</span>
+            </el-col>
+          </el-row>
+        </mt-cell>
+        <mt-cell v-for="comment in stationInfo.comments" :key="comment.commentid">
+          <el-row slot="title" style="margin:2vh 0;font-size:0.6em;">
+            <el-col :span="4">
+              <img class="avatarIcon" :src="avatarIcon">
+            </el-col>
+            <el-col :span="20">
+              <el-row>
+                <el-col :span="12">
+                  <span style="color:#00a6ca;">{{ comment.nickname }}</span>
+                </el-col>
+                <el-col :span="12">
+                  <span style="color:#b4b5c1;display:flex;justify-content:flex-end;align-items:center;">{{ comment.senddate }}</span>
+                </el-col>
+              </el-row>
+              <el-row style="margin-top:0.8vh;">
+                <el-col :span="4" style="color:#999999;">打分</el-col>
+                <el-col :span="20" style="margin-top:-0.3vh;">
+                  <star-rating :rating="3.5" :star-size="15" :increment="0.1" :fixed-points="1" :read-only="true" :show-rating="false"></star-rating>
+                </el-col>
+              </el-row>
+              <el-row style="margin-top:1vh;">
+                <span style="line-height:1.5em;">{{ comment.content }}</span>
+              </el-row>
             </el-col>
           </el-row>
         </mt-cell>
@@ -149,8 +158,13 @@
 </template>
 
 <script>
+import Vue from 'vue'
+import StarRating from 'vue-star-rating'
 import stationIcon from '@/assets/icon/station/station.png'
 import moreIcon from '@/assets/icon/station/more.svg'
+import avatarIcon from '@/assets/icon/station/avatar.svg'
+
+Vue.component('star-rating', StarRating)
 
 export default {
   name: 'stationInfo',
@@ -160,7 +174,8 @@ export default {
       activeTab: 'detail',
       stationInfo: {},
       stationIcon: stationIcon,
-      moreIcon: moreIcon
+      moreIcon: moreIcon,
+      avatarIcon: avatarIcon
     }
   },
   methods: {
@@ -173,13 +188,18 @@ export default {
         this.activeTab = 'terminal'
       }
     },
-    navigate() {
-      window.location.href = 'http://api.map.baidu.com/direction?origin=latlng:30.679204000000,104.107936000000|name:电子科技大学&destination=四川大学&mode=driving&region=成都&output=html'
+    toNavigate(position) {
+      let url = 'http://api.map.baidu.com/direction?origin=latlng:30.679204000000,104.107936000000|name:电子科技大学&destination='
+      url += 'position'
+      url += '&mode=driving&region=成都&output=html'
+      window.location.href = url
     }
   },
   created() {
-    this.$http.get('/mock/stationInfo.json').then(response => {
-      this.stationInfo = response.body[this.$route.params.id]
+    this.$http.post('/siteinformation/finddetails', {
+      'siteid': this.$route.params.id
+    }).then(response => {
+      this.stationInfo = response.body.data
     }, response => {
       // error callback
     })
@@ -205,11 +225,7 @@ table td {
 }
 
 table tr td:last-child {
-  border-right: 0px;
-}
-
-.iconWrapper {
-  display: inline-block;
+  border-right: 0;
 }
 
 .moreIcon {
@@ -218,13 +234,13 @@ table tr td:last-child {
 }
 
 .stationIcon {
-  width: 40vw;
+  width: 35vw;
   height: auto;
 }
 
 .boltIcon {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   margin-left: 5vw;
   background-color: #33e02f;
   border-radius: 4px;
@@ -268,5 +284,10 @@ table tr td:last-child {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.avatarIcon {
+  width: 10vw;
+  height: auto;
 }
 </style>

@@ -7,7 +7,7 @@
             <td width="5%">
             </td>
             <td width="75%">
-              <el-input placeholder="查找充电站" icon="search" v-model="stationFilter.name" :on-icon-click="stationSearch" v-enter @enter.native="stationSearch"></el-input>
+              <el-input placeholder="查找充电站" icon="search" v-model="stationFilter.sitename" :on-icon-click="stationSearch" v-enter @enter.native="stationSearch"></el-input>
             </td>
             <td width="20%">
               <span @click="changeTab()" style="color:#aaaaaa">{{ tab }}</span>
@@ -25,8 +25,8 @@
             </el-select>
           </el-col>
           <el-col :span="5">
-            <el-select placeholder="电站状态" size="small" v-model="stationFilter.devices">
-              <el-option v-for="op in stationFilterList.devicesOptions" :key="op.value" :label="op.label" :value="op.value">
+            <el-select placeholder="电站状态" size="small" v-model="stationFilter.state">
+              <el-option v-for="op in stationFilterList.stateOptions" :key="op.value" :label="op.label" :value="op.value">
               </el-option>
             </el-select>
           </el-col>
@@ -41,13 +41,13 @@
     </mt-cell>
     <mt-tab-container v-model="activeTab">
       <mt-tab-container-item id="list">
-        <mt-cell v-for="stationInfo in stationInfoList" :key="stationInfo.siteid">
+        <mt-cell v-for="stationInfo in stationInfoList" :key="stationInfo.siteid" @click.native="toStatinInfo(stationInfo.siteid)">
           <el-row slot="title">
-            <el-col :span="8">
-              <div class="iconWrapper"><img class="stationIcon" :src="stationIcon" /></div>
+            <el-col :span="8" style="margin:1vh 0;">
+              <img class="stationIcon" :src="stationIcon" />
             </el-col>
-            <el-col :span="16" style="margin:3vh 0px;">
-              <el-row style="font-size:1.1em;">
+            <el-col :span="16" style="margin:3vh 0;">
+              <el-row style="font-size:1.2em;">
                 <el-col :span="18">
                   <span style="vertical-align:text-bottom;">{{ stationInfo.sitename }}</span>
                 </el-col>
@@ -57,21 +57,21 @@
                 </el-col>
               </el-row>
               <el-row style="margin-top:2vh;font-size:0.8em;">
-                <el-col :span="7" style="margin-top:-0.6vh;">
-                  <el-rate v-model="stationInfo.score" disabled :max="3"></el-rate>
+                <el-col :span="7" style="margin-top:0.3vh;">
+                  <star-rating :rating="3" :star-size="18" :increment="0.1" :fixed-points="1" :read-only="true" :show-rating="false"></star-rating>
                 </el-col>
                 <el-col :span="10">
-                  <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                  <div class="ellipsis">
                     <span>{{ stationInfo.price }}元/度</span>
                   </div>
                 </el-col>
                 <el-col :span="7">
-                  <span style="color:#666666">距您{{ stationInfo.distance }}km</span>
+                  <span style="color:#666666">距您{{ (stationInfo.distance/1000).toFixed(1) }}km</span>
                 </el-col>
               </el-row>
               <el-row style="margin-top:2vh;font-size:0.6em;">
                 <el-col :span="18">
-                  <div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                  <div class="ellipsis">
                     <span>{{ stationInfo.position }}</span>
                   </div>
                 </el-col>
@@ -87,9 +87,7 @@
         </mt-cell>
       </mt-tab-container-item>
       <mt-tab-container-item id="map">
-        <baidu-map class="map" :scroll-wheel-zoom='true'>
-          <!-- <bm-driving start='电子科技大学' end='四川大学' :auto-viewport='true'></bm-driving> -->
-        </baidu-map>
+        <navigation :positionList="positionList"></navigation>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -97,37 +95,90 @@
 
 <script>
 import Vue from 'vue'
-import BaiduMap from 'vue-baidu-map'
+import StarRating from 'vue-star-rating'
+import navigation from './Navigation'
 import stationIcon from '@/assets/icon/station/station.png'
 
-Vue.use(BaiduMap, {
-  ak: 'fu6xOFGxYhEiIGWQIXk2CATSoYtS14Hg'
-})
+Vue.component('star-rating', StarRating)
 
 export default {
   name: 'nearbyStation',
   data() {
     return {
       clientWidth: '',
+      tab: '地图',
+      activeTab: 'list',
       locationOptions: [],
       locationProps: {
         value: 'label'
       },
-      tab: '地图',
-      activeTab: 'list',
-      stationInfoList: {},
+      location: [],
       stationFilterList: {},
       stationFilter: {
-        'name': '',
         'location': [],
         'distance': '',
-        'devices': '',
-        'sort': ''
+        'state': '',
+        'sort': '',
+        'sitename': ''
       },
-      stationIcon: stationIcon
+      stationParams: {
+        'province': '四川省',
+        'city': '成都市',
+        'district': '',
+        'sitename': '',
+        'state': '',
+        'requesttime': new Date().toString().slice(16, 21),
+        'distance': 0,
+        'commentfirst': 0,
+        'cheapfirst': 0,
+        'multiple': 0,
+        'pageNumber': 1,
+        'pageSize': 10
+      },
+      stationInfoList: {},
+      stationIcon: stationIcon,
+      totalPages: '',
+      positionList: []
     }
   },
   methods: {
+    stationSearch(ev) {
+      this.stationParams.sitename = this.stationFilter.sitename
+      if (this.stationFilter.location.length !== 0) {
+        this.stationParams.province = this.stationFilter.location[0]
+        this.stationParams.city = this.stationFilter.location[1]
+        this.stationParams.district = this.stationFilter.location[2]
+      }
+      if (this.stationFilter.distance !== null || this.stationFilter.distance !== undefined || this.stationFilter.distance !== '') {
+        this.stationParams.distance = this.stationFilter.distance
+      }
+      if (this.stationFilter.state !== null || this.stationFilter.state !== undefined || this.stationFilter.state !== '') {
+        this.stationParams.state = this.stationFilter.state
+      }
+      if (this.stationFilter.sort !== null || this.stationFilter.sort !== undefined || this.stationFilter.sort !== '') {
+        if (this.stationFilter.sort === 'multiple') {
+          this.stationParams.multiple = 1
+        } else if (this.stationFilter.sort === 'distance') {
+          this.stationParams.distance = 1
+        } else if (this.stationFilter.sort === 'commentfirst') {
+          this.stationParams.commentfirst = 1
+        } else if (this.stationFilter.sort === 'cheapfirst') {
+          this.stationParams.cheapfirst = 1
+        }
+      }
+      this.$http.post('/siteinformation/find', this.stationParams).then(response => {
+        this.stationInfoList = response.body.pageData
+        this.totalPages = response.body.totalPages
+        for (let stationInfo of this.stationInfoList) {
+          this.positionList.push({ lng: stationInfo.longitude, lat: stationInfo.latitude })
+        }
+      }, response => {
+      })
+    },
+    changeTab() {
+      this.tab = (this.tab === '地图') ? '列表' : '地图'
+      this.activeTab = (this.activeTab === 'list') ? 'map' : 'list'
+    },
     toStationInfo(index) {
       this.$router.push({
         name: 'stationInfo',
@@ -135,13 +186,6 @@ export default {
           id: index
         }
       })
-    },
-    stationSearch(ev) {
-      console.log(this.stationFilter.name)
-    },
-    changeTab() {
-      this.tab = (this.tab === '地图') ? '列表' : '地图'
-      this.activeTab = (this.activeTab === 'list') ? 'map' : 'list'
     }
   },
   created() {
@@ -153,15 +197,23 @@ export default {
     this.$http.post('/siteinformation/find', {
       'province': '四川省',
       'city': '成都市',
+      'district': '',
+      'sitename': '',
+      'state': '',
       'requesttime': new Date().toString().slice(16, 21),
       'distance': 0,
+      'commentfirst': 0,
+      'cheapfirst': 0,
+      'multiple': 0,
       'pageNumber': 1,
       'pageSize': 10
     }).then(response => {
-      console.log(response.body)
       this.stationInfoList = response.body.pageData
+      this.totalPages = response.body.totalPages
+      for (let stationInfo of this.stationInfoList) {
+        this.positionList.push({ lng: stationInfo.longitude, lat: stationInfo.latitude })
+      }
     }, response => {
-      console.log('error!')
     })
     this.$http.get('static/json/stationFilter.json').then(response => {
       this.stationFilterList = response.body
@@ -182,6 +234,9 @@ export default {
       unbind: function(el, binding, vnode) {
       }
     }
+  },
+  components: {
+    navigation
   }
 }
 </script>
@@ -191,10 +246,6 @@ export default {
 .filterIcon {
   width: 18px;
   height: 18px;
-}
-
-.iconWrapper {
-  display: inline-block;
 }
 
 .stationIcon {
@@ -232,8 +283,9 @@ export default {
   padding: 3px;
 }
 
-.map {
-  width: 100%;
-  height: 100%;
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
