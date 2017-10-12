@@ -27,8 +27,6 @@
         router.push({path: '/payment/charging', params: {pileid: this.pileId}})
       }
     }
-  },
-  created: {
   }
 </script>
 <style>

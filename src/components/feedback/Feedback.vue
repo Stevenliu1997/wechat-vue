@@ -32,12 +32,14 @@
         datamodel: {
           content: null,
           phone: null,
-          sendtime: null
+          sendtime: null,
+          account: ''
         }
       }
     },
     methods: {
       feedback () {
+        this.datamodel.account = localStorage.getItem('account')
         this.datamodel.sendtime = new Date().getFullYear() + '-' + new Date().getMonth() + '-' + new Date().getDate() + ' ' + new Date().toLocaleTimeString('en-GB')
         this.$http.post('/suggestion/addnew', this.datamodel).then(response => {
           if (response.code === '00') {
