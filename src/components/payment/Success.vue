@@ -49,7 +49,7 @@
 <style>
   #text{
     padding-top: 30px;
-    padding-left: 25%;
+    padding-left: 20%;
   }
   li{
     padding-left: 10px;
@@ -57,14 +57,14 @@
     list-style-type: none;
   }
   #star{
-    padding-left: 15%;
+    padding-left: 13%;
   }
   #tags{
     padding-top: 10px;
   }
   #comments{
     padding-top: 50px;
-    padding-left: 15%;
+    padding-left: 13%;
   }
   #message{
     width: 250px;
@@ -73,6 +73,6 @@
   }
   #bt{
     padding-top: 20px;
-    padding-left: 35%;
+    padding-left: 28%;
   }
 </style>

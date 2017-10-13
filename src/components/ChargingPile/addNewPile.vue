@@ -1,11 +1,12 @@
 <template>
-
 </template>
 <script type="text/javascript">
   import wx from 'weixin-js-sdk'
   import router from './../../router/index.js'
   export default ({
-    data () {},
+    data () {
+      return {}
+    },
     created: function () {
       wx.ready(function () {
         // 点击按钮扫描二维码
@@ -13,7 +14,10 @@
           needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
           scanType: ['qrCode', 'barCode'], // 可以指定扫二维码还是一维码，默认二者都有
           success: function (res) {
+            alert(location.href.split('#')[0])
             let result = res.resultStr // 当needResult 为 1 时，扫码返回的结果
+            alert(result)
+            alert('haha')
             router.push({path: '/ChargingPile/setInformation', params: {info: result}})
           },
           cancel: function () {

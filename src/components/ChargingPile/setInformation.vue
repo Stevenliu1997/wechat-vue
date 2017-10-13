@@ -10,7 +10,7 @@
         <tr>
           <td width="50%">
             <ul>
-              <li><img src="./../../assets/ChargingPile/26-512.png" width="96" height="96"/></li>
+              <li><img src="./../../assets/ChargingPile/e-gas-station-2151404_960_720.png" width="96" height="96"/></li>
             </ul>
           </td>
           <td><ul>

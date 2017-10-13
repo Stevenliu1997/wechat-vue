@@ -32,7 +32,7 @@
 <style>
   p {
     padding-top: 100px;
-    padding-left: 30%;
+    padding-left: 20%;
   }
 
   input {
@@ -43,11 +43,12 @@
   }
 
   #div-2 {
-    padding-left: 25%;
+    padding-top: 10px;
+    padding-left: 16%;
   }
 
   #div-3 {
-    padding-left: 40%;
-    padding-top: 20px;
+    padding-left: 28%;
+    padding-top: 30px;
   }
 </style>

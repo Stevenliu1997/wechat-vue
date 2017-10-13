@@ -27,14 +27,14 @@
   }
   #text{
     padding-top: 100px;
-    padding-left: 30%;
+    padding-left: 24%;
   }
   #bt-1{
     padding-top: 20px;
-    padding-left: 35%;
+    padding-left: 27%;
    }
   #bt-2{
-    padding-top: 20px;
-    padding-left: 25%;
+    padding-top: 30px;
+    padding-left: 20%;
   }
 </style>

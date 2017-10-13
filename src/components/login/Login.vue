@@ -65,7 +65,7 @@
     },
     created: function () {
       wx.ready(function () {
-        console.info('wx.ready come in!')
+//        console.info('wx.ready come in!')
         wx.getLocation({
           type: 'wgs84',
           success: function (res) {

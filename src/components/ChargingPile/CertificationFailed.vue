@@ -7,7 +7,6 @@
       </mt-header>
     </div>
     <div id="body">
-      <!--<img src="./../../assets/ChargingPile/raw_1503022745.png" height="200" width="200">-->
       <i class="fa fa-exclamation fa-3x" aria-hidden="true" id="exclamation"></i>
       <h1>对不起，你没有这个权限</h1>
     </div>
