@@ -29,11 +29,6 @@
                   </div>
                 </el-col>
               </el-row>
-              <el-row style="margin-top:2vh;font-size:0.6em;">
-                <el-col :span="5">
-                  <span>{{ stationInfo.stationType }}</span>
-                </el-col>
-              </el-row>
             </el-col>
           </el-row>
         </mt-cell>
@@ -69,7 +64,7 @@
               <span style="display:inline-block;font-size:0.9em;">{{ stationInfo.position }}</span>
             </el-col>
             <el-col :span="4" style="display:flex;justify-content:center;align-items:center;">
-              <span style="color:#999999;font-size:0.9em;" @click="toNavigate(stationInfo.position)">导航<img :src="moreIcon" class="moreIcon" /></span>
+              <span style="color:#999999;font-size:0.9em;" @click="toNavigate(start, stationInfo.position)">导航<img :src="moreIcon" class="moreIcon" /></span>
             </el-col>
           </el-row>
         </mt-cell>
@@ -134,17 +129,17 @@
           </el-row>
         </mt-cell>
       </mt-tab-container-item>
-      <mt-tab-container-item id="terminal">
-        <mt-cell v-for="(terminal,index) in stationInfo.terminals" :key="terminal.id">
+      <mt-tab-container-item id="pile">
+        <mt-cell v-for="pile in pileInfo" :key="pile.siteid">
           <el-row slot="title" style="display:flex;justify-content:center;align-items:center;">
             <el-col :span="5">
-              <button class="numberButton">{{ terminal.name }}</button>
+              <button class="numberButton"></button>
             </el-col>
             <el-col :span="10" :offset="1" style="font-size:0.8em;">
-              <p class="ellipsis">编号：{{ terminal.id }}</p>
-              <p class="ellipsis">终端类型：{{ terminal.type }}</p>
-              <p class="ellipsis">充电接口：{{ terminal.interface }}</p>
-              <p class="ellipsis">车位号：{{ terminal.parkingNum }}</p>
+              <p class="ellipsis">设备编号：{{ pile.pileid }}</p>
+              <p class="ellipsis">设备型号：{{ pile.type }}</p>
+              <p class="ellipsis">接口标准：{{ pile.interfacestandard }}</p>
+              <p class="ellipsis">车位编号：{{ pile.number[0] }}</p>
             </el-col>
             <el-col :span="7" :offset="1 ">
               <mt-button size="small" type="primary">空闲</mt-button>
@@ -173,6 +168,7 @@ export default {
       isplain: true,
       activeTab: 'detail',
       stationInfo: {},
+      pileInfo: [],
       stationIcon: stationIcon,
       moreIcon: moreIcon,
       avatarIcon: avatarIcon
@@ -184,22 +180,34 @@ export default {
         this.isplain = (this.activeTab === 'detail') ? this.isplain : !this.isplain
         this.activeTab = 'detail'
       } else if (index === 2) {
-        this.isplain = (this.activeTab === 'terminal') ? this.isplain : !this.isplain
-        this.activeTab = 'terminal'
+        this.isplain = (this.activeTab === 'pile') ? this.isplain : !this.isplain
+        this.activeTab = 'pile'
       }
     },
-    toNavigate(position) {
+    toNavigate(start, end) {
       let url = 'http://api.map.baidu.com/direction?origin=latlng:30.679204000000,104.107936000000|name:电子科技大学&destination='
-      url += 'position'
+      url += end
       url += '&mode=driving&region=成都&output=html'
       window.location.href = url
     }
   },
   created() {
     this.$http.post('/siteinformation/finddetails', {
-      'siteid': this.$route.params.id
+      'siteid': this.$route.params.id,
+      'requesttime': new Date().toString().slice(16, 21),
+      'pageNumber': 1,
+      'pageSize': 20
     }).then(response => {
       this.stationInfo = response.body.data
+    }, response => {
+      // error callback
+    })
+    this.$http.post('/siteinformation/findpile', {
+      'siteid': this.$route.params.id,
+      'pageNumber': 1,
+      'pageSize': 20
+    }).then(response => {
+      this.pileInfo = response.body.pageData
     }, response => {
       // error callback
     })
