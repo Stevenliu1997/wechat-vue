@@ -7,14 +7,14 @@
       <div class="mt-button">
         <mt-field label="验证码" placeholder="输入验证码" class="button" v-model="datamodel.verificationCode"></mt-field>
         <button v-on:click="getCode" class="button">
-          <span v-if="sendMsgDisabled">{{time+'秒后获取'}}</span>
+          <span v-if="sendMsgDisabled">{{time + '秒后获取'}}</span>
           <span v-if="!sendMsgDisabled">获取验证码</span>
         </button>
       </div>
       <mt-button type="primary" v-on:click="sendCode">确认登陆</mt-button>
     </div>
     <div>
-      <p>点击登录，即表示阅读并同意 <a href="/url">《充电服务条款》</a> </p>
+      <p>点击登录，即表示阅读并同意 <a href="/url">《充电服务条款》</a></p>
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@
   import wx from 'weixin-js-sdk'
   import { Button } from 'mint-ui'
   import MtButton from '../../../node_modules/mint-ui/packages/button/src/button'
+
   Vue.component(Button.name, Button)
 
   export default {
@@ -46,7 +47,7 @@
         let me = this
         me.sendMsgDisabled = true
         this.$http.post('/getVerificationCode', this.phoneNum)
-        let interval = window.setInterval(function() {
+        let interval = window.setInterval(function () {
           if ((me.time--) <= 0) {
             me.time = 60
             me.sendMsgDisabled = false
@@ -64,6 +65,20 @@
       }
     },
     created: function () {
+      this.$http.post('http://101.37.35.17:8888/wconfig',
+        {dataType: 'json'},
+        {contentType: 'application/json'},
+        {header: {'Access-Control-Allow-Origin': '*'}},
+        {url: 'http://833f5432.ngrok.io/#/login'}).then(function (data) {
+          wx.config({
+            debug: true,
+            appId: data.data.appId,
+            timestamp: data.data.timestamp,
+            nonceStr: data.data.nonceStr,
+            signature: data.data.signature,
+            jsApiList: ['getLocation', 'scanQRCode', 'chooseWXPay']
+          })
+        })
       wx.ready(function () {
 //        console.info('wx.ready come in!')
         wx.getLocation({
@@ -88,9 +103,11 @@
     margin-bottom: 8px;
     border-radius: 15px;
   }
+
   .mid-section {
     margin-top: 50px;
   }
+
   .button {
     display: inline-block;
     font-family: ".SF NS Display";

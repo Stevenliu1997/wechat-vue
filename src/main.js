@@ -12,6 +12,7 @@ import 'font-awesome/css/font-awesome.css'
 import VueCookie from 'vue-cookie'
 import wx from 'weixin-js-sdk'
 import Vuex from 'vuex'
+// import $ from 'jquery'
 
 Vue.config.productionTip = false
 
@@ -21,6 +22,7 @@ Vue.use(MintUI)
 Vue.use(ElementUI)
 Vue.use(VueCookie)
 Vue.use(wx)
+// Vue.use($)
 
 /* eslint-disable no-new */
 new Vue({

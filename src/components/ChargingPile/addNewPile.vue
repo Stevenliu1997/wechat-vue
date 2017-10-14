@@ -3,11 +3,27 @@
 <script type="text/javascript">
   import wx from 'weixin-js-sdk'
   import router from './../../router/index.js'
+
   export default ({
     data () {
       return {}
     },
     created: function () {
+      this.$http.post('http://101.37.35.17:8888/wconfig',
+        {type: 'post'},
+        {dataType: 'json'},
+        {contentType: 'application/json'},
+        {header: {'Access-Control-Allow-Origin': '*'}},
+        {data: {'url': location.href.split('#')[0]}}).then(function (data) {
+          wx.config({
+            debug: true,
+            appId: data.data.appId,
+            timestamp: data.data.timestamp,
+            nonceStr: data.data.nonceStr,
+            signature: data.data.signature,
+            jsApiList: ['getLocation', 'scanQRCode', 'chooseWXPay']
+          })
+        })
       wx.ready(function () {
         // 点击按钮扫描二维码
         wx.scanQRCode({
