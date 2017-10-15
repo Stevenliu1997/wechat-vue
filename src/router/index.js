@@ -3,7 +3,6 @@ import Router from 'vue-router'
 import CertificationFailed from '@/components/ChargingPile/CertificationFailed'
 import ChargingPileInfo from '@/components/ChargingPile/ChargingPileInfo'
 import ChargingPileDetail from '@/components/ChargingPile/ChargingPileDetail'
-import addNewPile from '@/components/ChargingPile/addNewPile'
 import SelectChargingMethod from '@/components/payment/SelectChargingMethod'
 import setInformation from '@/components/ChargingPile/setInformation'
 import ChargingByScan from '@/components/payment/ChargingByScan'
@@ -204,11 +203,6 @@ export default new Router({
     path: '/ChargingPile/ChargingPileDetail',
     name: 'ChargingPileDetail',
     component: ChargingPileDetail
-  },
-  {
-    path: '/ChargingPile/addNewPile',
-    name: 'addNewPile',
-    component: addNewPile
   },
   {
     path: '/nearbyStation',

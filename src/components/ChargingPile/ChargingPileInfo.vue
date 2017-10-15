@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     addNewPile: function() {
-      this.$http.post('http://101.37.35.17:8888/wconfig', 'http://3297449167.tunnel.qydev.com/ChargingPile/ChargingPileInfo').then(function(data) {
+      this.$http.post('http://101.37.35.17:8888/wconfig', 'http://3297449167.tunnel.qydev.com/#/ChargingPile/ChargingPileInfo').then(function(data) {
         wx.config({
           debug: true,
           appId: data.data.appId,
