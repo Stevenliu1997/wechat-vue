@@ -1,14 +1,14 @@
 <template>
   <div>
-    <div>
+    <div style="display: flex; justify-content: center; align-items: center; padding-top: 30%">
       <p>请输入充电桩编号</p>
     </div>
 
-    <div id="div-2">
+    <div style="display: flex; justify-content: center; align-items: center; padding-top: 5%">
       <input type="text" placeholder="单行输入" v-model="pileId"/>
     </div>
 
-    <div id="div-3" >
+    <div style="display: flex; justify-content: center; align-items: center; padding-top: 10%">
       <mt-button v-on:click="handIn">确认</mt-button>
     </div>
 
@@ -30,25 +30,10 @@
   }
 </script>
 <style>
-  p {
-    padding-top: 100px;
-    padding-left: 20%;
-  }
-
   input {
     border: 1px solid;
     border-radius: 10px;
     width: 200px;
     height: 40px;
-  }
-
-  #div-2 {
-    padding-top: 10px;
-    padding-left: 16%;
-  }
-
-  #div-3 {
-    padding-left: 28%;
-    padding-top: 30px;
   }
 </style>

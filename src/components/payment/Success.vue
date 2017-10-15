@@ -1,6 +1,6 @@
 <template>
   <div id="all">
-    <div id="text"><h1>支付成功!</h1></div>
+    <div style="display: flex; justify-content: center; align-items: center;"><h1>支付成功!</h1></div>
     <div id="star">
       <star-rating v-model="rating"></star-rating>
     </div>
@@ -14,7 +14,7 @@
     <div id="comments">
       <textarea id="message" placeholder="多行输入" v-model="textMessage"></textarea>
     </div>
-    <div id="bt" v-on:click="backToHome">
+    <div style="display: flex; justify-content: center; align-items: center; padding-top: 5%" v-on:click="backToHome">
       <mt-button>提交评论</mt-button>
     </div>
   </div>
@@ -47,10 +47,6 @@
   }
 </script>
 <style>
-  #text{
-    padding-top: 30px;
-    padding-left: 20%;
-  }
   li{
     padding-left: 10px;
     float: left;
@@ -64,15 +60,11 @@
   }
   #comments{
     padding-top: 50px;
-    padding-left: 13%;
+    padding-left: 18%;
   }
   #message{
     width: 250px;
     height: 100px;
     border: 2px solid;
-  }
-  #bt{
-    padding-top: 20px;
-    padding-left: 28%;
   }
 </style>

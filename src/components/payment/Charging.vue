@@ -6,7 +6,7 @@
     <mt-cell title="用电量" v-model="usedVoltage"></mt-cell>
     <mt-cell title="总价" v-model="totalPrice"></mt-cell>
     <div v-show="show">订单编号: {{this.orderId}}</div>
-    <div id="payment-button">
+    <div style="display: flex; justify-content: center; align-items: center;">
       <el-button type="primary" @click="show = !show">确认支付</el-button>
     </div>
     <div style="display: flex; margin-top: 20px; height: 100px;">
@@ -102,24 +102,15 @@
 <style>
   #coupon, #wallet, #WeChat {
     padding-top: 20px;
-    padding-left: 0px;
   }
-
-  #payment-button {
-    padding-top: 50px;
-    padding-left: 28%;
-  }
-
   .transition-box {
-    /*margin-bottom: 10px;*/
     width: 100%;
     height: 250px;
     border-radius: 4px;
     background-color: white;
     text-align: center;
     color: black;
-    /*padding: 20px 20px;*/
+    padding: 20px 20px;
     box-sizing: border-box;
-    margin-right: 140px;
   }
 </style>
