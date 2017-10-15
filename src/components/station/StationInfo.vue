@@ -138,7 +138,7 @@
             <el-col :span="10" :offset="1" style="font-size:0.8em;">
               <p class="ellipsis">设备编号：{{ pile.pileid }}</p>
               <p class="ellipsis">设备型号：{{ pile.type }}</p>
-              <p class="ellipsis">接口标准：{{ pile.interfacestandard }}</p>
+              <p class="ellipsis">接口标准：{{ pile.interfacestatard }}</p>
               <p class="ellipsis">车位编号：{{ pile.number[0] }}</p>
             </el-col>
             <el-col :span="7" :offset="1 ">
