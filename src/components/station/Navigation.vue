@@ -1,6 +1,6 @@
 <template>
   <div>
-    <baidu-map class='map' :scroll-wheel-zoom='true' center="成都" :zoom="15">
+    <baidu-map class='map' :scroll-wheel-zoom='true' center="成都" :zoom="14">
       <!-- <bm-marker :position="{lng: 116.404, lat: 39.915}"></bm-marker> -->
       <bm-marker v-for="position in positionList" :key="position" :position="position"></bm-marker>"></bm-marker>
     </baidu-map>

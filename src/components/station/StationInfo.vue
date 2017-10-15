@@ -64,7 +64,7 @@
               <span style="display:inline-block;font-size:0.9em;">{{ stationInfo.position }}</span>
             </el-col>
             <el-col :span="4" style="display:flex;justify-content:center;align-items:center;">
-              <span style="color:#999999;font-size:0.9em;" @click="toNavigate(start, stationInfo.position)">导航<img :src="moreIcon" class="moreIcon" /></span>
+              <span style="color:#999999;font-size:0.9em;" @click="toNavigate(stationInfo.position)">导航<img :src="moreIcon" class="moreIcon" /></span>
             </el-col>
           </el-row>
         </mt-cell>
@@ -138,7 +138,7 @@
             <el-col :span="10" :offset="1" style="font-size:0.8em;">
               <p class="ellipsis">设备编号：{{ pile.pileid }}</p>
               <p class="ellipsis">设备型号：{{ pile.type }}</p>
-              <p class="ellipsis">接口标准：{{ pile.interfacestandard }}</p>
+              <p class="ellipsis">接口标准：{{ pile.interfacestatard }}</p>
               <p class="ellipsis">车位编号：{{ pile.number[0] }}</p>
             </el-col>
             <el-col :span="7" :offset="1 ">
@@ -184,7 +184,7 @@ export default {
         this.activeTab = 'pile'
       }
     },
-    toNavigate(start, end) {
+    toNavigate(end) {
       let url = 'http://api.map.baidu.com/direction?origin=latlng:30.679204000000,104.107936000000|name:电子科技大学&destination='
       url += end
       url += '&mode=driving&region=成都&output=html'

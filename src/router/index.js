@@ -65,175 +65,175 @@ const carsinfo = () =>
   import('@/components/infomation/carsinfo')
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      redirect: '/login'
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/infomation',
-      name: 'Infomation',
-      component: Infomation
-    },
-    {
-      path: '/infomation/nickname',
-      name: 'nickname',
-      component: nickname
-    },
-    {
-      path: '/infomation/realname',
-      name: 'realname',
-      component: realname
-    },
-    {
-      path: '/infomation/carsinfo',
-      name: 'carsinfo',
-      component: carsinfo
-    },
-    {
-      path: '/self',
-      name: 'Self',
-      component: Self
-    },
-    {
-      path: '/recharge/GetRecharge',
-      name: 'GetRecharge',
-      component: GetRecharge
-    },
-    {
-      path: '/Ticket',
-      name: 'Ticket',
-      component: Ticket
-    },
-    {
-      path: '/receipt/Receipt',
-      name: 'Receipt',
-      component: Receipt
-    },
-    {
-      path: '/receipt/ReceiptHistory',
-      name: 'ReceiptHistory',
-      component: ReceiptHistory
-    },
-    {
-      path: '/recharge/Recharge',
-      name: 'Recharge',
-      component: Recharge
-    },
-    {
-      path: '/ticket/GetTicket',
-      name: 'GetTicket',
-      component: GetTicket
-    },
-    {
-      path: '/modifyPwd',
-      name: 'modifyPwd',
-      component: ModifyPwd
-    },
-    {
-      path: '/orderlist',
-      name: 'OrderList',
-      component: OrderList
-    },
-    {
-      path: '/feedback',
-      name: 'Feedback',
-      component: Feedback
-    },
-    {
-      path: '/wallet',
-      name: '/Wallet',
-      component: Wallet
-    },
-    {
-      path: '/setting',
-      name: 'Setting',
-      component: Setting
-    },
-    {
-      path: '/payment/homepage',
-      name: 'PaymentHomepage',
-      component: PaymentHomepage
-    },
-    {
-      path: '/payment/input',
-      name: 'PaymentInput',
-      component: PaymentInput
-    },
-    {
-      path: '/payment/charging',
-      name: 'Charging',
-      component: Charging
-    },
-    {
-      path: '/payment/success',
-      name: 'Success',
-      component: Success
-    },
-    {
-      path: '/payment/SelectChargingMethod',
-      name: 'SelectChargingMethod',
-      component: SelectChargingMethod
-    },
-    {
-      path: '/payment/ChargingByScan',
-      name: 'ChargingByScan',
-      component: ChargingByScan
-    },
-    {
-      path: '/ChargingPile/CertificationFailed',
-      name: 'CertificationFailed',
-      component: CertificationFailed
-    },
-    {
-      path: '/ChargingPile/setInformation',
-      name: 'setInformation',
-      component: setInformation
-    },
-    {
-      path: '/ChargingPile/ChargingPileInfo',
-      name: 'ChargingPileInfo',
-      component: ChargingPileInfo
-    },
-    {
-      path: '/ChargingPile/ChargingPileDetail',
-      name: 'ChargingPileDetail',
-      component: ChargingPileDetail
-    },
-    {
-      path: '/ChargingPile/addNewPile',
-      name: 'addNewPile',
-      component: addNewPile
-    },
-    {
-      path: '/nearbyStation',
-      name: 'nearbyStation',
-      component: NearbyStation
-    },
-    {
-      path: '/chooseCity',
-      name: 'chooseCity',
-      component: ChooseCity
-    },
-    {
-      path: '/stationInfo/:id',
-      name: 'stationInfo',
-      component: StationInfo
-    },
-    {
-      path: '/terminalInfo/:id/:index',
-      name: 'terminalInfo',
-      component: TerminalInfo
-    },
-    {
-      path: '/chargingMethod',
-      name: 'chargingMethod',
-      component: ChargingMethod
-    }
+  mode: 'history',
+  routes: [{
+    path: '/',
+    redirect: '/login'
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/infomation',
+    name: 'Infomation',
+    component: Infomation
+  },
+  {
+    path: '/infomation/nickname',
+    name: 'nickname',
+    component: nickname
+  },
+  {
+    path: '/infomation/realname',
+    name: 'realname',
+    component: realname
+  },
+  {
+    path: '/infomation/carsinfo',
+    name: 'carsinfo',
+    component: carsinfo
+  },
+  {
+    path: '/self',
+    name: 'Self',
+    component: Self
+  },
+  {
+    path: '/recharge/GetRecharge',
+    name: 'GetRecharge',
+    component: GetRecharge
+  },
+  {
+    path: '/Ticket',
+    name: 'Ticket',
+    component: Ticket
+  },
+  {
+    path: '/receipt/Receipt',
+    name: 'Receipt',
+    component: Receipt
+  },
+  {
+    path: '/receipt/ReceiptHistory',
+    name: 'ReceiptHistory',
+    component: ReceiptHistory
+  },
+  {
+    path: '/recharge/Recharge',
+    name: 'Recharge',
+    component: Recharge
+  },
+  {
+    path: '/ticket/GetTicket',
+    name: 'GetTicket',
+    component: GetTicket
+  },
+  {
+    path: '/modifyPwd',
+    name: 'modifyPwd',
+    component: ModifyPwd
+  },
+  {
+    path: '/orderlist',
+    name: 'OrderList',
+    component: OrderList
+  },
+  {
+    path: '/feedback',
+    name: 'Feedback',
+    component: Feedback
+  },
+  {
+    path: '/wallet',
+    name: '/Wallet',
+    component: Wallet
+  },
+  {
+    path: '/setting',
+    name: 'Setting',
+    component: Setting
+  },
+  {
+    path: '/payment/homepage',
+    name: 'PaymentHomepage',
+    component: PaymentHomepage
+  },
+  {
+    path: '/payment/input',
+    name: 'PaymentInput',
+    component: PaymentInput
+  },
+  {
+    path: '/payment/charging',
+    name: 'Charging',
+    component: Charging
+  },
+  {
+    path: '/payment/success',
+    name: 'Success',
+    component: Success
+  },
+  {
+    path: '/payment/SelectChargingMethod',
+    name: 'SelectChargingMethod',
+    component: SelectChargingMethod
+  },
+  {
+    path: '/payment/ChargingByScan',
+    name: 'ChargingByScan',
+    component: ChargingByScan
+  },
+  {
+    path: '/ChargingPile/CertificationFailed',
+    name: 'CertificationFailed',
+    component: CertificationFailed
+  },
+  {
+    path: '/ChargingPile/setInformation',
+    name: 'setInformation',
+    component: setInformation
+  },
+  {
+    path: '/ChargingPile/ChargingPileInfo',
+    name: 'ChargingPileInfo',
+    component: ChargingPileInfo
+  },
+  {
+    path: '/ChargingPile/ChargingPileDetail',
+    name: 'ChargingPileDetail',
+    component: ChargingPileDetail
+  },
+  {
+    path: '/ChargingPile/addNewPile',
+    name: 'addNewPile',
+    component: addNewPile
+  },
+  {
+    path: '/nearbyStation',
+    name: 'nearbyStation',
+    component: NearbyStation
+  },
+  {
+    path: '/chooseCity',
+    name: 'chooseCity',
+    component: ChooseCity
+  },
+  {
+    path: '/stationInfo/:id',
+    name: 'stationInfo',
+    component: StationInfo
+  },
+  {
+    path: '/terminalInfo/:id/:index',
+    name: 'terminalInfo',
+    component: TerminalInfo
+  },
+  {
+    path: '/chargingMethod',
+    name: 'chargingMethod',
+    component: ChargingMethod
+  }
   ]
 })

@@ -12,9 +12,9 @@
       <div class="pt-8vh">
         <img v-bind:src="treasure.headImg" class="left-icon">
       </div>
-      <div>
+      <router-link to="/infomation" tag="div">
         {{treasure.nickName}}
-      </div>
+      </router-link>
     </div>
 
     <div>

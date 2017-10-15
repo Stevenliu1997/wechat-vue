@@ -7,7 +7,7 @@
             <td width='5%'>
             </td>
             <td width='75%'>
-              <el-input placeholder='查找充电站' icon='search' v-model='stationFilter.sitename' :on-icon-click='stationSearch' v-enter @enter.native='stationSearch'></el-input>
+              <el-input placeholder='查找充电站' icon='search' v-model='stationFilter.sitename' :on-icon-click='search'></el-input>
             </td>
             <td width='20%'>
               <span @click='changeTab()' style='color:#aaaaaa'>{{ tab }}</span>
@@ -16,22 +16,22 @@
         </table>
         <el-row :gutter='5' style='padding:1vh;display:flex;justify-content:center;align-items:center;'>
           <el-col :span='6'>
-            <el-cascader :options='locationOptions' :show-all-levels='false' :props='locationProps' placeholder='位置' size='small' v-model='stationFilter.location' @change='stationSearch'></el-cascader>
+            <el-cascader :options='locationOptions' :show-all-levels='false' :props='locationProps' placeholder='位置' size='small' v-model='stationFilter.location' @change='filter'></el-cascader>
           </el-col>
           <el-col :span='6'>
-            <el-select placeholder='距离' size='small' v-model='stationFilter.distance' @change='stationSearch'>
+            <el-select placeholder='距离' size='small' v-model='stationFilter.distance' @change='filter'>
               <el-option v-for='op in stationFilterList.distanceOptions' :key='op.value' :label='op.label' :value='op.value'>
               </el-option>
             </el-select>
           </el-col>
           <el-col :span='6'>
-            <el-select placeholder='状态' size='small' v-model='stationFilter.state' @change='stationSearch'>
+            <el-select placeholder='状态' size='small' v-model='stationFilter.state' @change='filter'>
               <el-option v-for='op in stationFilterList.stateOptions' :key='op.value' :label='op.label' :value='op.value'>
               </el-option>
             </el-select>
           </el-col>
           <el-col :span='6'>
-            <el-select placeholder='排序' size='small' v-model='stationFilter.sort' @change='stationSearch'>
+            <el-select placeholder='排序' size='small' v-model='stationFilter.sort' @change='filter'>
               <el-option v-for='op in stationFilterList.sortOptions' :key='op.value' :label='op.label' :value='op.value'>
               </el-option>
             </el-select>
@@ -143,7 +143,29 @@ export default {
     }
   },
   methods: {
-    stationSearch(ev) {
+    search(ev) {
+      this.stationParams.province = '四川省'
+      this.stationParams.city = '成都市'
+      this.stationParams.district = ''
+      this.stationParams.sitename = this.stationFilter.sitename
+      this.stationParams.state = ''
+      this.stationParams.requesttime = new Date().toString().slice(16, 21)
+      this.stationParams.distance = 0
+      this.stationParams.commentfirst = 0
+      this.stationParams.cheapfirst = 0
+      this.stationParams.multiple = 0
+      this.stationParams.pageNumber = 1
+      this.stationParams.pageSize = 10
+      this.$http.post('/siteinformation/find', this.stationParams).then(response => {
+        this.totalPages = response.body.totalPages
+        this.stationInfoList = response.body.pageData
+        for (let stationInfo of this.stationInfoList) {
+          this.positionList.push({ lng: stationInfo.longitude, lat: stationInfo.latitude })
+        }
+      }, response => {
+      })
+    },
+    filter(ev) {
       this.stationParams.sitename = this.stationFilter.sitename
       if (this.stationFilter.location.length !== 0) {
         this.stationParams.province = this.stationFilter.location[0]
@@ -172,7 +194,7 @@ export default {
       }
       this.$http.post('/siteinformation/find', this.stationParams).then(response => {
         this.totalPages = response.body.totalPages
-        if (this.stationParams.pageNumber === '1') {
+        if (this.stationParams.pageNumber === 1) {
           this.stationInfoList = response.body.pageData
         } else {
           this.stationInfoList = this.stationInfoList.concat(response.body.pageData)
@@ -200,7 +222,7 @@ export default {
       setTimeout(() => {
         if (this.stationParams.pageNumber < this.totalPages) {
           this.stationParams.pageNumber++
-          this.stationSearch()
+          this.filter()
         }
         this.loading = false
       }, 1000)
@@ -210,6 +232,14 @@ export default {
     this.clientWidth = document.documentElement.clientWidth * 0.90
     this.$http.get('static/json/location.json').then(response => {
       this.locationOptions = response.body
+    }, response => {
+    })
+    this.$http.get('static/json/stationFilter.json').then(response => {
+      this.stationFilterList = response.body
+    }, response => {
+    })
+    this.$http.get('http://api.map.baidu.com/geocoder?location=30.548397,104.04701&output=json').then(response => {
+      console.log(response.body.result.addressComponent.city)
     }, response => {
     })
     this.$http.post('/siteinformation/find', {
@@ -233,25 +263,6 @@ export default {
       }
     }, response => {
     })
-    this.$http.get('static/json/stationFilter.json').then(response => {
-      this.stationFilterList = response.body
-    }, response => {
-    })
-  },
-  directives: {
-    enter: {
-      bind: function(el, binding, vnode) {
-        const input = el.getElementsByTagName('input')[0]
-        input.addEventListener('keypress', function(e) {
-          var key = e.which || e.keyCode
-          if (key === 13) {
-            el.dispatchEvent(new Event('enter'))
-          }
-        })
-      },
-      unbind: function(el, binding, vnode) {
-      }
-    }
   },
   components: {
     navigation
