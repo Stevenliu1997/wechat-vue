@@ -95,6 +95,7 @@
 
 <script>
 import Vue from 'vue'
+import wx from 'weixin-js-sdk'
 import StarRating from 'vue-star-rating'
 import navigation from './Navigation'
 import stationIcon from '@/assets/icon/station/station.png'
@@ -106,6 +107,8 @@ export default {
   data() {
     return {
       clientWidth: '',
+      latitude: '',
+      longitude: '',
       tab: '地图',
       activeTab: 'list',
       locationOptions: [],
@@ -133,7 +136,7 @@ export default {
         'cheapfirst': 0,
         'multiple': 0,
         'pageNumber': 1,
-        'pageSize': 10
+        'pageSize': 2
       },
       stationInfoList: [],
       stationIcon: stationIcon,
@@ -155,7 +158,7 @@ export default {
       this.stationParams.cheapfirst = 0
       this.stationParams.multiple = 0
       this.stationParams.pageNumber = 1
-      this.stationParams.pageSize = 10
+      this.stationParams.pageSize = 2
       this.$http.post('/siteinformation/find', this.stationParams).then(response => {
         this.totalPages = response.body.totalPages
         this.stationInfoList = response.body.pageData
@@ -238,7 +241,30 @@ export default {
       this.stationFilterList = response.body
     }, response => {
     })
-    this.$http.get('http://api.map.baidu.com/geocoder?location=30.548397,104.04701&output=json').then(response => {
+    this.$http.post('http://101.37.35.17:8888/wconfig', 'http://3297449167.tunnel.qydev.com/nearbyStation').then(function(data) {
+      wx.config({
+        debug: true,
+        appId: data.data.appId,
+        timestamp: data.data.timestamp,
+        nonceStr: data.data.nonceStr,
+        signature: data.data.signature,
+        jsApiList: ['getLocation']
+      })
+      wx.ready(function() {
+        wx.getLocation({
+          type: 'wgs84',
+          success: function(res) {
+            this.latitude = res.latitude
+            this.longitude = res.longitude
+            console.log(this.latitude)
+            console.log(this.longitude)
+          },
+          fail: function(res) {
+          }
+        })
+      })
+    })
+    this.$http.jsonp('http://api.map.baidu.com/geocoder?location=30.548397,104.04701&output=json').then(response => {
       console.log(response.body.result.addressComponent.city)
     }, response => {
     })
@@ -254,7 +280,7 @@ export default {
       'cheapfirst': 0,
       'multiple': 0,
       'pageNumber': 1,
-      'pageSize': 10
+      'pageSize': 2
     }).then(response => {
       this.stationInfoList = response.body.pageData
       this.totalPages = response.body.totalPages

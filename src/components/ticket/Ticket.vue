@@ -64,7 +64,7 @@
     },
     created: function () {
       let account = localStorage.getItem('account')
-      this.$http.post('/perInformation/getAllVoucher', account).then(response => {
+      this.$http.post('/perInformation/getAllVoucher', {'account': account}).then(response => {
         console.log(response)
         if (response.code === '00') {
           let data = response.result
