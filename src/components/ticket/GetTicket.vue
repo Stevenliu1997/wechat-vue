@@ -32,7 +32,7 @@
     methods: {
       getTicket () {
         let account = localStorage.getItem('account')
-        this.$http.post('/perInformation/exchangeVouche', {'code': this.chargecode, 'account': account}).then(response => {
+        this.$http.post('/perInformation/exchangeVoucher', {'code': this.chargecode, 'account': account}).then(response => {
           if (response.code === '00') {
             MessageBox('提示', '操作成功')
             this.$router.push({path: '/self'})

@@ -46,7 +46,7 @@
       getCode () {
         let me = this
         me.sendMsgDisabled = true
-        this.$http.post('/getVerificationCode', this.phoneNum)
+        this.$http.post('/getVerificationCode', {'phoneNum': this.datamodel.phoneNum})
         let interval = window.setInterval(function () {
           if ((me.time--) <= 0) {
             me.time = 60
