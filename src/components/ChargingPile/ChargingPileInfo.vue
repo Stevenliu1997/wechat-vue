@@ -155,20 +155,16 @@
       }, response => {
         // error callback
       })
-      this.$http.post('http://101.37.35.17:8888/wconfig',
-        {dataType: 'json'},
-        {contentType: 'application/json'},
-        {header: {'Access-Control-Allow-Origin': '*'}},
-        {url: 'http://833f5432.ngrok.io/#/login'}).then(function (data) {
-          wx.config({
-            debug: true,
-            appId: data.data.appId,
-            timestamp: data.data.timestamp,
-            nonceStr: data.data.nonceStr,
-            signature: data.data.signature,
-            jsApiList: ['getLocation', 'scanQRCode', 'chooseWXPay']
-          })
+      this.$http.post('http://101.37.35.17:8888/wconfig', 'https://3297449167.localtunnel.me/#/ChargingPile/ChargingPileInfo').then(function (data) {
+        wx.config({
+          debug: true,
+          appId: data.data.appId,
+          timestamp: data.data.timestamp,
+          nonceStr: data.data.nonceStr,
+          signature: data.data.signature,
+          jsApiList: ['getLocation', 'scanQRCode', 'chooseWXPay']
         })
+      })
     }
   }
 </script>
