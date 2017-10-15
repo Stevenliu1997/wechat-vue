@@ -234,6 +234,14 @@ export default {
       this.locationOptions = response.body
     }, response => {
     })
+    this.$http.get('static/json/stationFilter.json').then(response => {
+      this.stationFilterList = response.body
+    }, response => {
+    })
+    this.$http.get('http://api.map.baidu.com/geocoder?location=30.548397,104.04701&output=json').then(response => {
+      console.log(response.body.result.addressComponent.city)
+    }, response => {
+    })
     this.$http.post('/siteinformation/find', {
       'province': '四川省',
       'city': '成都市',
@@ -253,10 +261,6 @@ export default {
       for (let stationInfo of this.stationInfoList) {
         this.positionList.push({ lng: stationInfo.longitude, lat: stationInfo.latitude })
       }
-    }, response => {
-    })
-    this.$http.get('static/json/stationFilter.json').then(response => {
-      this.stationFilterList = response.body
     }, response => {
     })
   },
