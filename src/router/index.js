@@ -64,7 +64,6 @@ const carsinfo = () =>
   import('@/components/infomation/carsinfo')
 
 export default new Router({
-  mode: 'history',
   routes: [{
     path: '/',
     redirect: '/login'

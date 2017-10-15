@@ -241,7 +241,7 @@ export default {
       this.stationFilterList = response.body
     }, response => {
     })
-    this.$http.post('http://101.37.35.17:8888/wconfig', 'http://3297449167.tunnel.qydev.com/nearbyStation').then(function(data) {
+    this.$http.post('http://101.37.35.17:8888/wconfig', 'http://3297449167.tunnel.qydev.com/#/nearbyStation').then(function(data) {
       wx.config({
         debug: true,
         appId: data.data.appId,
@@ -264,10 +264,10 @@ export default {
         })
       })
     })
-    this.$http.jsonp('http://api.map.baidu.com/geocoder?location=30.548397,104.04701&output=json').then(response => {
-      console.log(response.body.result.addressComponent.city)
-    }, response => {
-    })
+    // this.$http.jsonp('http://api.map.baidu.com/geocoder?location=30.548397,104.04701&output=json').then(response => {
+    //   console.log(response.body.result.addressComponent.city)
+    // }, response => {
+    // })
     this.$http.post('/siteinformation/find', {
       'province': '四川省',
       'city': '成都市',
