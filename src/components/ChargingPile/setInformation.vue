@@ -35,7 +35,7 @@
         <mt-popup id="mt-popup" position="top" pop-transition="popup-fade" v-model="popupVisible">
          <mt-cell>
            <div slot="title">
-             站点A
+             站点B
            </div>
            <mt-button v-on:click="handleClick">绑定</mt-button>
          </mt-cell>
@@ -62,6 +62,7 @@
         popupVisible: false,
         latitude: '',
         longitude: 0,
+        result: null,
         chargingPileInfo: {
           deviceName: null,
           deviceModel: null,
@@ -81,7 +82,7 @@
         this.popupVisible = true
       },
       handIn: function () {
-        this.$http.post('/PileDetailInformation/Find').then(response => {
+        this.$http.post('/Pile/Add', {info: this.result}).then(response => {
           router.push({path: '/ChargingPile/ChargingPileInfo'})
         }, response => {})
       },
@@ -111,6 +112,7 @@
 //        console.log('呵呵')
 //        console.log(a1)
 //      }
+      this.result = router.history.current.query.info
       this.$http.post('/PileDetailInformation/Find').then(response => {
         let info = response.body
         this.chargingPileInfo.deviceName = info.data.pilename

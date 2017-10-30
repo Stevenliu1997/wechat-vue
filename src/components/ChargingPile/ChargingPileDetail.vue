@@ -87,13 +87,13 @@
         this.isShow = true
       },
       handIn: function () {
-        this.$http.post('/Pile/Add', {remarks: this.modifiedNote}).then(response => {
+        this.$http.post('/PileInformation/ChangeRemarks', {pileid: this.pileId, remarks: this.modifiedNote}).then(response => {
         }, response => {})
       }
     },
     created: function () {
       this.pileId = router.history.current.query.id
-      this.$http.post('/PileDetailInformation/Find', this.pileId).then(response => {
+      this.$http.post('/PilePartInformation/Find', this.pileId).then(response => {
         let info = response.body
         if (info.code === '00') {
           this.chargingPileInfo.deviceName = info.list.pilename
