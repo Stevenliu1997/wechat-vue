@@ -94,8 +94,9 @@
 </template>
 
 <script>
+// import $ from 'jquery'
 import Vue from 'vue'
-import wx from 'weixin-js-sdk'
+// import wx from 'weixin-js-sdk'
 import StarRating from 'vue-star-rating'
 import navigation from './Navigation'
 import stationIcon from '@/assets/icon/station/station.png'
@@ -109,6 +110,9 @@ export default {
       clientWidth: '',
       latitude: '',
       longitude: '',
+      province: '',
+      city: '',
+      district: '',
       tab: '地图',
       activeTab: 'list',
       locationOptions: [],
@@ -125,12 +129,13 @@ export default {
         'sitename': ''
       },
       stationParams: {
-        'province': '四川省',
-        'city': '成都市',
+        'province': '',
+        'city': '',
         'district': '',
         'sitename': '',
         'state': '',
-        'requesttime': new Date().toString().slice(16, 21),
+        // 'requesttime': new Date().toString().slice(16, 21),
+        'requesttime': '12:00',
         'distance': 0,
         'commentfirst': 0,
         'cheapfirst': 0,
@@ -152,7 +157,8 @@ export default {
       this.stationParams.district = ''
       this.stationParams.sitename = this.stationFilter.sitename
       this.stationParams.state = ''
-      this.stationParams.requesttime = new Date().toString().slice(16, 21)
+      // this.stationParams.requesttime = new Date().toString().slice(16, 21)
+      this.stationParams.requesttime = '12:00'
       this.stationParams.distance = 0
       this.stationParams.commentfirst = 0
       this.stationParams.cheapfirst = 0
@@ -169,7 +175,11 @@ export default {
       })
     },
     filter(ev) {
+      this.stationParams.province = '四川省'
+      this.stationParams.city = '成都市'
       this.stationParams.sitename = this.stationFilter.sitename
+      // this.stationParams.requesttime = new Date().toString().slice(16, 21)
+      this.stationParams.requesttime = '12:00'
       if (this.stationFilter.location.length !== 0) {
         this.stationParams.province = this.stationFilter.location[0]
         this.stationParams.city = this.stationFilter.location[1]
@@ -228,7 +238,7 @@ export default {
           this.filter()
         }
         this.loading = false
-      }, 1000)
+      }, 2000)
     }
   },
   created() {
@@ -236,45 +246,22 @@ export default {
     this.$http.get('static/json/location.json').then(response => {
       this.locationOptions = response.body
     }, response => {
+      // error callback
     })
     this.$http.get('static/json/stationFilter.json').then(response => {
       this.stationFilterList = response.body
     }, response => {
+      // error callback
     })
-    this.$http.post('http://101.37.35.17:8888/wconfig', 'http://3297449167.tunnel.qydev.com/#/nearbyStation').then(function(data) {
-      wx.config({
-        debug: true,
-        appId: data.data.appId,
-        timestamp: data.data.timestamp,
-        nonceStr: data.data.nonceStr,
-        signature: data.data.signature,
-        jsApiList: ['getLocation']
-      })
-      wx.ready(function() {
-        wx.getLocation({
-          type: 'wgs84',
-          success: function(res) {
-            this.latitude = res.latitude
-            this.longitude = res.longitude
-            console.log(this.latitude)
-            console.log(this.longitude)
-          },
-          fail: function(res) {
-          }
-        })
-      })
-    })
-    // this.$http.jsonp('http://api.map.baidu.com/geocoder?location=30.548397,104.04701&output=json').then(response => {
-    //   console.log(response.body.result.addressComponent.city)
-    // }, response => {
-    // })
+
     this.$http.post('/siteinformation/find', {
       'province': '四川省',
       'city': '成都市',
       'district': '',
       'sitename': '',
       'state': '',
-      'requesttime': new Date().toString().slice(16, 21),
+      // 'requesttime': new Date().toString().slice(16, 21),
+      'requesttime': '12:00',
       'distance': 0,
       'commentfirst': 0,
       'cheapfirst': 0,
@@ -285,10 +272,74 @@ export default {
       this.stationInfoList = response.body.pageData
       this.totalPages = response.body.totalPages
       for (let stationInfo of this.stationInfoList) {
-        this.positionList.push({ lng: stationInfo.longitude, lat: stationInfo.latitude })
+        this.positionList.push({ 'lng': stationInfo.longitude, 'lat': stationInfo.latitude })
       }
     }, response => {
+      // error callback
     })
+    // var _this = this
+    // this.$http.post('http://101.37.35.17:8888/wconfig', 'http://3297449167.tunnel.qydev.com/#/nearbyStation').then(response => {
+    //   wx.config({
+    //     debug: true,
+    //     appId: response.data.appId,
+    //     timestamp: response.data.timestamp,
+    //     nonceStr: response.data.nonceStr,
+    //     signature: response.data.signature,
+    //     jsApiList: ['getLocation']
+    //   })
+    //   wx.ready(function() {
+    //     wx.getLocation({
+    //       type: 'wgs84',
+    //       success: function(res) {
+    //         var latitude = res.latitude
+    //         var longitude = res.longitude
+    //         $.ajax({
+    //           // url: 'http://api.map.baidu.com/geocoder/v2/?location=30.572269,104.066541&output=json&ak=EO5oHjEfgBz7QieWfqG08jcx',
+    //           url: 'http://api.map.baidu.com/geocoder/v2/?location=' + latitude + ',' + longitude + '&output=json&ak=EO5oHjEfgBz7QieWfqG08jcx',
+    //           type: 'get',
+    //           dataType: 'jsonp',
+    //           jsonp: 'callback',
+    //           success: function(data) {
+    //             var province = data.result.addressComponent.province
+    //             var city = data.result.addressComponent.city
+    //             console.log(province)
+    //             console.log(city)
+    //             _this.$http.post('/siteinformation/find', {
+    //               'province': '四川省',
+    //               'city': '成都市',
+    //               'district': '',
+    //               'sitename': '',
+    //               'state': '',
+    //               'requesttime': new Date().toString().slice(16, 21),
+    //               'distance': 0,
+    //               'commentfirst': 0,
+    //               'cheapfirst': 0,
+    //               'multiple': 0,
+    //               'pageNumber': 1,
+    //               'pageSize': 2
+    //             }).then(response => {
+    //               // this.stationInfoList = response.body.pageData
+    //               // this.totalPages = response.body.totalPages
+    //               // for (let stationInfo of this.stationInfoList) {
+    //               //   this.positionList.push({ 'lng': stationInfo.longitude, 'lat': stationInfo.latitude })
+    //               // }
+    //               var stationInfoList = response.body.pageData
+    //               var totalPages = response.body.totalPages
+    //               console.log(stationInfoList)
+    //               console.log(totalPages)
+    //               _this.stationInfoList = stationInfoList
+    //               _this.totalPages = totalPages
+    //             }, response => {
+    //               // error callback
+    //             })
+    //           }
+    //         })
+    //       },
+    //       fail: function(res) {
+    //       }
+    //     })
+    //   })
+    // })
   },
   components: {
     navigation
