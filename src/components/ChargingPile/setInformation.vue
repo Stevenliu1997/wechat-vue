@@ -1,48 +1,51 @@
 <template>
-  <div id="all">
-    <div id="head">
-      <mt-header id="mt-head">
-        <mt-button router-link="'/'" slot="left"><i class="fa fa-arrow-left fa-lg" v-on:click="goBack">详细信息</i></mt-button>
+  <div id='all'>
+    <div id='head'>
+      <mt-header id='mt-head'>
+        <mt-button router-link="'/'" slot='left'><i class='fa fa-arrow-left fa-lg' v-on:click='goBack'>详细信息</i>
+        </mt-button>
       </mt-header>
     </div>
-    <div id="body">
-      <table width="100%">
+    <div id='body'>
+      <table width='100%'>
         <tr>
-          <td width="50%">
+          <td width='50%'>
             <ul>
-              <li><img src="./../../assets/ChargingPile/e-gas-station-2151404_960_720.png" width="96" height="96"/></li>
+              <li><img src='./../../assets/ChargingPile/e-gas-station-2151404_960_720.png' width='96' height='96'/></li>
             </ul>
           </td>
-          <td><ul>
-            <li>设备ID{{this.chargingPileInfo.deviceModel}}</li>
-            <li>站点ID{{this.chargingPileInfo.stationId}}</li>
-            <li>厂商ID{{this.chargingPileInfo.manufacturerId}}</li>
-            <li>设备名称{{this.chargingPileInfo.deviceName}}</li>
-          </ul></td>
+          <td>
+            <ul>
+              <li>设备ID{{this.chargingPileInfo.deviceModel}}</li>
+              <li>站点ID{{this.chargingPileInfo.stationId}}</li>
+              <li>厂商ID{{this.chargingPileInfo.manufacturerId}}</li>
+              <li>设备名称{{this.chargingPileInfo.deviceName}}</li>
+            </ul>
+          </td>
         </tr>
       </table>
     </div>
-    <div id="bottom">
-      <mt-cell title="设备型号">
+    <div id='bottom'>
+      <mt-cell title='设备型号'>
         <div>{{chargingPileInfo.deviceModel}}</div>
       </mt-cell>
-      <mt-cell title="工作状态">
+      <mt-cell title='工作状态'>
         <div>{{chargingPileInfo.workstation}}</div>
       </mt-cell>
-      <mt-cell title="位置信息">
-        <div style="padding-right: 120px">站点A</div>
-        <mt-button v-on:click="binding">绑定</mt-button>
-        <mt-popup id="mt-popup" position="top" pop-transition="popup-fade" v-model="popupVisible">
-         <mt-cell>
-           <div slot="title">
-             站点B
-           </div>
-           <mt-button v-on:click="handleClick">绑定</mt-button>
-         </mt-cell>
+      <mt-cell title='位置信息'>
+        <div style='padding-right: 120px'>{{this.defaultStation}}</div>
+        <mt-button v-on:click='binding'>绑定</mt-button>
+        <mt-popup id='mt-popup' position='top' pop-transition='popup-fade' v-model='popupVisible'>
+          <mt-cell v-for='nbStation in nearbyStation' :key='nbStation.siteid'>
+            <div slot='title'>
+              {{nbStation.sitename}}
+            </div>
+            <mt-button v-on:click='handleClick'>绑定</mt-button>
+          </mt-cell>
         </mt-popup>
       </mt-cell>
-      <div id="bt">
-        <mt-button v-on:click="handIn">提交</mt-button>
+      <div id='bt'>
+        <mt-button v-on:click='handIn'>提交</mt-button>
       </div>
     </div>
   </div>
@@ -52,17 +55,23 @@
   import MtButton from '../../../node_modules/mint-ui/packages/button/src/button.vue'
   import MtCell from '../../../node_modules/mint-ui/packages/cell/src/cell.vue'
   import MtField from '../../../node_modules/mint-ui/packages/field/src/field.vue'
+  import wx from 'weixin-js-sdk'
+
   export default {
     components: {
       MtField,
       MtCell,
-      MtButton},
+      MtButton
+    },
     data () {
       return {
         popupVisible: false,
-        latitude: '',
+        latitude: 0,
         longitude: 0,
         result: null,
+        nbStation: null,
+        nearbyStation: null,
+        defaultStation: '站点A',
         chargingPileInfo: {
           deviceName: null,
           deviceModel: null,
@@ -79,68 +88,85 @@
         router.push({path: '/ChargingPile/chargingPileInfo'})
       },
       binding: function () {
+        this.$http
+          .post('/siteinformation/find', {
+            longitude: this.longitude,
+            latitude: this.latitude
+          })
+          .then(response => {
+            this.nearbyStation = response.body
+          })
         this.popupVisible = true
       },
       handIn: function () {
-        this.$http.post('/Pile/Add', {info: this.result}).then(response => {
-          router.push({path: '/ChargingPile/ChargingPileInfo'})
-        }, response => {})
+        this.$http.post('/Pile/Add', {info: this.result}).then(
+          response => {
+            router.push({path: '/ChargingPile/ChargingPileInfo'})
+          },
+          response => {}
+        )
       },
       handleClick: function () {
+        this.defaultStation = this.nbStation.sitename
         this.popupVisible = false
       }
     },
     created: function () {
-//      if (navigator.geolocation) {
-//        let a1 = null
-//        navigator.geolocation.getCurrentPosition(
-//          function (position) {
-//            console.log('haha')
-//            a1 = position.coords.longitude
-//            console.log(a1)
-//            console.log(position.coords.latitude)
-//          },
-//          function (e) {
-//            console.log('hahaha')
-//            let msg = e.code
-//            let dd = e.message
-//            console.log(msg)
-//            console.log(dd)
-//          }
-//        )
-//        this.longitude = a1
-//        console.log('呵呵')
-//        console.log(a1)
-//      }
+      this.$http
+        .post(
+          'http://101.37.35.17:8888/wconfig',
+          'http://3297449167.tunnel.qydev.com/#/ChargingPile/setInformation'
+        )
+        .then(function (data) {
+          wx.config({
+            debug: true,
+            appId: data.data.appId,
+            timestamp: data.data.timestamp,
+            nonceStr: data.data.nonceStr,
+            signature: data.data.signature,
+            jsApiList: ['getLocation']
+          })
+          wx.ready(function () {
+            wx.getLocation({
+              type: 'wgs84',
+              success: function (res) {
+                this.latitude = res.latitude
+                this.longitude = res.longitude
+              },
+              fail: function (res) {
+                console.log('failed')
+              }
+            })
+          })
+        })
       this.result = router.history.current.query.info
-      this.$http.post('/PileDetailInformation/Find').then(response => {
-        let info = response.body
-        this.chargingPileInfo.deviceName = info.data.pilename
-        this.chargingPileInfo.deviceModel = info.data.pileid
-        this.chargingPileInfo.stationId = info.data.siteid
-        this.chargingPileInfo.manufacturerId = info.data.factoryid
-        this.chargingPileInfo.location = info.data.position
-        this.chargingPileInfo.deviceNote = info.data.remarks
-        this.chargingPileInfo.workstation = info.data.workstation
-      }, response => {
-      })
+      this.chargingPileInfo.deviceName = this.result.zhuangname
+      this.chargingPileInfo.deviceModel = this.result.leixing
+      this.chargingPileInfo.stationId = this.result.data.zhandianid
+      this.chargingPileInfo.manufacturerId = this.result.data.changid
+      this.chargingPileInfo.location = this.result.data.weizhi
+      this.chargingPileInfo.deviceNote = this.result.data.beizhu
+      this.chargingPileInfo.workstation = this.result.data.wworkstate
     }
   }
 </script>
 <style scoped>
-  #bt{
+  #bt {
     padding-top: 15%;
-    padding-left: 40%;
+    padding-left: 40%
   }
-  li{
-    list-style-type :none;
-    text-align: center;
+
+  li {
+    list-style-type: none;
+    text-align: center
   }
-  #mt-head{
-    background-color: gray;
+
+  #mt-head {
+    background-color: gray
   }
-  #mt-popup{
+
+  #mt-popup {
     width: 100%;
-    margin-top: 90%;
+    margin-top: 90%
   }
 </style>
