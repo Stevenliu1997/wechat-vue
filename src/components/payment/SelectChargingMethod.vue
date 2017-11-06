@@ -40,7 +40,7 @@
               success: function (res) {
                 let result = res.resultStr // 当needResult 为 1 时，扫码返回的结果
                 this.pileId = result.zhuangid
-                router.push({path: '/payment/charging', params: {pileid: this.pileId}})
+                router.push({path: '/payment/charging', query: {pileid: this.pileId}})
               },
               cancel: function () {
                 alert('用户取消扫描')

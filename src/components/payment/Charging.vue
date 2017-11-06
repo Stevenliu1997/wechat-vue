@@ -55,7 +55,7 @@
     },
     methods: {
       submit: function () {
-        this.pileId = this.$route.params.pileid
+        this.pileId = router.history.current.query.pileid
         this.$http.post('/charge/create', {pileid: this.pileId}).then(response => {
           let data = response.body
           if (data.code === '00') {

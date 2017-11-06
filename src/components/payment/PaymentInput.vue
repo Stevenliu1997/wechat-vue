@@ -24,7 +24,7 @@
     },
     methods: {
       handIn: function () {
-        router.push({path: '/payment/charging', params: {pileid: this.pileId}})
+        router.push({path: '/payment/charging', query: {pileid: this.pileId}})
       }
     }
   }

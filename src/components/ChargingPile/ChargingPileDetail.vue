@@ -89,6 +89,7 @@
       handIn: function () {
         this.$http.post('/PileInformation/ChangeRemarks', {pileid: this.pileId, remarks: this.modifiedNote}).then(response => {
         }, response => {})
+        window.location.reload()
       }
     },
     created: function () {

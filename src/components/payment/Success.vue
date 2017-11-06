@@ -35,7 +35,7 @@
     },
     methods: {
       backToHome: function () {
-        this.pileId = this.$route.params.pileid
+        this.pileId = router.history.current.query.pileid
         this.$http.post('/siteinformation/addcomment', {star: this.rating, content: this.textMessage, pileid: this.pileId}).then(response => {
           router.push({path: '/payment/homepage'})
         }, response => {})
